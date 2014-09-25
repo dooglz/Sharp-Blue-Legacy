@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include "glew\glew.h"
 #include "../GMaths.h"
 
 /*! \brief PS3 shader class
@@ -15,8 +14,8 @@ namespace Engine{
 
 			//! A table of paramaters/uniforms within the shader for quick lookups.
 			//std :: map <std :: string , CGparameter > _uniforms;
-			GLuint _shaderID;
-			GLenum _shaderType; //GL_VERTEX_SHADER or GL_FRAGMENT_SHADER.
+			unsigned int _shaderID;
+			unsigned int _shaderType; //GL_VERTEX_SHADER or GL_FRAGMENT_SHADER.
 
 		public:
 
@@ -52,7 +51,7 @@ namespace Engine{
 			//! The shader program code
 			//void* ucode{};
 
-			GLuint getID(){ return _shaderID; };
+			unsigned int getID(){ return _shaderID; };
 		};
 
 	}

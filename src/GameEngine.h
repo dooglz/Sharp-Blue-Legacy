@@ -1,10 +1,10 @@
 #pragma once
-#include "Renderer.h"
-#include "MeshLoader.h"
-#include "Event_Manager.h"
-#include "Font.h"
 
 namespace Engine{
+	class Renderer;
+	class Meshloader;
+	class EventManager;
+	class Font;
 
 	class GameEngine{
 

@@ -6,6 +6,8 @@
 
 #include <stdlib.h>
 
+
+
 #if defined(_vita_)
 	#include "VITA/GXM_Renderer.h"
 	#include "VITA/GXM_Meshloader.h"

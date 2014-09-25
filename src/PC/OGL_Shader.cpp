@@ -1,5 +1,6 @@
 #include "../Utilities.h"
 #include "OGL_Shader.h"
+#include "glew\glew.h"
 #include <iostream>
 #include <fstream>
 #include <string>

@@ -9,6 +9,11 @@
 #include "Actor.h"
 #include "GameEngine.h"	
 
+#include "Renderer.h"
+#include "MeshLoader.h"
+#include "Event_Manager.h"
+#include "Font.h"
+
 #if defined(_PS3_)
 	#include <sys/paths.h>
 #endif

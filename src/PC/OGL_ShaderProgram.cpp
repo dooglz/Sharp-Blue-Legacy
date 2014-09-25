@@ -1,4 +1,5 @@
 #include "OGL_ShaderProgram.h"
+#include "glew\glew.h"
 namespace Engine{
 	namespace OGL{
 

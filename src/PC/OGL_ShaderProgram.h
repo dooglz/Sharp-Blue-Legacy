@@ -1,6 +1,7 @@
 #pragma once
 #include "OGL_FragmentShader.h"
 #include "OGL_VertexShader.h"
+
 namespace Engine{
 	namespace OGL{
 		class OGL_ShaderProgram{
@@ -17,11 +18,11 @@ namespace Engine{
 
 			void attachShader(OGL_Shader* shader);
 
-			GLuint getID();
+			unsigned int getID();
 
 
 		protected:
-			GLuint _ID;
+			unsigned int _ID;
 
 		};
 	}
