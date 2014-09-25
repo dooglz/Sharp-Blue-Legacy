@@ -14,7 +14,7 @@ namespace Engine{
 
 			CGparameter position_param = cellGcmCgGetNamedParameter(program, "position");
 			//All vertex shaders should have a position parameter
-			//DBG_ASSERT(position_param);
+			//ASSERT(position_param);
 
 			CGparameter colour_param = cellGcmCgGetNamedParameter(program, "color");
 

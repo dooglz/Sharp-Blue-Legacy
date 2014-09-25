@@ -43,7 +43,7 @@ namespace Engine{
 
 			// initialize
 			err = sceGxmInitialize(&initializeParams);
-			SCE_DBG_ASSERT(err == SCE_OK);
+			SCE_ASSERT(err == SCE_OK);
 
 			/* ---------------------------------------------------------------------
 			3. Create a libgxm context
@@ -98,7 +98,7 @@ namespace Engine{
 
 			_context = NULL;
 			err = sceGxmCreateContext(&contextParams, &_context);
-			SCE_DBG_ASSERT(err == SCE_OK);
+			SCE_ASSERT(err == SCE_OK);
 
 			// initialize controller data
 			memset(&ctrlData, 0, sizeof(ctrlData));
@@ -151,7 +151,7 @@ namespace Engine{
 
 			// create the render target
 			int err = sceGxmCreateRenderTarget(&renderTargetParams, &_renderTarget);
-			SCE_DBG_ASSERT(err == SCE_OK);
+			SCE_ASSERT(err == SCE_OK);
 		}
 
 		// Create Buffers/surfaces in memory
@@ -194,11 +194,11 @@ namespace Engine{
 					DISPLAY_HEIGHT,
 					DISPLAY_STRIDE_IN_PIXELS,
 					_surfacesData[i]);
-				SCE_DBG_ASSERT(err == SCE_OK);
+				SCE_ASSERT(err == SCE_OK);
 
 				// create a sync object that we will associate with this buffer
 				err = sceGxmSyncObjectCreate(&_surfacesSync[i]);
-				SCE_DBG_ASSERT(err == SCE_OK);
+				SCE_ASSERT(err == SCE_OK);
 			}
 
 			/* ---------------------------------------------------------------------
@@ -245,7 +245,7 @@ namespace Engine{
 				depthStrideInSamples,
 				depthBufferData,
 				NULL);
-			SCE_DBG_ASSERT(err == SCE_OK);
+			SCE_ASSERT(err == SCE_OK);
 
 		}
 
@@ -499,18 +499,18 @@ namespace Engine{
 			framebuf.height = DISPLAY_HEIGHT;
 			// Swap to the new buffer on the next VSYNC
 			int err = sceDisplaySetFrameBuf(&framebuf, SCE_DISPLAY_UPDATETIMING_NEXTVSYNC);
-			SCE_DBG_ASSERT(err == SCE_OK);
+			SCE_ASSERT(err == SCE_OK);
 
 			// Swap to the new buffer on the next VSYNC
 			err = sceDisplaySetFrameBuf(&framebuf, SCE_DISPLAY_UPDATETIMING_NEXTVSYNC);
-			SCE_DBG_ASSERT(err == SCE_OK);
+			SCE_ASSERT(err == SCE_OK);
 			// Block this callback until the swap has finished
 			err = sceDisplayWaitVblankStart();
-			SCE_DBG_ASSERT(err == SCE_OK);
+			SCE_ASSERT(err == SCE_OK);
 
 			// Block this callback until the swap has finished
 			err = sceDisplayWaitVblankStart();
-			SCE_DBG_ASSERT(err == SCE_OK);
+			SCE_ASSERT(err == SCE_OK);
 		}
 	}
 }

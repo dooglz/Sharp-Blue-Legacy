@@ -20,45 +20,57 @@
 // as win64 might have issues with win32 stuff
 #elif defined(WIN32) || defined(_WIN32_)  || defined(__WIN32__) || defined(_WIN32) || defined(_WIN64_) || defined(__CYGWIN__) || defined(MINGW32)
 	#define _WINDOWS_
+	#define _PC_
 //This works, but it could be either an OSX or iOS device
 #elif defined( APPLE )
 	#define _MAC_
+	#define _PC_
 //This works, but isn’t a complete solution, google unix
 #elif defined( linux )
 	#define _LINUX_
+	#define _PC_
 #else
 	#error unknown platform
 #endif
 
 #define DEBUG 1
 
+#if defined(_PC_)
+	#include "sdl/sdl_assert.h"
+#endif
 
 // −− Platform specific halts
 #if (DEBUG == 1)
 	#if defined(_vita_)
 		#include "libdbg.h"
-		#define DBG_HALT _SCE_BREAK();
+		#define HALT _SCE_BREAK();
 	#elif defined(_PS3_)
-		//#define DBG_HALT { __asm__ volatile( "trap" ); }
-		#define DBG_HALT { exit (1); }
-	#elif defined(_XBOX360_) || defined(_WINDOWS_)
-		//#define DBG_HALT  __debugbreak
-		#define DBG_HALT __asm {int 3}
-	#elif defined(_APPLE_)
-		#define HALT builtin trap();
-	#elif defined(_linux_)
-		#define HALT raise(SIGINT);
+		//#define HALT { __asm__ volatile( "trap" ); }
+		#define HALT { exit (1); }
+	#elif defined(_XBOX360_)
+		//#define HALT  __debugbreak
+		#define HALT __asm {int 3}
+	#elif defined(_PC_)
+		#define HALT SDL_TriggerBreakpoint();
 	#else
 		#error HALT: unknown platform
 	#endif
 #endif
 
-// call DBG_HALT on assert fail
-#define DBG_ASSERT(exp) { if ( !(exp) ) {DBG_HALT;} }
-// Prints the suplied string on assert fail, then call DBG_HALT
-#define DBG_ASSERT_MSG( exp, smsg ) { if ( !(exp) ) {puts (smsg); DBG_HALT;} }
-// Calls the suplied function on assert fail, then call DBG_HALT
-#define DBG_ASSERT_FUNC( exp, func) { if ( !(exp) ) {func; DBG_HALT;} }
+#if defined(_PC_)
+	//Use the Radcool SDL assert
+	#define ASSERT(exp) SDL_assert(exp)
+	#define ASSERT_MSG( exp, smsg ) SDL_assert(exp)
+	#define ASSERT_FUNC( exp, func) SDL_assert(exp)
+#else
+	// call HALT on assert fail
+	#define ASSERT(exp) { if ( !(exp) ) {HALT;} }
+	// Prints the suplied string on assert fail, then call HALT
+	#define ASSERT_MSG( exp, smsg ) { if ( !(exp) ) {puts (smsg); HALT;} }
+	// Calls the suplied function on assert fail, then call HALT
+	#define ASSERT_FUNC( exp, func) { if ( !(exp) ) {func; HALT;} }
+
+#endif
 
 // −− Platform specific Utility Libs
 #if defined(_vita_)

@@ -9,7 +9,7 @@ namespace Engine{
 
 		void OGL_Shader::LoadBinaryShader(std::string name)
 		{
-			DBG_ASSERT_MSG((_shaderType), "_shaderType must be set before loading a shader file!");
+			ASSERT_MSG((_shaderType), "_shaderType must be set before loading a shader file!");
 			/*
 			const char *buffer;
 			int shaderCompiled = 0;
@@ -40,11 +40,11 @@ namespace Engine{
 
 		void OGL_Shader::LoadSourceShader(std::string name)
 		{
-			DBG_ASSERT_MSG((_shaderType), "_shaderType must be set before loading a shader file!");
+			ASSERT_MSG((_shaderType), "_shaderType must be set before loading a shader file!");
 			GLenum err = glGetError();
 			if (err != GL_NO_ERROR){
 				printf("An OGL error ahas occured: %i\n", err);
-				DBG_HALT;
+				HALT;
 			}
 
 			int shaderCompiled = 0;
@@ -56,21 +56,21 @@ namespace Engine{
 			err = glGetError();
 			if (err != GL_NO_ERROR){
 				printf("An OGL error ahas occured: %i\n", err);
-				DBG_HALT;
+				HALT;
 			}
 
 			glShaderSource(_shaderID, 1, (const GLchar **)&shaderSource, 0);
 			err = glGetError();
 			if (err != GL_NO_ERROR){
 				printf("An OGL error ahas occured: %i\n", err);
-				DBG_HALT;
+				HALT;
 			}
 
 			glCompileShader(_shaderID);
 			err = glGetError();
 			if (err != GL_NO_ERROR){
 				printf("An OGL error ahas occured: %i\n", err);
-				DBG_HALT;
+				HALT;
 			}
 
 			glGetShaderiv(_shaderID, GL_COMPILE_STATUS, &shaderCompiled);

@@ -45,7 +45,7 @@ namespace Engine{
 			GCM_MemoryUtils::localHeapStart = 0;
 			int err = 0;
 			err = cellGcmInit(COMMAND_SIZE, BUFFER_SIZE, memalign(1024 * 1024, BUFFER_SIZE));
-			DBG_ASSERT_MSG(err == CELL_OK, "cellGcmInit failed !");
+			ASSERT_MSG(err == CELL_OK, "cellGcmInit failed !");
 			InitDisplay();
 			InitSurfaces();
 			loadDefaultShaders();
@@ -68,10 +68,10 @@ namespace Engine{
 			//Get the current display mode, 
 			// This has to have been previously set in the target manager at some point
 			int err = cellVideoOutGetState(CELL_VIDEO_OUT_PRIMARY, 0, &videoState);
-			DBG_ASSERT_MSG(err == CELL_OK, "cellVideoOutGetState failed !");
+			ASSERT_MSG(err == CELL_OK, "cellVideoOutGetState failed !");
 
 			err = cellVideoOutGetResolution(videoState.displayMode.resolutionId, &resolution);
-			DBG_ASSERT_MSG(err == CELL_OK, "cellVideoOutGetResolution failed !");
+			ASSERT_MSG(err == CELL_OK, "cellVideoOutGetResolution failed !");
 
 			printf("Output Resolution:\t%i x %i \n", resolution.width, resolution.height);
 			screenWidth = resolution.width;
@@ -95,11 +95,11 @@ namespace Engine{
 
 			//Set the video configuration, we haven't changed anything other than possibly the Z/colour depth
 			err = cellVideoOutConfigure(CELL_VIDEO_OUT_PRIMARY, &video_cfg, NULL, 0);
-			DBG_ASSERT_MSG(err == CELL_OK, "cellVideoOutConfigure failed !");
+			ASSERT_MSG(err == CELL_OK, "cellVideoOutConfigure failed !");
 
 			//Fetch videoState again, just to make sure everything went ok
 			err = cellVideoOutGetState(CELL_VIDEO_OUT_PRIMARY, 0, &videoState);
-			DBG_ASSERT_MSG(err == CELL_OK, "cellVideoOutGetState failed !");
+			ASSERT_MSG(err == CELL_OK, "cellVideoOutGetState failed !");
 
 			//Store the aspect ratio
 			switch (videoState.displayMode.aspect){
@@ -343,7 +343,7 @@ namespace Engine{
 
 		void GCM_Renderer::renderMesh(stMesh* msh, matrix4 mvp)
 		{
-			DBG_ASSERT(msh->loadedLocal);
+			ASSERT(msh->loadedLocal);
 			//set active shader
 			GCM_Renderer::SetCurrentShader(*msh->vertShader, *msh->fragShader);
 

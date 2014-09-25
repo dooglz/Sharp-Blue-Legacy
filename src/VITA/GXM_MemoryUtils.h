@@ -53,28 +53,28 @@ static void *graphicsAlloc(SceKernelMemBlockType type, uint32_t size, uint32_t a
 	*/
 	if (type == SCE_KERNEL_MEMBLOCK_TYPE_USER_CDRAM_RWDATA) {
 		// CDRAM memblocks must be 256KiB aligned
-		SCE_DBG_ASSERT(alignment <= 256 * 1024);
+		SCE_ASSERT(alignment <= 256 * 1024);
 		size = ALIGN(size, 256 * 1024);
 	}
 	else {
 		// LPDDR memblocks must be 4KiB aligned
-		SCE_DBG_ASSERT(alignment <= 4 * 1024);
+		SCE_ASSERT(alignment <= 4 * 1024);
 		size = ALIGN(size, 4 * 1024);
 	}
 	UNUSED(alignment);
 
 	// allocate some memory
 	*uid = sceKernelAllocMemBlock("basic", type, size, NULL);
-	SCE_DBG_ASSERT(*uid >= SCE_OK);
+	SCE_ASSERT(*uid >= SCE_OK);
 
 	// grab the base address
 	void *mem = NULL;
 	err = sceKernelGetMemBlockBase(*uid, &mem);
-	SCE_DBG_ASSERT(err == SCE_OK);
+	SCE_ASSERT(err == SCE_OK);
 
 	// map for the GPU
 	err = sceGxmMapMemory(mem, size, attribs);
-	SCE_DBG_ASSERT(err == SCE_OK);
+	SCE_ASSERT(err == SCE_OK);
 
 	// done
 	return mem;
@@ -88,15 +88,15 @@ static void graphicsFree(SceUID uid)
 	// grab the base address
 	void *mem = NULL;
 	err = sceKernelGetMemBlockBase(uid, &mem);
-	SCE_DBG_ASSERT(err == SCE_OK);
+	SCE_ASSERT(err == SCE_OK);
 
 	// unmap memory
 	err = sceGxmUnmapMemory(mem);
-	SCE_DBG_ASSERT(err == SCE_OK);
+	SCE_ASSERT(err == SCE_OK);
 
 	// free the memory block
 	err = sceKernelFreeMemBlock(uid);
-	SCE_DBG_ASSERT(err == SCE_OK);
+	SCE_ASSERT(err == SCE_OK);
 }
 
 static void *vertexUsseAlloc(uint32_t size, SceUID *uid, uint32_t *usseOffset)
@@ -109,16 +109,16 @@ static void *vertexUsseAlloc(uint32_t size, SceUID *uid, uint32_t *usseOffset)
 
 	// allocate some memory
 	*uid = sceKernelAllocMemBlock("basic", SCE_KERNEL_MEMBLOCK_TYPE_USER_RWDATA_UNCACHE, size, NULL);
-	SCE_DBG_ASSERT(*uid >= SCE_OK);
+	SCE_ASSERT(*uid >= SCE_OK);
 
 	// grab the base address
 	void *mem = NULL;
 	err = sceKernelGetMemBlockBase(*uid, &mem);
-	SCE_DBG_ASSERT(err == SCE_OK);
+	SCE_ASSERT(err == SCE_OK);
 
 	// map as vertex USSE code for the GPU
 	err = sceGxmMapVertexUsseMemory(mem, size, usseOffset);
-	SCE_DBG_ASSERT(err == SCE_OK);
+	SCE_ASSERT(err == SCE_OK);
 
 	// done
 	return mem;
@@ -132,15 +132,15 @@ static void vertexUsseFree(SceUID uid)
 	// grab the base address
 	void *mem = NULL;
 	err = sceKernelGetMemBlockBase(uid, &mem);
-	SCE_DBG_ASSERT(err == SCE_OK);
+	SCE_ASSERT(err == SCE_OK);
 
 	// unmap memory
 	err = sceGxmUnmapVertexUsseMemory(mem);
-	SCE_DBG_ASSERT(err == SCE_OK);
+	SCE_ASSERT(err == SCE_OK);
 
 	// free the memory block
 	err = sceKernelFreeMemBlock(uid);
-	SCE_DBG_ASSERT(err == SCE_OK);
+	SCE_ASSERT(err == SCE_OK);
 }
 
 static void *fragmentUsseAlloc(uint32_t size, SceUID *uid, uint32_t *usseOffset)
@@ -153,16 +153,16 @@ static void *fragmentUsseAlloc(uint32_t size, SceUID *uid, uint32_t *usseOffset)
 
 	// allocate some memory
 	*uid = sceKernelAllocMemBlock("basic", SCE_KERNEL_MEMBLOCK_TYPE_USER_RWDATA_UNCACHE, size, NULL);
-	SCE_DBG_ASSERT(*uid >= SCE_OK);
+	SCE_ASSERT(*uid >= SCE_OK);
 
 	// grab the base address
 	void *mem = NULL;
 	err = sceKernelGetMemBlockBase(*uid, &mem);
-	SCE_DBG_ASSERT(err == SCE_OK);
+	SCE_ASSERT(err == SCE_OK);
 
 	// map as fragment USSE code for the GPU
 	err = sceGxmMapFragmentUsseMemory(mem, size, usseOffset);
-	SCE_DBG_ASSERT(err == SCE_OK);
+	SCE_ASSERT(err == SCE_OK);
 
 	// done
 	return mem;
@@ -176,14 +176,14 @@ static void fragmentUsseFree(SceUID uid)
 	// grab the base address
 	void *mem = NULL;
 	err = sceKernelGetMemBlockBase(uid, &mem);
-	SCE_DBG_ASSERT(err == SCE_OK);
+	SCE_ASSERT(err == SCE_OK);
 
 	// unmap memory
 	err = sceGxmUnmapFragmentUsseMemory(mem);
-	SCE_DBG_ASSERT(err == SCE_OK);
+	SCE_ASSERT(err == SCE_OK);
 
 	// free the memory block
 	err = sceKernelFreeMemBlock(uid);
-	SCE_DBG_ASSERT(err == SCE_OK);
+	SCE_ASSERT(err == SCE_OK);
 }
 

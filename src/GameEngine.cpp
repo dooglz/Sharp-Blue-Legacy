@@ -25,6 +25,16 @@
 	#include "PC/OGL_Meshloader.h"
 	#include "PC/SDL_Event_Manager.h"
 	#include "PC/SDL_Font.h"
+
+	SDL_assert_state CustomAssertionHandler(const SDL_assert_data* data, void* userdata)
+	{
+		//CheckGL();
+		//CheckSDL();
+		//ASSERT_MSG((err == 0), "TTF_Init() error");
+		SDL_AssertionHandler defaultHandler = SDL_GetDefaultAssertionHandler();
+		return defaultHandler(data, userdata);
+	}
+
 #endif
 
 
@@ -52,6 +62,7 @@ namespace Engine{
 			GameEngine::EventManager = new PS3::PS3EventManager();
 			GameEngine::Font = new PS3::PS3_Font();
 		#elif defined(_WINDOWS_)
+
 			GameEngine::Renderer = new OGL::OGL_Renderer();
 			GameEngine::Meshloader = new OGL::OGL_Meshloader();
 			GameEngine::EventManager = new OGL::SDLEventManager();

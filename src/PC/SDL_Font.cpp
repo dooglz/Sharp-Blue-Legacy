@@ -1,7 +1,7 @@
 ﻿#include "SDL_Font.h"
 #include "../Utilities.h"
 #include "OGL_Renderer.h"
-
+#include <Vector>
 namespace Engine{
 
 	void SDL_Font::init()
@@ -9,7 +9,7 @@ namespace Engine{
 		printf("Font Init \n");
 		//Initialize SDL_ttf
 		int err = TTF_Init();
-		DBG_ASSERT_MSG((err == 0),"TTF_Init() error");
+		ASSERT_MSG((err == 0),"TTF_Init() error");
 		//Open the font
 		loadfont(28);
 		_fontSize = 28;
@@ -57,7 +57,7 @@ namespace Engine{
 	{
 		TTF_Font* font = TTF_OpenFont("fonts/LiberationSans-Regular.ttf", size);
 		//_font = TTF_OpenFont("fonts/lazy.ttf", size);
-		DBG_ASSERT_FUNC((font != NULL), printf("TTF_OpenFont error:  %s/n", TTF_GetError()));
+		ASSERT_FUNC((font != NULL), printf("TTF_OpenFont error:  %s/n", TTF_GetError()));
 
 		_fonts.insert(std::pair<unsigned int, TTF_Font*>(size, font));
 	}
@@ -107,9 +107,9 @@ namespace Engine{
 		Uint16 chr = (Uint16)character; //TODO: Remove this madness.
 
 		text_surface = TTF_RenderGlyph_Blended(getFont(_fontSize), chr, _color);
-		DBG_ASSERT_FUNC((text_surface != NULL), printf("TTF_RenderGlyph_Solid:  %s/n", TTF_GetError()));
+		ASSERT_FUNC((text_surface != NULL), printf("TTF_RenderGlyph_Solid:  %s/n", TTF_GetError()));
 
-		apply_surface(X, Y, text_surface, _surface_buffer);
+		apply_surface((int)X, (int)Y, text_surface, _surface_buffer);
 		SDL_FreeSurface(text_surface);
 	}
 
@@ -119,16 +119,16 @@ namespace Engine{
 		SDL_Surface *text_surface;
 
 		text_surface = TTF_RenderText_Blended(getFont(_fontSize), characters, _color);
-		DBG_ASSERT_FUNC((text_surface != NULL), printf("TTF_RenderText_Solid:  %s/n", TTF_GetError()));
+		ASSERT_FUNC((text_surface != NULL), printf("TTF_RenderText_Solid:  %s/n", TTF_GetError()));
 
 		//Engine::OGL::OGL_Renderer::getSurface()
-		apply_surface(X, Y, text_surface, _surface_buffer);
+		apply_surface((int)X, (int)Y, text_surface, _surface_buffer);
 		SDL_FreeSurface(text_surface);
 	}
 
 		//! Sets the color of the font renderer
 	void SDL_Font::setColour(float R, float G, float B, float A){
-		_color = { R,G,B,A };
+		_color = { (int)R, (int)G, (int)B, (int)A };
 	}
 
 		//! Sets the size of the font renderer

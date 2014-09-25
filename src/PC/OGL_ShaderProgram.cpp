@@ -19,7 +19,7 @@ namespace Engine{
 				char * errorStr = new char[256];
 				glGetProgramInfoLog(_ID, 256, 0, errorStr);
 				printf("program link error: %s\n", errorStr);
-				DBG_HALT
+				HALT
 			}
 
 			//check for general errors

@@ -1,6 +1,9 @@
 #pragma once
 #include "Utilities.h"		// asserts and commmon defines
+#include "GMaths.h"
+#include <String>
 #include "Mesh.h"
+
 namespace Engine{
 	class Renderer{
 

@@ -9,7 +9,7 @@ namespace Engine{
 	{
 		// Look for file
 		std::ifstream file(name.c_str(), std::ios::in | std::ios::binary);
-		DBG_ASSERT_FUNC((file), printf("Can 't find file: %s\n", name.c_str()));
+		ASSERT_FUNC((file), printf("Can 't find file: %s\n", name.c_str()));
 
 		// Create a buffer for holding the lines of the file
 		// With a max line length of 256 characters
@@ -42,7 +42,7 @@ namespace Engine{
 	{
 		// Look for file
 		std::ifstream file(name.c_str(), std::ios::in | std::ios::binary);
-		DBG_ASSERT_FUNC((file), printf("Can 't find file: %s\n", name.c_str()));
+		ASSERT_FUNC((file), printf("Can 't find file: %s\n", name.c_str()));
 
 		// Load file attributes
 		file.seekg(0, std::ios::end);

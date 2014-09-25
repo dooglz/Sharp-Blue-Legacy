@@ -14,13 +14,13 @@ namespace Engine{
 		void GXM_Shader::registerWithPatcher(){
 			printf("Shader %s, registering with Patcher\n",_name.c_str());
 			int err = sceGxmShaderPatcherRegisterProgram(shaderPatcher, unpatchedProgram, &_patcherID);
-			SCE_DBG_ASSERT(err == SCE_OK);
+			SCE_ASSERT(err == SCE_OK);
 			//Cache all parameters
 			uint32_t params = sceGxmProgramGetParameterCount(unpatchedProgram);
 			for(uint32_t i=0; i < (params);++i)
 			{
 				const SceGxmProgramParameter* p =sceGxmProgramGetParameter(unpatchedProgram,i);
-				SCE_DBG_ASSERT(p && (sceGxmProgramParameterGetCategory(p) == SCE_GXM_PARAMETER_CATEGORY_ATTRIBUTE));
+				SCE_ASSERT(p && (sceGxmProgramParameterGetCategory(p) == SCE_GXM_PARAMETER_CATEGORY_ATTRIBUTE));
 				const char* pramName = sceGxmProgramParameterGetName(p);
 				printf("Shader %s, parsing paramerter: %i - %s\n",_name.c_str(),i,pramName);
 				//insert into map
@@ -35,7 +35,7 @@ namespace Engine{
 				//already in map
 				return (it->second);
 			}
-			DBG_HALT;
+			HALT;
 			return NULL;
 		}
 		
@@ -97,7 +97,7 @@ namespace Engine{
 
 			shaderPatcher = NULL;
 			int err = sceGxmShaderPatcherCreate(&patcherParams, &shaderPatcher);
-			SCE_DBG_ASSERT(err == SCE_OK);
+			SCE_ASSERT(err == SCE_OK);
 		}
 	}
 }

@@ -9,7 +9,7 @@ namespace Engine{
 		void PS3_Input::Initialise()
 		{
 			int err = cellPadInit(1);
-			DBG_ASSERT_MSG(err == CELL_PAD_OK, "cellPadInit failed !");
+			ASSERT_MSG(err == CELL_PAD_OK, "cellPadInit failed !");
 			//Refresh();
 
 			Input::addAxis("gp_1_dpad_l");
@@ -34,7 +34,7 @@ namespace Engine{
 		void PS3_Input::Refresh()
 		{
 			int err = cellPadClearBuf(PORT_NO);
-			DBG_ASSERT_MSG(err == CELL_PAD_OK, "cellPadClearBuf failed !");
+			ASSERT_MSG(err == CELL_PAD_OK, "cellPadClearBuf failed !");
 		}
 
 		// Retreive and parse controller info, call funcs if needed.

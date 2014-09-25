@@ -19,7 +19,7 @@ namespace Engine{
 				blendInfo,
 				vertexProgram,
 				&patchedProgram);
-			SCE_DBG_ASSERT(err == SCE_OK);
+			SCE_ASSERT(err == SCE_OK);
 			_patches.push_back(patchedProgram);
 		}
 

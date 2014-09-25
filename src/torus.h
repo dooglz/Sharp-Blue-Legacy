@@ -12,11 +12,11 @@ CreateTorus(float InnerRadius,
 {
 	
 	// A few checks
-	DBG_ASSERT_MSG((Sides >= 3), "Sides must be 3 or bigger");
-	DBG_ASSERT_MSG((Rings >= 3), "Rings must be 3 or bigger");
-	DBG_ASSERT_MSG((InnerRadius >= 0),"InnerRadius can not be negative"
+	ASSERT_MSG((Sides >= 3), "Sides must be 3 or bigger");
+	ASSERT_MSG((Rings >= 3), "Rings must be 3 or bigger");
+	ASSERT_MSG((InnerRadius >= 0),"InnerRadius can not be negative"
 		"(well, you can but than it is no longer a donut)");	
-	DBG_ASSERT_MSG((OuterRadius > InnerRadius), "OuterRadius must be bigger than InnerRadius");
+	ASSERT_MSG((OuterRadius > InnerRadius), "OuterRadius must be bigger than InnerRadius");
 
 	const float centerRadius = InnerRadius * 0.5f + OuterRadius * 0.5f;
 	const float rangeRadius = OuterRadius - centerRadius;

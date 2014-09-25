@@ -2,14 +2,22 @@
 
 #include "Utilities.h"		// asserts and commmon defines
 #include "GMaths.h"
-#if defined(_PS3_)
-	#include "PS3/GCM_FragmentShader.h"
-	#include "PS3/GCM_VertexShader.h"
-#elif defined(_WINDOWS_)
-	#include "PC/OGL_ShaderProgram.h"
-#endif
-
 #include <vector>
+
+#if defined(_PS3_)
+	namespace Engine{
+		namespace GCM{
+			class GCM_FragmentShader;
+			class GCM_VertexShader;
+		};
+	};
+#elif defined(_WINDOWS_)
+	namespace Engine{
+		namespace OGL{
+			class OGL_ShaderProgram;
+		};
+	};
+#endif
 
 struct stMesh{
 	bool loadedMain;
@@ -18,6 +26,7 @@ struct stMesh{
 	bool strip;
 	bool fan;
 	bool line;
+
 	// mesh data in main memory
 	std::vector<stVertex> vertexData;
 
@@ -35,9 +44,9 @@ struct stMesh{
 	#elif defined(_WINDOWS_)
 		//! A reference to the shader program to use
 		Engine::OGL::OGL_ShaderProgram * program;
-		GLuint gVBO;
-		GLuint gVAO;
-		GLuint gIBO;
+		unsigned int gVBO;
+		unsigned int gVAO;
+		unsigned int gIBO;
 	#endif
 };
 

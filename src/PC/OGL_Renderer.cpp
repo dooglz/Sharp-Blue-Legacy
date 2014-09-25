@@ -5,6 +5,8 @@
 #include <gl\glu.h>
 #include "glm\gtc\matrix_transform.hpp"
 #include "glm\gtc\type_ptr.hpp"
+#include "../Mesh.h"
+
 namespace Engine{
 	namespace OGL{
 
@@ -32,7 +34,7 @@ namespace Engine{
 		void OGL_Renderer::InitDisplay(){
 			printf("Making Display \n");
 			//Initialize SDL
-			DBG_ASSERT_FUNC((SDL_Init(SDL_INIT_VIDEO) >= 0), printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError()));
+			ASSERT_FUNC((SDL_Init(SDL_INIT_VIDEO) >= 0), printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError()));
 
 			//Use OpenGL 3.1 core
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
@@ -41,11 +43,11 @@ namespace Engine{
 
 			//Create an ogl window
 			_window = SDL_CreateWindow("SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
-			DBG_ASSERT_FUNC((_window != NULL), printf("Window could not be created! SDL_Error: %s\n", SDL_GetError()));
+			ASSERT_FUNC((_window != NULL), printf("Window could not be created! SDL_Error: %s\n", SDL_GetError()));
 
 			//Create context
 			_gContext = SDL_GL_CreateContext(_window);
-			DBG_ASSERT_FUNC((_gContext != NULL), printf("OpenGL context could not be created! SDL Error: %s\n", SDL_GetError()));
+			ASSERT_FUNC((_gContext != NULL), printf("OpenGL context could not be created! SDL Error: %s\n", SDL_GetError()));
 
 			//Initialize GLEW
 			glewExperimental = GL_TRUE;
@@ -53,11 +55,11 @@ namespace Engine{
 			//Glewinit always throws an error, due to that experimental flag, just ignore it.
 			glGetError();
 
-			DBG_ASSERT_FUNC((glewError == GLEW_OK), printf("Error initializing GLEW! %s\n", glewGetErrorString(glewError)));
+			ASSERT_FUNC((glewError == GLEW_OK), printf("Error initializing GLEW! %s\n", glewGetErrorString(glewError)));
 			checkerr();
 
 			//Use Vsync
-			DBG_ASSERT_FUNC((SDL_GL_SetSwapInterval(1) >= 0), printf("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError()));
+			ASSERT_FUNC((SDL_GL_SetSwapInterval(1) >= 0), printf("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError()));
 
 			checkerr();
 		};
@@ -164,7 +166,7 @@ namespace Engine{
 			GLenum err;
 			while ((err = glGetError()) != GL_NO_ERROR) {
 				printf("An OGL error has occured: %i\n", err);
-				DBG_HALT;
+				HALT;
 			}
 		}
 

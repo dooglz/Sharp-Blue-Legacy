@@ -42,7 +42,7 @@ namespace Engine{
 
 			void PS3EventManager::init(){
 				int err = cellSysutilRegisterCallback(0, sysutil_callback, NULL);
-				DBG_ASSERT_MSG(err == 0, "cellSysutilRegisterCallback failed !");
+				ASSERT_MSG(err == 0, "cellSysutilRegisterCallback failed !");
 
 				PS3_Input::Initialise();
 			}

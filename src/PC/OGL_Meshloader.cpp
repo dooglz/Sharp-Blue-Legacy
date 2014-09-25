@@ -52,7 +52,7 @@ namespace Engine{
 			if (file == NULL){
 				printf("Impossible to open the file! Are you in the right path ?\n");
 				getchar();
-				DBG_HALT;
+				HALT;
 				return false;
 			}
 

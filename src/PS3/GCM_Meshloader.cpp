@@ -2,6 +2,7 @@
 #include <cell/fs/cell_fs_errno.h>
 #include <cell/fs/cell_fs_file_api.h>
 #include "GCM_MemoryUtils.h"
+#include <cell/gcm.h>
 #include <string>
 
 namespace Engine{
@@ -150,7 +151,7 @@ namespace Engine{
 
 			//calculate offset
 			int err = cellGcmAddressToOffset((void*)msh->vertexBuffer, &msh->vertexBufferOffset);
-			DBG_ASSERT(err == CELL_OK);
+			ASSERT(err == CELL_OK);
 		}
 	}
 }
