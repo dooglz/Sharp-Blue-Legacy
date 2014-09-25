@@ -85,10 +85,17 @@ namespace Engine{
 				else if (strcmp(lineHeader, "f") == 0){
 					std::string vertex1, vertex2, vertex3;
 					unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
-					int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2]);
+					char data[64];
+					fgets(data, 64, file);
+					//THERE MAY BE QUADS, if there is, we only take the last 4.
+
+					int matches = sscanf(data, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2]);
 					if (matches != 9){
-						printf("File can't be read by our simple parser :-( Try exporting with other options\n");
-						return false;
+						matches = sscanf(data, "%d %d %d\n", &vertexIndex[0], &vertexIndex[1], &vertexIndex[2]);
+						if (matches != 3){
+							printf("File can't be read by our simple parser :-( Try exporting with other options %i\n", matches);
+							return false;
+						}
 					}
 					vertexIndices.push_back(vertexIndex[0]);
 					vertexIndices.push_back(vertexIndex[1]);
@@ -117,15 +124,18 @@ namespace Engine{
 				unsigned int normalIndex = normalIndices[i];
 
 				// Get the attributes thanks to the index
-				stvec3 vertex = temp_vertices[vertexIndex - 1];
-				stvec2 uv = temp_uvs[uvIndex - 1];
-				stvec3 normal = temp_normals[normalIndex - 1];
-
 				// Put the attributes in buffers
-				out_vertices.push_back(vertex);
-				out_uvs.push_back(uv);
-				out_normals.push_back(normal);
+				stvec3 vertex = temp_vertices[vertexIndex - 1];
 
+				out_vertices.push_back(vertex);
+				if (!temp_uvs.empty()){ 
+					stvec2 uv = temp_uvs[uvIndex - 1]; 
+					out_uvs.push_back(uv);
+				}
+				if (!temp_normals.empty()){ 
+					stvec3 normal = temp_normals[normalIndex - 1]; 
+					out_normals.push_back(normal);
+				}
 			}
 
 			return true;
