@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="Base_Platform.cpp" />
+    <ClCompile Include="GameEngine.cpp" />
+    <ClCompile Include="FileIO.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GMaths.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="PS3/GCM_FragmentShader.cpp">
+      <Filter>PS3</Filter>
+    </ClCompile>
+    <ClCompile Include="PS3/GCM_MemoryUtils.cpp">
+      <Filter>PS3</Filter>
+    </ClCompile>
+    <ClCompile Include="PS3/GCM_Meshloader.cpp">
+      <Filter>PS3</Filter>
+    </ClCompile>
+    <ClCompile Include="PS3/GCM_Renderer.cpp">
+      <Filter>PS3</Filter>
+    </ClCompile>
+    <ClCompile Include="PS3/GCM_Shader.cpp">
+      <Filter>PS3</Filter>
+    </ClCompile>
+    <ClCompile Include="PS3/GCM_VertexShader.cpp">
+      <Filter>PS3</Filter>
+    </ClCompile>
+    <ClCompile Include="PS3/PS3_Event_Manager.cpp">
+      <Filter>PS3</Filter>
+    </ClCompile>
+    <ClCompile Include="PS3/PS3_Input_handler.cpp">
+      <Filter>PS3</Filter>
+    </ClCompile>
+    <ClCompile Include="PC/OGL_FragmentShader.cpp">
+      <Filter>PC</Filter>
+    </ClCompile>
+    <ClCompile Include="PC/OGL_Meshloader.cpp">
+      <Filter>PC</Filter>
+    </ClCompile>
+    <ClCompile Include="PC/OGL_Renderer.cpp">
+      <Filter>PC</Filter>
+    </ClCompile>
+    <ClCompile Include="PC/OGL_Shader.cpp">
+      <Filter>PC</Filter>
+    </ClCompile>
+    <ClCompile Include="PC/OGL_ShaderProgram.cpp">
+      <Filter>PC</Filter>
+    </ClCompile>
+    <ClCompile Include="PC/OGL_VertexShader.cpp">
+      <Filter>PC</Filter>
+    </ClCompile>
+    <ClCompile Include="PC/SDL_Event_Manager.cpp">
+      <Filter>PC</Filter>
+    </ClCompile>
+    <ClCompile Include="PC/SDL_Font.cpp">
+      <Filter>PC</Filter>
+    </ClCompile>
+    <ClCompile Include="PS3\PS3_Font.cpp">
+      <Filter>PS3</Filter>
+    </ClCompile>
+    <ClCompile Include="VITA/GXM_Fragment_Shader.cpp">
+      <Filter>VITA</Filter>
+    </ClCompile>
+    <ClCompile Include="VITA/GXM_Renderer.cpp">
+      <Filter>VITA</Filter>
+    </ClCompile>
+    <ClCompile Include="VITA/GXM_Shader.cpp">
+      <Filter>VITA</Filter>
+    </ClCompile>
+    <ClCompile Include="VITA/GXM_Vertex_Shader.cpp">
+      <Filter>VITA</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Actor.h" />
+    <ClInclude Include="Base_Platform.h" />
+    <ClInclude Include="GameEngine.h" />
+    <ClInclude Include="Event_Manager.h" />
+    <ClInclude Include="FileIO.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="GMaths.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Meshloader.h" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="torus.h" />
+    <ClInclude Include="Utilities.h" />
+    <ClInclude Include="PS3/GCM_FragmentShader.h">
+      <Filter>PS3</Filter>
+    </ClInclude>
+    <ClInclude Include="PS3/GCM_MemoryUtils.h">
+      <Filter>PS3</Filter>
+    </ClInclude>
+    <ClInclude Include="PS3/GCM_MeshLoader.h">
+      <Filter>PS3</Filter>
+    </ClInclude>
+    <ClInclude Include="PS3/GCM_Platform.h">
+      <Filter>PS3</Filter>
+    </ClInclude>
+    <ClInclude Include="PS3/GCM_Renderer.h">
+      <Filter>PS3</Filter>
+    </ClInclude>
+    <ClInclude Include="PS3/GCM_Shader.h">
+      <Filter>PS3</Filter>
+    </ClInclude>
+    <ClInclude Include="PS3/GCM_VertexShader.h">
+      <Filter>PS3</Filter>
+    </ClInclude>
+    <ClInclude Include="PS3/PS3_Event_Manager.h">
+      <Filter>PS3</Filter>
+    </ClInclude>
+    <ClInclude Include="PS3/PS3_Input_handler.h">
+      <Filter>PS3</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h" />
+    <ClInclude Include="PC/OGL_FragmentShader.h">
+      <Filter>PC</Filter>
+    </ClInclude>
+    <ClInclude Include="PC/OGL_Meshloader.h">
+      <Filter>PC</Filter>
+    </ClInclude>
+    <ClInclude Include="PC/OGL_Platform.h">
+      <Filter>PC</Filter>
+    </ClInclude>
+    <ClInclude Include="PC/OGL_Renderer.h">
+      <Filter>PC</Filter>
+    </ClInclude>
+    <ClInclude Include="PC/OGL_Shader.h">
+      <Filter>PC</Filter>
+    </ClInclude>
+    <ClInclude Include="PC/OGL_ShaderProgram.h">
+      <Filter>PC</Filter>
+    </ClInclude>
+    <ClInclude Include="PC/OGL_VertexShader.h">
+      <Filter>PC</Filter>
+    </ClInclude>
+    <ClInclude Include="PC/SDL_Font.h">
+      <Filter>PC</Filter>
+    </ClInclude>
+    <ClInclude Include="PC/SDL_Event_Manager.h">
+      <Filter>PC</Filter>
+    </ClInclude>
+    <ClInclude Include="PS3/PS3_Font.h">
+      <Filter>PS3</Filter>
+    </ClInclude>
+    <ClInclude Include="VITA/GXM_Vertex_Shader.h">
+      <Filter>VITA</Filter>
+    </ClInclude>
+    <ClInclude Include="VITA/GXM_Fragment_shader.h">
+      <Filter>VITA</Filter>
+    </ClInclude>
+    <ClInclude Include="VITA/GXM_MemoryUtils.h">
+      <Filter>VITA</Filter>
+    </ClInclude>
+    <ClInclude Include="VITA/GXM_Meshloader.h">
+      <Filter>VITA</Filter>
+    </ClInclude>
+    <ClInclude Include="VITA/GXM_Platform.h">
+      <Filter>VITA</Filter>
+    </ClInclude>
+    <ClInclude Include="VITA/GXM_Renderer.h">
+      <Filter>VITA</Filter>
+    </ClInclude>
+    <ClInclude Include="VITA/GXM_Shader.h">
+      <Filter>VITA</Filter>
+    </ClInclude>
+    <ClInclude Include="VITA/VITA_Event_Manager.h">
+      <Filter>VITA</Filter>
+    </ClInclude>
+    <ClInclude Include="VITA/VITA_Font.h">
+      <Filter>VITA</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\res\shaders\basic.frag">
+      <Filter>PC\Shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\res\shaders\basic.vert">
+      <Filter>PC\Shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\res\shaders\textured.frag">
+      <Filter>PC\Shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\res\shaders\textured.vert">
+      <Filter>PC\Shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\res\shaders\vita\basic_f.cg">
+      <Filter>VITA\Shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\res\shaders\vita\basic_v.cg">
+      <Filter>VITA\Shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\res\shaders\vita\clear_f.cg">
+      <Filter>VITA\Shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\res\shaders\vita\clear_v.cg">
+      <Filter>VITA\Shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="../res/shaders/ps3/fs_basic.cg">
+      <Filter>PS3\Shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="../res/shaders/ps3/vs_basic.cg">
+      <Filter>PS3\Shaders</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="PS3">
+      <UniqueIdentifier>{9e48fd58-772b-4b21-a35f-e1c49ae7e134}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PS3\Shaders">
+      <UniqueIdentifier>{f2cc3d7c-28e8-45e6-99ef-86c8f4b437ee}</UniqueIdentifier>
+      <Extensions>.cg</Extensions>
+    </Filter>
+    <Filter Include="PC">
+      <UniqueIdentifier>{c17ec6b3-1a91-4707-adb6-5f144367abcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PC\Shaders">
+      <UniqueIdentifier>{ef3d8716-823f-45f5-96d5-f308a8f27eab}</UniqueIdentifier>
+      <Extensions>.cg;.frag;.vert</Extensions>
+    </Filter>
+    <Filter Include="VITA">
+      <UniqueIdentifier>{6f794ee4-8d57-491a-99c8-b6bf53851f4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VITA\Shaders">
+      <UniqueIdentifier>{ab9fdbe8-dcd1-451e-9808-fde622b4b013}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
