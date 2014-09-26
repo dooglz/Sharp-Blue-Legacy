@@ -64,7 +64,7 @@ public:
 	#define vector2 glm::vec2
 	#define Quaternion glm::quat
 	#define Normalize glm::normalize
-	#define Dot glm::dot;
+	#define Dot glm::dot
 	#ifndef M_PI
 		#define M_PI 3.14159265358979323846
 	#endif

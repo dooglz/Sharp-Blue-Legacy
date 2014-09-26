@@ -148,17 +148,21 @@ namespace M4{
 
 	vector3 Transform(const matrix4& mat, const vector3& p)
 	{
+		glm::vec4 v4(p, 0);
+		glm::vec4 t = mat * v4;
+		return vector3(t.x, t.y, t.z);
+		/*
 		vector3 v1 = vector3(
 			mat[0] * p.x + mat[4] * p.y + mat[8] * p.z,
 			mat[1] * p.x + mat[5] * p.y + mat[9] * p.z,
 			mat[2] * p.x + mat[6] * p.y + mat[10] * p.z
 			);
 		vector3 v2 = vector3(1.0f*mat[12], 1.0f*mat[13], 1.0f* mat[14]);
-		return v1 + v2;
+		return v1 + v2;*/
 	}
 	vector3 GetTranslation(const matrix4& mat)
 	{
-		return vector3(mat[12], mat[13], mat[14]);
+		return vector3(mat[12][0], mat[13][0], mat[14][0]);
 	}
 
 }
