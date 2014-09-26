@@ -145,7 +145,64 @@ namespace M4{
 	matrix4 identity(){
 		return glm::mat4(1.0f);
 	}
+
+	vector3 Transform(const matrix4& mat, const vector3& p)
+	{
+		vector3 v1 = vector3(
+			mat[0] * p.x + mat[4] * p.y + mat[8] * p.z,
+			mat[1] * p.x + mat[5] * p.y + mat[9] * p.z,
+			mat[2] * p.x + mat[6] * p.y + mat[10] * p.z
+			);
+		vector3 v2 = vector3(1.0f*mat[12], 1.0f*mat[13], 1.0f* mat[14]);
+		return v1 + v2;
+	}
+	vector3 GetTranslation(const matrix4& mat)
+	{
+		return vector3(mat[12], mat[13], mat[14]);
+	}
+
 }
+
+namespace QU{
+	Quaternion FromAxisAngle(const vector3& v, float angle)
+	{
+		angle *= 0.5f;
+		float sinAngle = sin(angle);
+
+		vector3 normVector = Normalize(v);
+		return Quaternion(normVector.x*sinAngle,
+			normVector.y*sinAngle,
+			normVector.z*sinAngle,
+			cos(angle));
+	}
+	float ToAxisAngle(const Quaternion& q, vector3& v)
+	{
+		// The quaternion representing the rotation is
+		//   q = cos(A/2)+sin(A/2)*(x*i+y*j+z*k)
+
+		float sqrLength = q.x*q.x + q.y*q.y + q.z*q.z;
+		if (sqrLength > 0.0f)
+		{
+			float invLength = 1.0f / sqrt(sqrLength);
+
+			v.x = q.x*invLength;
+			v.y = q.y*invLength;
+			v.z = q.z*invLength;
+
+			return 2.f*acos(q.w);
+		}
+		else
+		{
+			// angle is 0 (mod 2*pi), so any axis will do.
+			v.x = 1.0f;
+			v.y = 0.0f;
+			v.z = 0.0f;
+
+			return 0.f;
+		}
+	}
+}
+
 
 namespace M3{
 	vector3 cross(const vector3 a, const vector3 b){

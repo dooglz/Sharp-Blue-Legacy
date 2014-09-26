@@ -53,6 +53,7 @@ public:
 	#define GLM_FORCE_RADIANS
 	#include <cmath>
 	#include "glm\glm.hpp"
+	#include "glm/gtc/quaternion.hpp"
 	//#define uint32_t unsigned int
 	//#define uint16_t unsigned int
 	//TODO implement generic methods to change values in vectors
@@ -61,6 +62,9 @@ public:
 	#define vector4 glm::vec4
 	#define vector3 glm::vec3
 	#define vector2 glm::vec2
+	#define Quaternion glm::quat
+	#define Normalize glm::normalize
+	#define Dot glm::dot;
 	#ifndef M_PI
 		#define M_PI 3.14159265358979323846
 	#endif
@@ -87,6 +91,9 @@ namespace M4{
 	matrix4 lookat(const vector3 eyePos, const vector3 targetPos, const vector3 UpVector);
 	matrix4 perspective(const float FoV, const float ratio,const float nearClip, const float farClip );
 	matrix4 identity();
+
+	vector3 Transform(const matrix4& mat, const vector3& p);
+	vector3 GetTranslation(const matrix4& mat);
 };
 
 namespace SPACIAL{
@@ -101,6 +108,11 @@ namespace M3{
 
 namespace M2{
 	float dot(const vector2 a, const vector2 b);
+}
+
+namespace QU{
+	Quaternion FromAxisAngle(const vector3& v, float angle);
+	float ToAxisAngle(const Quaternion& q, vector3& v);
 }
 
 
