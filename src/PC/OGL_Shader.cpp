@@ -99,6 +99,6 @@ namespace Engine{
 		void OGL_Shader::SetParameter(std::string name, float * data){};
 
 		//! Transposes a matrix into a 2d float[] and stores into a named paramter value 
-		void OGL_Shader::SetParameterM(std::string name, matrix4 & totranpose){};
+		void OGL_Shader::SetParameterM(std::string name, Matrix4 & totranpose){};
 	}
 }

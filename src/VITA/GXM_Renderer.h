@@ -159,7 +159,7 @@ namespace Engine{
 			uint32_t depth_pitch;
 			uint32_t depthSize;
 
-			void renderMesh(stMesh* msh, matrix4 mvp);
+			void renderMesh(stMesh* msh, Matrix4 mvp);
 
 			GXM_Vertex_Shader* blankVertShader;
 			GXM_Fragment_Shader* blankFragShader;

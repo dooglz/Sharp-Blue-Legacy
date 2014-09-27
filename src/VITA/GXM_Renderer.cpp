@@ -476,7 +476,7 @@ namespace Engine{
 
 		}
 
-		void GXM_Renderer::renderMesh(stMesh* msh, matrix4 mvp)
+		void GXM_Renderer::renderMesh(stMesh* msh, Matrix4 mvp)
 		{
 
 		}

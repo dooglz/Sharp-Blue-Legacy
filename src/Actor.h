@@ -10,10 +10,10 @@ namespace Engine{
 		public:
 
 			stMesh* Mesh;
-			vector3 position;
-			vector3 rotation;
-			vector3 scale;
-			matrix4 getModelProjection();
+			Vector3 position;
+			Vector3 rotation;
+			Vector3 scale;
+			Matrix4 getModelProjection();
 		//	void render();
 			bool isVisible();
 			void setVisibility(const bool vis);

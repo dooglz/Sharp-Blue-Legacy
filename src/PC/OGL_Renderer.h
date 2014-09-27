@@ -72,9 +72,9 @@ namespace Engine{
 			unsigned int depth_pitch;
 			unsigned int depthSize;
 
-			void renderMesh(stMesh* msh, matrix4 mvp);
+			void renderMesh(stMesh* msh, Matrix4 mvp);
 
-			void renderPoly(float a1, float a2, float a3, matrix4 mvp);
+			void renderPoly(float a1, float a2, float a3, Matrix4 mvp);
 
 			static OGL_ShaderProgram * getTextureProgram(){ return textureProgram; }
 			static OGL_ShaderProgram * getDefaultProgram(){ return defaultProgram; }

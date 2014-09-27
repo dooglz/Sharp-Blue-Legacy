@@ -83,7 +83,7 @@ namespace Engine{
 
 		void OGL_Renderer::clearSurface()
 		{
-			glClearColor(0.25f, 0.25f, 0.25f, 1.f);
+			glClearColor(0.5f, 0.5f, 0.5f, 1.f);
 			checkerr();
 
 			//SDL_Delay( 16 );
@@ -176,7 +176,7 @@ namespace Engine{
 			m->program = defaultProgram;
 		};
 
-		void OGL_Renderer::renderMesh(stMesh* msh, matrix4 mvp)
+		void OGL_Renderer::renderMesh(stMesh* msh, Matrix4 mvp)
 		{
 			glUseProgram(msh->program->getID());
 			OGL_Renderer::checkerr();
@@ -224,7 +224,7 @@ namespace Engine{
 			OGL_Renderer::checkerr();
 		};
 
-		void OGL_Renderer::renderPoly(float a1, float a2, float a3, matrix4 mvp)
+		void OGL_Renderer::renderPoly(float a1, float a2, float a3, Matrix4 mvp)
 		{
 			//OGL_Meshloader::loadOnGPU(stMesh* msh)
 		};

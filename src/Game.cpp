@@ -18,14 +18,14 @@
 	#include <sys/paths.h>
 #endif
 
-matrix4 ViewProjection;
-matrix4 projMatrix;
-matrix4 ModelProjection1;
-matrix4 ModelProjection2;
+Matrix4 ViewProjection;
+Matrix4 projMatrix;
+Matrix4 ModelProjection1;
+Matrix4 ModelProjection2;
 stMesh* bmesh;
 Engine::Actor torusActor;
 stMesh torus;
-vector3 cameraPos; 
+Vector3 cameraPos; 
 float horizontalAngle;
 float verticalAngle;
 
@@ -101,19 +101,19 @@ void Game::init()
 	registerInputs();
 
 	horizontalAngle = 1.5f;
-	cameraPos = vector3(-30, 0, 0);
+	cameraPos = Vector3(-30, 0, 0);
 	verticalAngle = 0.0f;
 
-	torusActor.scale = vector3(2.0f, 2.0f, 2.0f);
-	torusActor.rotation = vector3(0.0f, 0.0f, 0.0f);
-	torusActor.position = vector3(0.0f, 0.0f, 0.0f);
+	torusActor.scale = Vector3(2.0f, 2.0f, 2.0f);
+	torusActor.rotation = Vector3(0.0f, 0.0f, 0.0f);
+	torusActor.position = Vector3(0.0f, 0.0f, 0.0f);
 }
 float a;
 float x, y, z;
 void Game::update(float delta)
 {
 	a += delta;
-	torusActor.rotation = vector3(0, a*0.1f, 0);
+	torusActor.rotation = Vector3(0, a*0.1f, 0);
 	if (Engine::Input::getMapData("action1") > 128){
 		printf("action pressed\n");
 	}
@@ -131,21 +131,21 @@ void Game::update(float delta)
 	}
 
 	// Direction : Spherical coordinates to Cartesian coordinates conversion
-	vector3 direction = vector3(
+	Vector3 direction = Vector3(
 		cos(verticalAngle) * sin(horizontalAngle),
 		sin(verticalAngle),
 		cos(verticalAngle) * cos(horizontalAngle)
 		);
 
 	// Right vector
-	vector3 right = vector3(
+	Vector3 right = Vector3(
 		sin(horizontalAngle - 3.14f / 2.0f),
 		0,
 		cos(horizontalAngle - 3.14f / 2.0f)
 		);
 
 	// Up vector
-	vector3 up = M3::cross(right, direction);
+	Vector3 up = M3::cross(right, direction);
 
 	if (Engine::Input::getMapData("W") > 128){
 		cameraPos += (delta / 10.0f)*direction;
@@ -160,15 +160,15 @@ void Game::update(float delta)
 		cameraPos += (delta / 10.0f)* right;
 	}
 
-	matrix4 viewMatrix = M4::lookat(cameraPos, cameraPos + direction, up);
+	Matrix4 viewMatrix = M4::lookat(cameraPos, cameraPos + direction, up);
 	ViewProjection = (projMatrix * viewMatrix);
 
-	matrix4 rot = M4::rotation(a*0.025f , vector3(0,1,0));
-	matrix4 rot2 = M4::rotation(a*-0.01f , vector3(0,1,0));
-	matrix4 scl = M4::scale(vector3(2.0f, 2.0f, 2.0f));
+	Matrix4 rot = M4::rotation(a*0.025f , Vector3(0,1,0));
+	Matrix4 rot2 = M4::rotation(a*-0.01f , Vector3(0,1,0));
+	Matrix4 scl = M4::scale(Vector3(2.0f, 2.0f, 2.0f));
 	//glm rotation uses degrees
-	ModelProjection1 = ViewProjection * M4::translation(vector3(0, 0, 0))* scl * rot2;
-	ModelProjection2 = ViewProjection * M4::translation(vector3(0, 0, 0))* scl * rot;
+	ModelProjection1 = ViewProjection * M4::translation(Vector3(0, 0, 0))* scl * rot2;
+	ModelProjection2 = ViewProjection * M4::translation(Vector3(0, 0, 0))* scl * rot;
 }
 
 bool flp;

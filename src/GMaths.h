@@ -2,20 +2,20 @@
 #include "Utilities.h"
 
 #if defined(_vita_) || defined(_PS3_)
-class vector2{
+class Vector2{
 public:
-	vector2 operator* (float f){ return vector2(x*f, y*f); }
-	vector2 operator+= (vector2 f){ x += f.x; y += f.y; return vector2(x, y); }
-	vector2 operator-= (vector2 f){ x -= f.x; y -= f.y; return vector2(x, y); }
-	vector2 operator+ (vector2 f){ return vector2(x + f.x, y + f.y); }
-	vector2 operator- (vector2 f){ return vector2(x - f.x, y - f.y); }
+	Vector2 operator* (float f){ return Vector2(x*f, y*f); }
+	Vector2 operator+= (Vector2 f){ x += f.x; y += f.y; return Vector2(x, y); }
+	Vector2 operator-= (Vector2 f){ x -= f.x; y -= f.y; return Vector2(x, y); }
+	Vector2 operator+ (Vector2 f){ return Vector2(x + f.x, y + f.y); }
+	Vector2 operator- (Vector2 f){ return Vector2(x - f.x, y - f.y); }
 	float x, y;
-	vector2(){
+	Vector2(){
 		x = 0;
 		y = 0;
 	};
 
-	vector2(float Xv, float Yv)
+	Vector2(float Xv, float Yv)
 	{
 		x = Xv;
 		y = Yv;
@@ -25,8 +25,8 @@ public:
 
 #if defined(_vita_)
 	#include <vectormath.h>
-	#define matrix4 sce::Vectormath::Simd::Aos::Matrix4
-	#define vector3 sce::Vectormath::Simd::Aos::Vector3
+	#define Matrix4 sce::Vectormath::Simd::Aos::Matrix4
+	#define Vector3 sce::Vectormath::Simd::Aos::Vector3
 	#define matrix3 sce::Vectormath::Simd::Aos::Matrix3
 	#define vector4 sce::Vectormath::Simd::Aos::Vector4
 	#define point3 sce::Vectormath::Simd::Aos::Point3
@@ -36,8 +36,8 @@ public:
 #elif defined(_PS3_)
 	#include <vectormath/cpp/vectormath_aos.h>
 	//using namespace Vectormath::Aos;
-	#define matrix4 Vectormath::Aos::Matrix4
-	#define vector3 Vectormath::Aos::Vector3
+	#define Matrix4 Vectormath::Aos::Matrix4
+	#define Vector3 Vectormath::Aos::Vector3
 	#define matrix3 Vectormath::Aos::Matrix3
 	#define vector4 Vectormath::Aos::Vector4
 	#define point3 Vectormath::Aos::Point3
@@ -48,20 +48,18 @@ public:
 		#define FLT_MAX 10^37
 	#endif
 
-#elif defined(_XBOX360_) || defined(_WINDOWS_)
+#elif defined(_XBOX360_) || defined(_PC_)
 	#define _USE_MATH_DEFINES
 	#define GLM_FORCE_RADIANS
 	#include <cmath>
 	#include "glm\glm.hpp"
 	#include "glm/gtc/quaternion.hpp"
-	//#define uint32_t unsigned int
-	//#define uint16_t unsigned int
 	//TODO implement generic methods to change values in vectors
-	#define matrix4 glm::mat4
-	#define matrix3 glm::mat3
-	#define vector4 glm::vec4
-	#define vector3 glm::vec3
-	#define vector2 glm::vec2
+	#define Matrix4 glm::mat4
+	#define Matrix3 glm::mat3
+	#define Vector4 glm::vec4
+	#define Vector3 glm::vec3
+	#define Vector2 glm::vec2
 	#define Quaternion glm::quat
 	#define Normalize glm::normalize
 	#define Dot glm::dot
@@ -78,41 +76,58 @@ public:
 #endif
 
 
+void EulerToAngleAxis(const Vector3 euler, Vector3 &axis, float &angle);
+void QuatToAngleAxis(const Quaternion q, Vector3 &axis, float &angle);
+void MatrixToAngleAxis(const Matrix4 m, Vector3 &axis, float &angle);
+
+Vector3 QuatToEuler(const Quaternion q);
+Vector3 AngleAxisToEuler(const Vector3 axis, const float angle);
+Vector3 MatrixToEuler(const Matrix4 m);
+
+Quaternion EulerToQuat(const Vector3 euler);
+Quaternion AngleAxisToQuat(const Vector3 axis, const float angle);
+Quaternion MatrixToQuat(const Matrix4 m);
+
+Matrix4 EulerToMatrix(const Vector3 euler);
+Matrix4 QuatToMatrix(const Quaternion q);
+Matrix4 AngleAxisToMatrix(const Vector3 axis, const float angle);
+
+
 namespace M4{
 	//
-	matrix4 rotation(const float angle, const vector3 axis);
-	matrix4 rotation(const vector3 rotation);
-	matrix4 translation(const vector3 translationVector);
-	matrix4 scale(const vector3 scaleVector);
+	Matrix4 rotation(const float angle, const Vector3 axis);
+	Matrix4 rotation(const Vector3 rotation);
+	Matrix4 translation(const Vector3 translationVector);
+	Matrix4 scale(const Vector3 scaleVector);
 	//
 	void transform();
 	void rotate();
 	//
-	matrix4 lookat(const vector3 eyePos, const vector3 targetPos, const vector3 UpVector);
-	matrix4 perspective(const float FoV, const float ratio,const float nearClip, const float farClip );
-	matrix4 identity();
+	Matrix4 lookat(const Vector3 eyePos, const Vector3 targetPos, const Vector3 UpVector);
+	Matrix4 perspective(const float FoV, const float ratio,const float nearClip, const float farClip );
+	Matrix4 identity();
 
-	vector3 Transform(const matrix4& mat, const vector3& p);
-	vector3 GetTranslation(const matrix4& mat);
+	Vector3 Transform(const Matrix4& mat, const Vector3& p);
+	Vector3 GetTranslation(const Matrix4& mat);
 };
 
 namespace SPACIAL{
-	vector2 getFrustrumBoundsAtDepth(float fov, float ratio, float distance);
-	vector2 getFrustrumBoundsAtDepth(float depth, float farX, float farY, float farZ, float nearX, float nearY);
-	bool withinFrustrum(vector3 position);
+	Vector2 getFrustrumBoundsAtDepth(float fov, float ratio, float distance);
+	Vector2 getFrustrumBoundsAtDepth(float depth, float farX, float farY, float farZ, float nearX, float nearY);
+	bool withinFrustrum(Vector3 position);
 }
 
 namespace M3{
-	vector3 cross(const vector3 a, const vector3 b);
+	Vector3 cross(const Vector3 a, const Vector3 b);
 }
 
 namespace M2{
-	float dot(const vector2 a, const vector2 b);
+	float dot(const Vector2 a, const Vector2 b);
 }
 
 namespace QU{
-	Quaternion FromAxisAngle(const vector3& v, float angle);
-	float ToAxisAngle(const Quaternion& q, vector3& v);
+	Quaternion FromAxisAngle(const Vector3& v, float angle);
+	float ToAxisAngle(const Quaternion& q, Vector3& v);
 }
 
 

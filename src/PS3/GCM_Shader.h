@@ -36,10 +36,10 @@ namespace Engine{
 			void SetParameter(std::string name, float * data);
 
 			//! Transposes a matrix into a 2d float[] and stores into a named paramter value 
-			void SetParameterM(std::string name, matrix4 & totranpose);
+			void SetParameterM(std::string name, Matrix4 & totranpose);
 
 			//! Transposes a matrix into a 2d float[] and stores into a named paramter value 
-			void SetParameterM(CGparameter param, matrix4 & totranpose);
+			void SetParameterM(CGparameter param, Matrix4 & totranpose);
 
 			//! The shader program, residing in main memory
 			CGprogram program;

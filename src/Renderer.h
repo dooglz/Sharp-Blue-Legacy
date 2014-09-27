@@ -20,8 +20,8 @@ namespace Engine{
 		bool _swapFlag;
 
 	public:
-		matrix4 projMatrix;
-		matrix4 viewMatrix;
+		Matrix4 projMatrix;
+		Matrix4 viewMatrix;
 
 		virtual void init(){};
 
@@ -69,7 +69,7 @@ namespace Engine{
 
 		virtual ~Renderer(){};
 
-		virtual void renderMesh(stMesh* msh, matrix4 mvp){};
-		virtual void renderPoly(float a1, float a2, float a3, matrix4 mvp){};
+		virtual void renderMesh(stMesh* msh, Matrix4 mvp){};
+		virtual void renderPoly(float a1, float a2, float a3, Matrix4 mvp){};
 	};
 }

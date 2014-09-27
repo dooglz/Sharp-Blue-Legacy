@@ -80,16 +80,16 @@ namespace Engine{
 		}
 
 		// Transposes a matrix into a 2d float[] and stores into a named paramter value 
-		void GCM_Shader::SetParameterM(std::string name, matrix4 & totranpose)
+		void GCM_Shader::SetParameterM(std::string name, Matrix4 & totranpose)
 		{
-			matrix4 tempMatrix = transpose(totranpose);
+			Matrix4 tempMatrix = transpose(totranpose);
 			SetParameter(name, (float *)& tempMatrix);
 		}
 
 		// Transposes a matrix into a 2d float[] and stores into a named paramter value 
-		void GCM_Shader::SetParameterM(CGparameter param, matrix4 & totranpose)
+		void GCM_Shader::SetParameterM(CGparameter param, Matrix4 & totranpose)
 		{
-			matrix4 tempMatrix = transpose(totranpose);
+			Matrix4 tempMatrix = transpose(totranpose);
 			SetParameter(param, (float *)& tempMatrix);
 		}
 

@@ -341,7 +341,7 @@ namespace Engine{
 
 		}
 
-		void GCM_Renderer::renderMesh(stMesh* msh, matrix4 mvp)
+		void GCM_Renderer::renderMesh(stMesh* msh, Matrix4 mvp)
 		{
 			ASSERT(msh->loadedLocal);
 			//set active shader

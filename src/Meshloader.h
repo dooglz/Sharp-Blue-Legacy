@@ -13,7 +13,7 @@ namespace Engine{
 		Meshloader(){};
 		virtual stMesh* loadOBJFile(const std::string &filename) { return NULL; };
 		virtual void loadOnGPU(stMesh* msh){};
-		virtual void render(stMesh* msh, matrix4 mvp) {};
+		virtual void render(stMesh* msh, Matrix4 mvp) {};
 		virtual ~Meshloader(){};
 	};
 }
