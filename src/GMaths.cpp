@@ -162,7 +162,8 @@ namespace M4{
 	}
 	vector3 GetTranslation(const matrix4& mat)
 	{
-		return vector3(mat[12][0], mat[13][0], mat[14][0]);
+		//return vector3(mat[12][0], mat[13][0], mat[14][0]);
+		return vector3(mat[3]);
 	}
 
 }

@@ -21,6 +21,7 @@ namespace Engine{
 
 	public:
 		matrix4 projMatrix;
+		matrix4 viewMatrix;
 
 		virtual void init(){};
 

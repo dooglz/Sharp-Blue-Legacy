@@ -17,5 +17,6 @@ namespace Engine{
 		//	void render();
 			bool isVisible();
 			void setVisibility(const bool vis);
+			void Render();
 	};
 }
