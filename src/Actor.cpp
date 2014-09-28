@@ -10,10 +10,11 @@ namespace Engine{
 	{
 		//calculate Model projection
 		Matrix4 scl = M4::scale(scale);
-		Matrix4 rot = M4::rotation(rotation);
+		//Matrix4 rot = M4::rotation(rotation);
+		Matrix4 rot = EulerToMatrix(rotation);
 		Matrix4 trn = M4::translation(position);
-		return (scl * rot * trn);
-		//return (trn * rot * scl);
+		//return (scl * rot * trn);
+		return (trn * rot * scl);
 	}
 	void Actor::Render()
 	{

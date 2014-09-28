@@ -277,7 +277,7 @@ Vector3 QuatToEuler(const Quaternion q)
 Vector3 AngleAxisToEuler(const Vector3 axis, const float angle){
 	return QuatToEuler(AngleAxisToQuat(axis, angle));
 }
-
+//only translate
 Vector3 MatrixToEuler(const Matrix4 m){
 	return Vector3(m[3]);
 }
@@ -306,6 +306,7 @@ Matrix4 QuatToMatrix(const Quaternion q)
 	return glm::mat4_cast(q);
 }
 
+// Angle in Radians
 Matrix4 AngleAxisToMatrix(const Vector3 axis, const float angle)
 {
 	return glm::rotate(glm::mat4(1.0f), angle, axis);
