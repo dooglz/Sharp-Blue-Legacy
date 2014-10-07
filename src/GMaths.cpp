@@ -131,7 +131,7 @@ namespace M4{
 	}
 
 	//
-	void transform(){};
+	//void transform(){};
 	void rotate(){};
 	//
 
@@ -151,8 +151,8 @@ namespace M4{
 
 	Vector3 Transform(const Matrix4& mat, const Vector3& p)
 	{
-		glm::vec4 v4(p, 0);
-		glm::vec4 t = mat * v4;
+		glm::vec4 v4(p, 1.0f);
+		glm::vec4 t = v4 * mat;
 		return Vector3(t.x, t.y, t.z);
 		/*
 		Vector3 v1 = Vector3(
