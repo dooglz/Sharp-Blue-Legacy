@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sharp Blue", "SharpBlue.vcxproj", "{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SharpBlue", "SharpBlue.vcxproj", "{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,31 +23,24 @@ Global
 		SNC Release|Win32 = SNC Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.Debug|PS3.ActiveCfg = Debug|PS3
-		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.Debug|PS3.Build.0 = Debug|PS3
-		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.Debug|PSVita.ActiveCfg = Debug|PSVita
-		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.Debug|PSVita.Build.0 = Debug|PSVita
+		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.Debug|PS3.ActiveCfg = Debug|Win32
+		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.Debug|PSVita.ActiveCfg = Debug|Win32
 		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.Debug|Win32.ActiveCfg = Debug|Win32
 		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.Debug|Win32.Build.0 = Debug|Win32
-		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.debugLib|PS3.ActiveCfg = debugLib|PS3
-		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.debugLib|PS3.Build.0 = debugLib|PS3
-		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.debugLib|PSVita.ActiveCfg = debugLib|PSVita
-		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.debugLib|PSVita.Build.0 = debugLib|PSVita
+		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.debugLib|PS3.ActiveCfg = debugLib|Win32
+		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.debugLib|PSVita.ActiveCfg = debugLib|Win32
 		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.debugLib|Win32.ActiveCfg = debugLib|Win32
 		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.debugLib|Win32.Build.0 = debugLib|Win32
 		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.Release|PS3.ActiveCfg = Release|Win32
-		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.Release|PSVita.ActiveCfg = Release|PSVita
-		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.Release|PSVita.Build.0 = Release|PSVita
+		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.Release|PSVita.ActiveCfg = Release|Win32
 		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.Release|Win32.ActiveCfg = Release|Win32
 		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.Release|Win32.Build.0 = Release|Win32
 		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.SNC Debug|PS3.ActiveCfg = Debug|Win32
-		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.SNC Debug|PSVita.ActiveCfg = Debug|PSVita
-		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.SNC Debug|PSVita.Build.0 = Debug|PSVita
+		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.SNC Debug|PSVita.ActiveCfg = Debug|Win32
 		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.SNC Debug|Win32.ActiveCfg = Debug|Win32
 		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.SNC Debug|Win32.Build.0 = Debug|Win32
 		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.SNC Release|PS3.ActiveCfg = Release|Win32
-		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.SNC Release|PSVita.ActiveCfg = Release|PSVita
-		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.SNC Release|PSVita.Build.0 = Release|PSVita
+		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.SNC Release|PSVita.ActiveCfg = Release|Win32
 		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.SNC Release|Win32.ActiveCfg = Release|Win32
 		{E6602EDB-4106-4396-B7CA-4B13E2BE8B99}.SNC Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection

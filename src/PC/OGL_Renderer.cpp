@@ -10,6 +10,49 @@
 namespace Engine{
 	namespace OGL{
 
+		void SDLVersionInfo()
+		{
+			SDL_version compiled;
+			SDL_version linked;
+
+			SDL_VERSION(&compiled);
+			SDL_GetVersion(&linked);
+			printf("Compiled against SDL version %d.%d.%d ...\n",
+				compiled.major, compiled.minor, compiled.patch);
+			printf("linking against SDL version %d.%d.%d.\n",
+				linked.major, linked.minor, linked.patch);
+		}
+		void GlewInfo()
+		{
+			printf("----------------------------------------------------------------\n");
+			printf("Graphics Successfully Initialized\n");
+			printf("OpenGL Info\n");
+			printf("    Version: %s\n", glGetString(GL_VERSION));
+			printf("     Vendor: %s\n", glGetString(GL_VENDOR));
+			printf("   Renderer: %s\n", glGetString(GL_RENDERER));
+			printf("    Shading: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+			printf("----------------------------------------------------------------\n");
+		}
+
+
+		void CheckGL(){
+			GLenum err;
+			while ((err = glGetError()) != GL_NO_ERROR) {
+				printf("An OGL error has occured: %i\n", err);
+				//DBG_HALT;
+			}
+		}
+
+		void CheckSDL(){
+			const char* err = SDL_GetError();
+			if (strlen(err) != 0){
+				printf("SDL error: %s\n", err);
+				SDL_ClearError();
+				//DBG_HALT;
+			}
+		}
+
+
 		OGL_ShaderProgram* OGL_Renderer::textureProgram;
 		OGL_ShaderProgram * OGL_Renderer::defaultProgram;
 
@@ -32,6 +75,7 @@ namespace Engine{
 		}
 
 		void OGL_Renderer::InitDisplay(){
+			SDLVersionInfo();
 			printf("Making Display \n");
 			//Initialize SDL
 			ASSERT_FUNC((SDL_Init(SDL_INIT_VIDEO) >= 0), printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError()));
@@ -40,11 +84,12 @@ namespace Engine{
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+			//TODO: check for highest support OGL version
 
 			//Create an ogl window
 			_window = SDL_CreateWindow("SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
 			ASSERT_FUNC((_window != NULL), printf("Window could not be created! SDL_Error: %s\n", SDL_GetError()));
-
+		
 			//Create context
 			_gContext = SDL_GL_CreateContext(_window);
 			ASSERT_FUNC((_gContext != NULL), printf("OpenGL context could not be created! SDL Error: %s\n", SDL_GetError()));
@@ -57,11 +102,19 @@ namespace Engine{
 
 			ASSERT_FUNC((glewError == GLEW_OK), printf("Error initializing GLEW! %s\n", glewGetErrorString(glewError)));
 			checkerr();
+			GlewInfo();
 
 			//Use Vsync
 			ASSERT_FUNC((SDL_GL_SetSwapInterval(1) >= 0), printf("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError()));
 
 			checkerr();
+
+			int r = 0;
+			int g = 0;
+			SDL_GL_GetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, &r);
+			SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &g);
+			printf("Major:%i, Minor:%i\n");
+
 		};
 
 		void OGL_Renderer::InitSurfaces(){};
