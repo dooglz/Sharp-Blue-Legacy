@@ -6,9 +6,9 @@
 class Game {
 private:
 public:
-  void init();
-  void update(float delta);
-  void render();
+  static void init();
+  static void update(float delta);
+  static void render();
   void shutdown();
   Game(){};
 };

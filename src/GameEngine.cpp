@@ -43,6 +43,8 @@ Renderer* GameEngine::Renderer;
 Meshloader* GameEngine::Meshloader;
 EventManager* GameEngine::EventManager;
 Font* GameEngine::Font;
+void (*GameEngine::_GameUpdate)(float);
+void (*GameEngine::_GameRender)();
 
 void GameEngine::init() {
   // Seed random generator
@@ -112,4 +114,39 @@ unsigned int GameEngine::getTime() {
 #endif
   return 0;
 }
+
+void GameEngine::Loop() {
+  float delta = 0;
+  unsigned int prevtime = Engine::GameEngine::getTime();
+  unsigned int time;
+  while (run) {
+
+    time = Engine::GameEngine::getTime();
+
+    // delta should be in milliseconds
+    delta = ((float)(time - prevtime)) / (1000000.0f / 60.0f);
+    prevtime = time;
+
+    // Update engine
+    update(delta);
+
+    // Update game
+    _GameUpdate(delta);
+
+    // Render
+    render();
+    _GameRender();
+
+    // Finished Drawing
+    Postrender();
+  }
+};
+
+void GameEngine::RegisterUpdate(void (*GameUpdate)(float)) {
+  _GameUpdate = GameUpdate;
+};
+
+void GameEngine::RegisterRender(void (*GameRender)()) {
+  _GameRender = GameRender;
+};
 }

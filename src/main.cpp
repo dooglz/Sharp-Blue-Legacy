@@ -22,34 +22,13 @@ int main(int argc, char **argv) {
   Engine::GameEngine::init();
 
   Game *GameCode = new Game();
-
   GameCode->init();
-  float delta = 0;
+
+  Engine::GameEngine::RegisterUpdate(Game::update);
+  Engine::GameEngine::RegisterRender(Game::render);
 
   puts("Starting loop\n");
-
-  unsigned int prevtime = Engine::GameEngine::getTime();
-  while (Engine::GameEngine::run) {
-
-    unsigned int time = Engine::GameEngine::getTime();
-
-    // delta should be in milliseconds
-    delta = ((float)(time - prevtime)) / (1000000.0f / 60.0f);
-    prevtime = time;
-
-    // Update engine
-    Engine::GameEngine::update(delta);
-
-    // Update game
-    GameCode->update(delta);
-
-    // Render
-    Engine::GameEngine::render();
-    GameCode->render();
-
-    // Finished Drawing
-    Engine::GameEngine::Postrender();
-  }
+  Engine::GameEngine::Loop();
 
   puts("Shutting Down\n");
 

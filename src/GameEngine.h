@@ -9,7 +9,13 @@ class Font;
 class GameEngine {
 
 private:
+  static void(*_GameUpdate)(float);
+  static void(*_GameRender)();
 public:
+  static void Loop();
+  static void RegisterUpdate(void(*GameUpdate)(float));
+  static void RegisterRender(void(*GameRender)());
+
   //
   static bool run;
   static void init();
