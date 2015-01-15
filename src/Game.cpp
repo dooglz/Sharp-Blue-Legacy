@@ -118,8 +118,8 @@ void Game::init() {
 }
 float a;
 float x, y, z;
-void Game::update(float delta) {
-  a += delta;
+void Game::update(double delta) {
+  a += 0.01f;
   torusActor.rotation = Vector3(0, a * 0.1f, 0);
   if (Engine::Input::getMapData("action1") > 128) {
     printf("action pressed\n");
@@ -150,23 +150,23 @@ void Game::update(float delta) {
   Vector3 up = M3::cross(right, direction);
 
   if (Engine::Input::getMapData("W") > 128) {
-    cameraPos += (delta / 10.0f) * direction;
+    cameraPos += (float)(delta / 100.0) * direction;
   }
   if (Engine::Input::getMapData("A") > 128) {
-    cameraPos += (delta / -10.0f) * right;
+    cameraPos += (float)(delta / -100.0) * right;
   }
   if (Engine::Input::getMapData("S") > 128) {
-    cameraPos += (delta / -10.0f) * direction;
+    cameraPos += (float)(delta / -100.0) * direction;
   }
   if (Engine::Input::getMapData("D") > 128) {
-    cameraPos += (delta / 10.0f) * right;
+    cameraPos += (float)(delta / 100.0) * right;
   }
 
   Matrix4 viewMatrix = M4::lookat(cameraPos, cameraPos + direction, up);
   ViewProjection = (projMatrix * viewMatrix);
 
-  Matrix4 rot = M4::rotation(a * 0.025f, Vector3(0, 1, 0));
-  Matrix4 rot2 = M4::rotation(a * -0.01f, Vector3(0, 1, 0));
+  Matrix4 rot = M4::rotation(a * 0.1f* delta, Vector3(0, 1, 0));
+  Matrix4 rot2 = M4::rotation(a * -1.0f * delta , Vector3(0, 1, 0));
   Matrix4 scl = M4::scale(Vector3(2.0f, 2.0f, 2.0f));
   // glm rotation uses degrees
   ModelProjection1 =

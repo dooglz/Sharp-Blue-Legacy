@@ -7,7 +7,7 @@ class Game {
 private:
 public:
   static void init();
-  static void update(float delta);
+  static void update(double delta);
   static void render();
   void shutdown();
   Game(){};

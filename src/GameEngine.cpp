@@ -43,7 +43,7 @@ Renderer* GameEngine::Renderer;
 Meshloader* GameEngine::Meshloader;
 EventManager* GameEngine::EventManager;
 Font* GameEngine::Font;
-void (*GameEngine::_GameUpdate)(float);
+void (*GameEngine::_GameUpdate)(double);
 void (*GameEngine::_GameRender)();
 
 void GameEngine::init() {
@@ -76,7 +76,7 @@ void GameEngine::init() {
   GameEngine::run = true;
 }
 
-void GameEngine::update(const float delta) { EventManager->processEvents(); }
+void GameEngine::update(const double delta) { EventManager->processEvents(); }
 
 void GameEngine::render() {
   // Prep for render
@@ -104,34 +104,35 @@ void GameEngine::shutdown() {
   GameEngine::Renderer = NULL;
 }
 
-unsigned int GameEngine::getTime() {
+double GameEngine::getTime() {
 #if defined(_PS3_)
   // microseconds
-  return ((unsigned int)(sys_time_get_system_time()));
+  return (((double)(sys_time_get_system_time())) * 0.000001);
 #elif defined(_WINDOWS_)
-  // milliseconds * 10000
-  return ((unsigned int)(1000 * SDL_GetTicks()));
+  return ((double)(SDL_GetPerformanceCounter()) /
+          ((double)SDL_GetPerformanceFrequency()));
 #endif
   return 0;
 }
 
 void GameEngine::Loop() {
-  float delta = 0;
-  unsigned int prevtime = Engine::GameEngine::getTime();
-  unsigned int time;
+  double delta = 0;
+  double currentTime = Engine::GameEngine::getTime();
+  // 60fps in Microseconds.
+  double tartgettime = 1.0 / 60.0;
+
   while (run) {
+    double newTime = Engine::GameEngine::getTime();
+    delta = newTime - currentTime;
 
-    time = Engine::GameEngine::getTime();
-
-    // delta should be in milliseconds
-    delta = ((float)(time - prevtime)) / (1000000.0f / 60.0f);
-    prevtime = time;
+    // delta / 60fps
+    double deltaPercent = (double)delta / (double)tartgettime;
 
     // Update engine
-    update(delta);
+    update(deltaPercent);
 
     // Update game
-    _GameUpdate(delta);
+    _GameUpdate(deltaPercent);
 
     // Render
     render();
@@ -142,7 +143,7 @@ void GameEngine::Loop() {
   }
 };
 
-void GameEngine::RegisterUpdate(void (*GameUpdate)(float)) {
+void GameEngine::RegisterUpdate(void (*GameUpdate)(double)) {
   _GameUpdate = GameUpdate;
 };
 
