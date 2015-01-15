@@ -11,7 +11,7 @@ void SDLEventManager::processEvents() {
   while (SDL_PollEvent(&e) != 0) {
     switch (e.type) {
       case SDL_QUIT: {
-        GameEngine::run = false;
+        GameEngine::StopLoop();
         break;
       }
 
@@ -24,7 +24,7 @@ void SDLEventManager::processEvents() {
             break;
           }
           case SDLK_ESCAPE: {
-            GameEngine::run = false;
+            GameEngine::StopLoop();
             break;
           }
 

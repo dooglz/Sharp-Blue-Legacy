@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
 
   Game *GameCode = new Game();
   GameCode->init();
-
+  
   Engine::GameEngine::RegisterUpdate(Game::update);
   Engine::GameEngine::RegisterRender(Game::render);
 

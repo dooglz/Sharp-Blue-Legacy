@@ -149,4 +149,6 @@ void GameEngine::RegisterUpdate(void (*GameUpdate)(float)) {
 void GameEngine::RegisterRender(void (*GameRender)()) {
   _GameRender = GameRender;
 };
+
+void GameEngine::StopLoop() { run = false; }
 }

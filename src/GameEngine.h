@@ -9,20 +9,21 @@ class Font;
 class GameEngine {
 
 private:
-  static void(*_GameUpdate)(float);
-  static void(*_GameRender)();
-public:
-  static void Loop();
-  static void RegisterUpdate(void(*GameUpdate)(float));
-  static void RegisterRender(void(*GameRender)());
-
-  //
+  static void (*_GameUpdate)(float);
+  static void (*_GameRender)();
   static bool run;
-  static void init();
+
   static void update(const float delta);
   static void render();
   static void Postrender();
+
+public:
   static void shutdown();
+  static void init();
+  static void Loop();
+  static void StopLoop();
+  static void RegisterUpdate(void (*GameUpdate)(float));
+  static void RegisterRender(void (*GameRender)());
   //
   static unsigned int getTime();
   //
