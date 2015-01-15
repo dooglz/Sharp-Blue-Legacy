@@ -1,10 +1,10 @@
 /*
-	ENGINE MAIN
-	This is an example main, used for debugging the engine, 
-	games using the library will have their own main file.
+        ENGINE MAIN
+        This is an example main, used for debugging the engine,
+        games using the library will have their own main file.
 
-	Sam Serrels
-	sam@samserrels.com
+        Sam Serrels
+        sam@samserrels.com
 */
 #include <stdio.h>
 #include "Utilities.h" // asserts and commmon defines
@@ -13,55 +13,52 @@
 
 // ******************************************************************************
 //
-// Program Entry Point: main 
+// Program Entry Point: main
 //
-int main(int argc, char** argv)
-{
+int main(int argc, char **argv) {
 
-	puts("Program Entry Point: Main\n");
+  puts("Program Entry Point: Main\n");
 
-	Engine::GameEngine::init();
+  Engine::GameEngine::init();
 
-	Game * GameCode = new Game(); 
+  Game *GameCode = new Game();
 
-	GameCode->init();
-	float delta = 0;
+  GameCode->init();
+  float delta = 0;
 
-	puts("Starting loop\n");
+  puts("Starting loop\n");
 
-	unsigned int prevtime = Engine::GameEngine::getTime();
-	while (Engine::GameEngine::run)
-	{	
-		
-		unsigned int time = Engine::GameEngine::getTime();
+  unsigned int prevtime = Engine::GameEngine::getTime();
+  while (Engine::GameEngine::run) {
 
-		//delta should be in milliseconds
-		delta = ((float)(time - prevtime)) / (1000000.0f / 60.0f);
-		prevtime = time;
+    unsigned int time = Engine::GameEngine::getTime();
 
-		//Update engine 
-		Engine::GameEngine::update(delta);
+    // delta should be in milliseconds
+    delta = ((float)(time - prevtime)) / (1000000.0f / 60.0f);
+    prevtime = time;
 
-		//Update game
-		GameCode->update(delta);
-		
-		//Render
-		Engine::GameEngine::render();
-		GameCode->render();
+    // Update engine
+    Engine::GameEngine::update(delta);
 
-		// Finished Drawing
-		Engine::GameEngine::Postrender();
-	}
+    // Update game
+    GameCode->update(delta);
 
-	puts("Shutting Down\n");
+    // Render
+    Engine::GameEngine::render();
+    GameCode->render();
 
-	GameCode->shutdown();
-	Engine::GameEngine::shutdown();
+    // Finished Drawing
+    Engine::GameEngine::Postrender();
+  }
 
-	delete GameCode;
-	GameCode = NULL;
+  puts("Shutting Down\n");
 
-	puts("Quitting\n");
-	return 0;
+  GameCode->shutdown();
+  Engine::GameEngine::shutdown();
 
+  delete GameCode;
+  GameCode = NULL;
+
+  puts("Quitting\n");
+  return 0;
 }

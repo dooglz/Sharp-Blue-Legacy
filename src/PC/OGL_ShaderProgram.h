@@ -2,28 +2,26 @@
 #include "OGL_FragmentShader.h"
 #include "OGL_VertexShader.h"
 
-namespace Engine{
-	namespace OGL{
-		class OGL_ShaderProgram{
+namespace Engine {
+namespace OGL {
+class OGL_ShaderProgram {
 
-		public:
-			OGL_ShaderProgram();
+public:
+  OGL_ShaderProgram();
 
-			OGL_VertexShader VS;
-			OGL_FragmentShader FS;
+  OGL_VertexShader VS;
+  OGL_FragmentShader FS;
 
-			std::string name;
+  std::string name;
 
-			void link();
+  void link();
 
-			void attachShader(OGL_Shader* shader);
+  void attachShader(OGL_Shader* shader);
 
-			unsigned int getID();
+  unsigned int getID();
 
-
-		protected:
-			unsigned int _ID;
-
-		};
-	}
+protected:
+  unsigned int _ID;
+};
+}
 }

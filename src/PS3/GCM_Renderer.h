@@ -1,79 +1,78 @@
 #pragma once
 #define COMMAND_SIZE (65536) // 64 KB
-#define BUFFER_SIZE (1024*1024) //1MB
+#define BUFFER_SIZE (1024 * 1024) // 1MB
 
-#include "Utilities.h"		// asserts and commmon defines
-#include "Renderer.h"		// asserts and commmon defines
+#include "Utilities.h" // asserts and commmon defines
+#include "Renderer.h"  // asserts and commmon defines
 #include "GCM_FragmentShader.h"
 #include "GCM_VertexShader.h"
-#include <cell/gcm.h>	//for CGprogram
-namespace Engine{
-	namespace GCM{
-		class GCM_Renderer : public Renderer{
+#include <cell/gcm.h> //for CGprogram
+namespace Engine {
+namespace GCM {
+class GCM_Renderer : public Renderer {
 
-		private:
+private:
+  //! A reference to the current Fragment shader in use
+  static GCM_FragmentShader* _currentFrag;
 
-			//! A reference to the current Fragment shader in use
-			static GCM_FragmentShader * _currentFrag;
+  //! A reference to the current Vertex shader in use
+  static GCM_VertexShader* _currentVert;
 
-			//! A reference to the current Vertex shader in use
-			static GCM_VertexShader * _currentVert;
+  //! A reference to the default Fragment shader
+  static GCM_FragmentShader* defaultFrag;
 
-			//! A reference to the default Fragment shader
-			static GCM_FragmentShader * defaultFrag;
+  //! A reference to the default Vertex shader
+  static GCM_VertexShader* defaultVert;
 
-			//! A reference to the default Vertex shader
-			static GCM_VertexShader * defaultVert;
+public:
+  //! The array of render surfaces.
+  static CellGcmSurface _surfaces[_numberOfSurfaces];
 
-		public:
-			//! The array of render surfaces.
-			static CellGcmSurface _surfaces[_numberOfSurfaces];
+  void init();
 
+  static void sysutil_callback(uint64_t status, uint64_t param, void* userdata);
 
-			void init();
+  void assignShader(stMesh* m, std::string name);
 
-			static void sysutil_callback(uint64_t status, uint64_t param, void *userdata);
+  //! Constructor, calls InitDisplay() and InitSurfaces()
+  GCM_Renderer(void);
 
-			void assignShader(stMesh* m, std::string name);
+  ~GCM_Renderer(){};
 
-			//! Constructor, calls InitDisplay() and InitSurfaces()
-			GCM_Renderer(void);
+  //! Output screen ratio, width/height
+  float screenRatio;
 
-			~GCM_Renderer(){};
+  //! Detect and set resolution
+  void InitDisplay();
 
-			//! Output screen ratio, width/height
-			float screenRatio;
+  //! Create Buffers/surfaces in memory
+  void InitSurfaces();
 
-			//! Detect and set resolution
-			void InitDisplay();
+  void loadDefaultShaders();
 
-			//! Create Buffers/surfaces in memory
-			void InitSurfaces();
+  void setupFrame();
 
-			void loadDefaultShaders();
+  void clearSurface();
 
-			void setupFrame();
+  //! Switch which buffer is active(being rendered on) and currentyl displayed
+  void swapBuffers();
 
-			void clearSurface();
+  //! Set the active vertex and fragment shader
+  static void SetCurrentShader(GCM_VertexShader& vert,
+                               GCM_FragmentShader& frag);
 
-			//! Switch which buffer is active(being rendered on) and currentyl displayed
-			void swapBuffers();
+  //! Initialises viewport (coordinate scaling)
+  void SetViewport();
 
-			//! Set the active vertex and fragment shader
-			static void SetCurrentShader(GCM_VertexShader & vert, GCM_FragmentShader & frag);
+  void shutdown(){};
 
-			//! Initialises viewport (coordinate scaling)
-			void SetViewport();
+  // TODO: put these in a struct or something
+  uint32_t color_pitch;
+  uint32_t color_size;
+  uint32_t depth_pitch;
+  uint32_t depthSize;
 
-			void shutdown(){};
-
-			//TODO: put these in a struct or something
-			uint32_t color_pitch;
-			uint32_t color_size;
-			uint32_t depth_pitch;
-			uint32_t depthSize;
-
-			void renderMesh(stMesh* msh, Matrix4 mvp);
-		};
-	}
+  void renderMesh(stMesh* msh, Matrix4 mvp);
+};
+}
 }
