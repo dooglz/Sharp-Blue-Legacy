@@ -74,6 +74,10 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Maths.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Cm_Camera.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
@@ -176,6 +180,10 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Maths.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="Cm_Camera.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\res\shaders\basic.frag">
@@ -229,6 +237,9 @@
     </Filter>
     <Filter Include="VITA\Shaders">
       <UniqueIdentifier>{ab9fdbe8-dcd1-451e-9808-fde622b4b013}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{7c548c04-289f-4826-ab4d-e9fc4aa35a03}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
