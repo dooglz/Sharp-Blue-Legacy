@@ -1,7 +1,6 @@
 #pragma once
 
 namespace Engine {
-class Renderer;
 class Meshloader;
 class EventManager;
 class Font;
@@ -13,21 +12,22 @@ private:
   static void (*_GameRender)();
   static bool run;
 
-  static void update(const double delta);
-  static void render();
+  static void Update(const double delta);
+  static void Render();
   static void Postrender();
 
 public:
-  static void shutdown();
-  static void init();
+  static void Shutdown();
+  static void Init();
   static void Loop();
   static void StopLoop();
   static void RegisterUpdate(void(*GameUpdate)(double));
   static void RegisterRender(void (*GameRender)());
+  static void CreateWindow(unsigned int x, unsigned int y);
   //
-  static double getTime();
+  static double GetTime();
   //
-  static Renderer* Renderer;
+
   static Meshloader* Meshloader;
   static EventManager* EventManager;
   static Font* Font;

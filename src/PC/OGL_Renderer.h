@@ -9,7 +9,7 @@
 
 namespace Engine {
 namespace OGL {
-class OGL_Renderer : public Renderer {
+class OGL_Renderer : public CRenderer {
 
 private:
   //! A reference to the current Fragment shader in use
@@ -34,11 +34,11 @@ private:
   SDL_Window* _window;
 
 public:
-  void init();
+  void Init();
 
-  static void checkerr();
+  static void Checkerr();
 
-  void assignShader(stMesh* m, std::string name);
+  void AssignShader(stMesh* m, std::string name);
 
   //! Constructor, calls InitDisplay() and InitSurfaces()
   OGL_Renderer();
@@ -49,14 +49,14 @@ public:
   //! Create Buffers/surfaces in memory
   void InitSurfaces();
 
-  void setupFrame();
+  void SetupFrame();
 
-  void clearSurface();
+  void ClearSurface();
 
-  void loadDefaultShaders();
+  void LoadDefaultShaders();
 
   //! Switch which buffer is active(being rendered on) and currentyl displayed
-  void swapBuffers();
+  void SwapBuffers();
 
   //! Set the active vertex and fragment shader
   void SetCurrentShader(OGL_VertexShader& vert, OGL_FragmentShader& frag);
@@ -64,7 +64,7 @@ public:
   //! Initialises viewport (coordinate scaling)
   void SetViewport();
 
-  void shutdown();
+  void Shutdown();
 
   // TODO: put these in a struct or something
   unsigned int color_pitch;
@@ -72,12 +72,12 @@ public:
   unsigned int depth_pitch;
   unsigned int depthSize;
 
-  void renderMesh(stMesh* msh, Matrix4 mvp);
+  void RenderMesh(stMesh* msh, Matrix4 mvp);
 
-  void renderPoly(float a1, float a2, float a3, Matrix4 mvp);
+  void RenderPoly(float a1, float a2, float a3, Matrix4 mvp);
 
-  static OGL_ShaderProgram* getTextureProgram() { return textureProgram; }
-  static OGL_ShaderProgram* getDefaultProgram() { return defaultProgram; }
+  static OGL_ShaderProgram* GetTextureProgram() { return textureProgram; }
+  static OGL_ShaderProgram* GetDefaultProgram() { return defaultProgram; }
 };
 }
 }

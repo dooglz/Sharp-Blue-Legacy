@@ -253,7 +253,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
-    <ClCompile Include="Base_Platform.cpp" />
     <ClCompile Include="Cm_Camera.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -264,7 +263,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='debugLib|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Maths.cpp" />
+    <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="PC/SDL_Platform.cpp" />
     <ClCompile Include="VITA/GXM_Fragment_Shader.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|PS3'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='debugLib|PS3'">true</ExcludedFromBuild>
@@ -451,7 +452,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
-    <ClInclude Include="Base_Platform.h" />
+    <ClInclude Include="Platform.h" />
     <ClInclude Include="Cm_Camera.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Entity.h" />
@@ -613,7 +614,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|PSVita'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="PC/OGL_Platform.h">
+    <ClInclude Include="PC\SDL_Platform.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|PS3'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='debugLib|PS3'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>

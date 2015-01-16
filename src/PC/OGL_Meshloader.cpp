@@ -147,24 +147,24 @@ bool OGL_Meshloader::loadOBJ(const char* path,
 void OGL_Meshloader::loadOnGPU(stMesh* msh) {
   // Generate VAO
   glGenVertexArrays(1, &msh->gVAO);
-  OGL_Renderer::checkerr();
+  OGL_Renderer::Checkerr();
 
   // Bind VAO
   glBindVertexArray(msh->gVAO);
-  OGL_Renderer::checkerr();
+  OGL_Renderer::Checkerr();
 
   // Generate VBO
   glGenBuffers(1, &(msh->gVBO));
-  OGL_Renderer::checkerr();
+  OGL_Renderer::Checkerr();
 
   // Bind VBO
   glBindBuffer(GL_ARRAY_BUFFER, (msh->gVBO));
-  OGL_Renderer::checkerr();
+  OGL_Renderer::Checkerr();
 
   // put the data in it
   glBufferData(GL_ARRAY_BUFFER, msh->vertexData.size() * sizeof(stVertex),
                &msh->vertexData[0], GL_STATIC_DRAW);
-  OGL_Renderer::checkerr();
+  OGL_Renderer::Checkerr();
 
   /* stVertex layout:
                   [x,y,z,color]
@@ -181,7 +181,7 @@ void OGL_Meshloader::loadOnGPU(stMesh* msh) {
                         sizeof(stVertex), // stride
                         NULL // pointer/offset
                         );
-  OGL_Renderer::checkerr();
+  OGL_Renderer::Checkerr();
 
   // color data
   glEnableVertexAttribArray(1);
@@ -192,15 +192,15 @@ void OGL_Meshloader::loadOnGPU(stMesh* msh) {
                         sizeof(stVertex), // stride
                         (void*)(sizeof(float) * 3) // pointer/offset
                         );
-  OGL_Renderer::checkerr();
+  OGL_Renderer::Checkerr();
 
   // Unblind VAO
   glEnableVertexAttribArray(NULL);
-  OGL_Renderer::checkerr();
+  OGL_Renderer::Checkerr();
 
   // Unblind VBO
   glBindVertexArray(NULL);
-  OGL_Renderer::checkerr();
+  OGL_Renderer::Checkerr();
 
   msh->loadedLocal = true;
 }

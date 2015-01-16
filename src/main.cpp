@@ -19,8 +19,9 @@ int main(int argc, char **argv) {
 
   puts("Program Entry Point: Main\n");
 
-  Engine::GameEngine::init();
+  Engine::GameEngine::Init();
 
+  Engine::GameEngine::CreateWindow(1280,720);
   Game *GameCode = new Game();
   GameCode->init();
   
@@ -33,7 +34,7 @@ int main(int argc, char **argv) {
   puts("Shutting Down\n");
 
   GameCode->shutdown();
-  Engine::GameEngine::shutdown();
+  Engine::GameEngine::Shutdown();
 
   delete GameCode;
   GameCode = NULL;

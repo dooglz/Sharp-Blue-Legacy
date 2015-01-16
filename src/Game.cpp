@@ -91,14 +91,14 @@ void Game::init() {
   torus.loadedMain = true;
   torus.numVerts = torus.vertexData.size();
   torus.strip = true;
-  Engine::GameEngine::Renderer->assignShader(&torus, "");
+  Engine::Renderer->assignShader(&torus, "");
   Engine::GameEngine::Meshloader->loadOnGPU(&torus);
 
   // load a model from a .obj file
   std::string name = "models/beacon.obj";
   name = FILE_PATH + name;
   bmesh = Engine::GameEngine::Meshloader->loadOBJFile(name);
-  Engine::GameEngine::Renderer->assignShader(bmesh, "");
+  Engine::Renderer->assignShader(bmesh, "");
   Engine::GameEngine::Meshloader->loadOnGPU(bmesh);
 
   // Setup view matricies
@@ -178,9 +178,9 @@ void Game::update(double delta) {
 bool flp;
 void Game::render() {
   flp = !flp;
-  Engine::GameEngine::Renderer->renderMesh(bmesh, ModelProjection2);
+  Engine::Renderer->RenderMesh(bmesh, ModelProjection2);
   // Engine::Engine::Renderer->renderMesh(&torus, ModelProjection1);
-  Engine::GameEngine::Renderer->renderMesh(
+  Engine::Renderer->RenderMesh(
       &torus, ViewProjection * torusActor.getModelProjection());
   Engine::GameEngine::Font->renderString(flp, "Hello World", 150, 150);
 }

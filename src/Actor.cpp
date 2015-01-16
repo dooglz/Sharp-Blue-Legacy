@@ -16,9 +16,9 @@ Matrix4 Actor::getModelProjection() {
   return (trn * rot * scl);
 }
 void Actor::Render() {
-  Engine::GameEngine::Renderer->renderMesh(
-      Mesh, Engine::GameEngine::Renderer->projMatrix *
-                Engine::GameEngine::Renderer->viewMatrix *
+  Engine::Renderer->RenderMesh(
+      Mesh, Engine::Renderer->projMatrix *
+                Engine::Renderer->viewMatrix *
                 getModelProjection());
 }
 }

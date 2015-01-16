@@ -27,15 +27,15 @@ void SDL_Font::init() {
 
   // Generate VAO
   glGenVertexArrays(1, &_VAO);
-  OGL::OGL_Renderer::checkerr();
+  OGL::OGL_Renderer::Checkerr();
 
   // Generate VBO
   glGenBuffers(1, &_VBO);
-  OGL::OGL_Renderer::checkerr();
+  OGL::OGL_Renderer::Checkerr();
 
   // Generate glTexture
   glGenTextures(1, &_gltexture);
-  OGL::OGL_Renderer::checkerr();
+  OGL::OGL_Renderer::Checkerr();
 }
 
 TTF_Font* SDL_Font::getFont(const unsigned int size) {
@@ -66,7 +66,7 @@ void SDL_Font::shutdown() {
   glDeleteTextures(1, &_gltexture);
   glDeleteBuffers(1, &_VBO);
   glDeleteVertexArrays(1, &_VAO);
-  OGL::OGL_Renderer::checkerr();
+  OGL::OGL_Renderer::Checkerr();
 
   SDL_FreeSurface(_surface_buffer);
 
@@ -139,9 +139,9 @@ void SDL_Font::setSize(float Size) { _fontSize = (int)Size; }
 void SDL_Font::flush() {
   // Load the texture shader
   int textureShaderProgram =
-      Engine::OGL::OGL_Renderer::getTextureProgram()->getID();
+      Engine::OGL::OGL_Renderer::GetTextureProgram()->getID();
   glUseProgram(textureShaderProgram);
-  OGL::OGL_Renderer::checkerr();
+  OGL::OGL_Renderer::Checkerr();
 
   // Coordinates for a plane (x,y,u,v)
   std::vector<glm::vec4> coords;
@@ -154,11 +154,11 @@ void SDL_Font::flush() {
 
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  OGL::OGL_Renderer::checkerr();
+  OGL::OGL_Renderer::Checkerr();
 
   // Which gpu texture UNIT to use.
   glActiveTexture(GL_TEXTURE0);
-  OGL::OGL_Renderer::checkerr();
+  OGL::OGL_Renderer::Checkerr();
 
   // Bind to texture
   glBindTexture(GL_TEXTURE_2D, _gltexture);
@@ -166,29 +166,29 @@ void SDL_Font::flush() {
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _surface_buffer->w,
                _surface_buffer->h, 0, GL_BGRA, GL_UNSIGNED_BYTE,
                _surface_buffer->pixels);
-  OGL::OGL_Renderer::checkerr();
+  OGL::OGL_Renderer::Checkerr();
 
   // Send data to Shader
   GLint TEXTURE_UNIFORM = glGetUniformLocation(textureShaderProgram, "texture");
   glUniform1i(TEXTURE_UNIFORM, 0);
-  OGL::OGL_Renderer::checkerr();
+  OGL::OGL_Renderer::Checkerr();
 
   GLint TINT_UNIFORM = glGetUniformLocation(textureShaderProgram, "tint");
   float tint[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
   glProgramUniform4fv(textureShaderProgram, TINT_UNIFORM, 1, tint);
-  OGL::OGL_Renderer::checkerr();
+  OGL::OGL_Renderer::Checkerr();
 
   // Bind VBO
   glBindBuffer(GL_ARRAY_BUFFER, _VBO);
-  OGL::OGL_Renderer::checkerr();
+  OGL::OGL_Renderer::Checkerr();
 
   glBufferData(GL_ARRAY_BUFFER, coords.size() * sizeof(glm::vec4),
                coords.data(), GL_DYNAMIC_DRAW);
-  OGL::OGL_Renderer::checkerr();
+  OGL::OGL_Renderer::Checkerr();
 
   // Bind VAO
   glBindVertexArray(_VAO);
-  OGL::OGL_Renderer::checkerr();
+  OGL::OGL_Renderer::Checkerr();
 
   // Position
   glEnableVertexAttribArray(0);

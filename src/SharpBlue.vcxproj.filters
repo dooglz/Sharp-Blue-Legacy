@@ -2,7 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
-    <ClCompile Include="Base_Platform.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="FileIO.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -78,10 +77,13 @@
     <ClCompile Include="Cm_Camera.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="PC/SDL_Platform.cpp">
+      <Filter>PC</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
-    <ClInclude Include="Base_Platform.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="Event_Manager.h" />
     <ClInclude Include="FileIO.h" />
@@ -124,9 +126,6 @@
       <Filter>PC</Filter>
     </ClInclude>
     <ClInclude Include="PC/OGL_Meshloader.h">
-      <Filter>PC</Filter>
-    </ClInclude>
-    <ClInclude Include="PC/OGL_Platform.h">
       <Filter>PC</Filter>
     </ClInclude>
     <ClInclude Include="PC/OGL_Renderer.h">
@@ -184,6 +183,10 @@
     <ClInclude Include="Cm_Camera.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="PC\SDL_Platform.h">
+      <Filter>PC</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\res\shaders\basic.frag">

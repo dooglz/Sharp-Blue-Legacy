@@ -6,6 +6,9 @@
 
 #include <stdlib.h>
 
+#include "Scene.h"
+#include "platform.h"
+
 #if defined(_vita_)
 #include "VITA/GXM_Renderer.h"
 #include "VITA/GXM_Meshloader.h"
@@ -20,91 +23,96 @@
 #include "PS3/PS3_Font.h"
 #elif defined(_WINDOWS_)
 #include "sdl/SDL.h"
+#include "PC/SDL_platform.h"
 #include "PC/OGL_Meshloader.h"
 #include "PC/OGL_Renderer.h"
 #include "PC/OGL_Meshloader.h"
 #include "PC/SDL_Event_Manager.h"
 #include "PC/SDL_Font.h"
 
-SDL_assert_state CustomAssertionHandler(const SDL_assert_data* data,
-                                        void* userdata) {
-  // CheckGL();
-  // CheckSDL();
-  // ASSERT_MSG((err == 0), "TTF_Init() error");
-  SDL_AssertionHandler defaultHandler = SDL_GetDefaultAssertionHandler();
-  return defaultHandler(data, userdata);
-}
+
 
 #endif
 
 namespace Engine {
 bool GameEngine::run;
-Renderer* GameEngine::Renderer;
+CPlatform* Platform = 0;
 Meshloader* GameEngine::Meshloader;
 EventManager* GameEngine::EventManager;
 Font* GameEngine::Font;
 void (*GameEngine::_GameUpdate)(double);
 void (*GameEngine::_GameRender)();
 
-void GameEngine::init() {
+void GameEngine::Init() {
   // Seed random generator
   srand((unsigned int)time(NULL));
 
-// load relevant modules
 #if defined(_vita_)
-  GameEngine::Renderer = new GXM::GXM_Renderer();
-  GameEngine::Meshloader = new GXM::GXM_Meshloader();
-  GameEngine::EventManager = new VITA::VITA_EventManager();
-  GameEngine::Font = new VITA::VITA_Font();
+  Renderer = new GXM::GXM_Renderer();
+  Meshloader = new GXM::GXM_Meshloader();
+  EventManager = new VITA::VITA_EventManager();
+  Font = new VITA::VITA_Font();
+
 #elif defined(_PS3_)
-  GameEngine::Renderer = new GCM::GCM_Renderer();
-  GameEngine::Meshloader = new GCM::GCM_Meshloader();
-  GameEngine::EventManager = new PS3::PS3EventManager();
-  GameEngine::Font = new PS3::PS3_Font();
+
+  Renderer = new GCM::GCM_Renderer();
+  Meshloader = new GCM::GCM_Meshloader();
+  EventManager = new PS3::PS3EventManager();
+  Font = new PS3::PS3_Font();
+
 #elif defined(_WINDOWS_)
 
-  GameEngine::Renderer = new OGL::OGL_Renderer();
-  GameEngine::Meshloader = new OGL::OGL_Meshloader();
-  GameEngine::EventManager = new OGL::SDLEventManager();
-  GameEngine::Font = new SDL_Font();
+  Renderer = new OGL::OGL_Renderer();
+  Meshloader = new OGL::OGL_Meshloader();
+  EventManager = new OGL::SDLEventManager();
+  //Platform = new SDL::SDL_Platform();
+  Font = new SDL_Font();
 #endif
 
   // init modules
-  GameEngine::Renderer->init();
-  GameEngine::EventManager->init();
-  GameEngine::Font->init();
-  GameEngine::run = true;
+  Renderer->Init();
+  EventManager->init();
+  Font->init();
+  ActiveScene = new Scene();
+
+  run = true;
 }
 
-void GameEngine::update(const double delta) { EventManager->processEvents(); }
+void GameEngine::Update(const double delta) {
+  EventManager->processEvents();
+  ActiveScene->Update(delta);
+}
 
-void GameEngine::render() {
+void GameEngine::Render() {
   // Prep for render
-  GameEngine::Renderer->SetViewport();
-  GameEngine::Renderer->setupFrame();
-  GameEngine::Renderer->clearSurface();
+  Renderer->SetViewport();
+  Renderer->SetupFrame();
+  Renderer->ClearSurface();
 }
 void GameEngine::Postrender() {
-  GameEngine::Font->flush();
-  GameEngine::Renderer->swapBuffers();
+  Font->flush();
+  Renderer->SwapBuffers();
 }
 
-void GameEngine::shutdown() {
-  GameEngine::Font->shutdown();
-  delete GameEngine::Font;
-  GameEngine::Font = NULL;
+void GameEngine::Shutdown() {
+  ActiveScene->Shutdown();
+  delete ActiveScene;
 
-  delete GameEngine::EventManager;
-  GameEngine::EventManager = NULL;
+  Font->shutdown();
+  delete Font;
+  Font = NULL;
 
-  delete GameEngine::Meshloader;
-  GameEngine::Meshloader = NULL;
+  delete EventManager;
+  EventManager = NULL;
 
-  delete GameEngine::Renderer;
-  GameEngine::Renderer = NULL;
+  delete Meshloader;
+  Meshloader = NULL;
+
+  delete Renderer;
+  Renderer = NULL;
 }
 
-double GameEngine::getTime() {
+double GameEngine::GetTime() {
 #if defined(_PS3_)
   // microseconds
   return (((double)(sys_time_get_system_time())) * 0.000001);
@@ -117,25 +125,26 @@ double GameEngine::getTime() {
 
 void GameEngine::Loop() {
   double delta = 0;
-  double currentTime = Engine::GameEngine::getTime();
+  double currentTime = Engine::GameEngine::GetTime();
   // 60fps in Microseconds.
   double tartgettime = 1.0 / 60.0;
 
   while (run) {
-    double newTime = Engine::GameEngine::getTime();
+      continue;
+    double newTime = Engine::GameEngine::GetTime();
     delta = newTime - currentTime;
 
     // delta / 60fps
     double deltaPercent = (double)delta / (double)tartgettime;
 
     // Update engine
-    update(deltaPercent);
+    Update(deltaPercent);
 
     // Update game
     _GameUpdate(deltaPercent);
 
     // Render
-    render();
+    Render();
     _GameRender();
 
     // Finished Drawing
@@ -152,4 +161,11 @@ void GameEngine::RegisterRender(void (*GameRender)()) {
 };
 
 void GameEngine::StopLoop() { run = false; }
+
+
+void GameEngine::CreateWindow(unsigned int x, unsigned int y)
+{    
+    Platform->InitDisplay(x, y);
+}
+
 }

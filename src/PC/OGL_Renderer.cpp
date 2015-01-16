@@ -57,14 +57,14 @@ const int SCREEN_HEIGHT = 720;
 
 OGL_Renderer::OGL_Renderer() {}
 
-void OGL_Renderer::init() {
+void OGL_Renderer::Init() {
   printf("Renderer Init \n");
   // Projection matrix : 60° Field of View, 16:9 ratio, display range : 0.1 unit
   // <-> 100 units
   projMatrix = Perspective(60.0f, (16.0f / 9.0f), 1.0f, 2000.0f);
   InitDisplay();
   InitSurfaces();
-  loadDefaultShaders();
+  LoadDefaultShaders();
 }
 
 void OGL_Renderer::InitDisplay() {
@@ -104,7 +104,7 @@ void OGL_Renderer::InitDisplay() {
 
   ASSERT_FUNC((glewError == GLEW_OK), printf("Error initializing GLEW! %s\n",
                                              glewGetErrorString(glewError)));
-  checkerr();
+  Checkerr();
   GlewInfo();
 
   // Use Vsync
@@ -112,7 +112,7 @@ void OGL_Renderer::InitDisplay() {
       (SDL_GL_SetSwapInterval(1) >= 0),
       printf("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError()));
 
-  checkerr();
+  Checkerr();
 
   int r = 0;
   int g = 0;
@@ -123,7 +123,7 @@ void OGL_Renderer::InitDisplay() {
 
 void OGL_Renderer::InitSurfaces(){};
 
-void OGL_Renderer::setupFrame() {
+void OGL_Renderer::SetupFrame() {
 
   glEnable(GL_DEPTH_TEST);
   glDepthFunc(GL_LESS);
@@ -135,27 +135,27 @@ void OGL_Renderer::setupFrame() {
   // glEnable(GL_CULL_FACE);
   // glViewport(0,0,1920,1080);
 
-  checkerr();
+  Checkerr();
 };
 
-void OGL_Renderer::clearSurface() {
+void OGL_Renderer::ClearSurface() {
   glClearColor(0.5f, 0.5f, 0.5f, 1.f);
-  checkerr();
+  Checkerr();
 
   // SDL_Delay( 16 );
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  checkerr();
+  Checkerr();
 }
 
-void OGL_Renderer::loadDefaultShaders() {
+void OGL_Renderer::LoadDefaultShaders() {
   printf("Loading Shaders \n");
   defaultProgram = new OGL_ShaderProgram();
 
   // Create vertex shader
   OGL_VertexShader* VS = new OGL_VertexShader();
   VS->LoadSourceShader("shaders/basic.vert");
-  checkerr();
+  Checkerr();
 
   // Attach vertex shader to program
   defaultProgram->attachShader(VS);
@@ -163,11 +163,11 @@ void OGL_Renderer::loadDefaultShaders() {
   // Create Fragment shader
   OGL_FragmentShader* FS = new OGL_FragmentShader();
   FS->LoadSourceShader("shaders/basic.frag");
-  checkerr();
+  Checkerr();
 
   // Attach vertex shader to program
   defaultProgram->attachShader(FS);
-  checkerr();
+  Checkerr();
 
   // Link program
   defaultProgram->link();
@@ -178,7 +178,7 @@ void OGL_Renderer::loadDefaultShaders() {
   // Create vertex shader
   VS = new OGL_VertexShader();
   VS->LoadSourceShader("shaders/textured.vert");
-  checkerr();
+  Checkerr();
 
   // Attach vertex shader to program
   textureProgram->attachShader(VS);
@@ -186,20 +186,20 @@ void OGL_Renderer::loadDefaultShaders() {
   // Create Fragment shader
   FS = new OGL_FragmentShader();
   FS->LoadSourceShader("shaders/textured.frag");
-  checkerr();
+  Checkerr();
 
   // Attach vertex shader to program
   textureProgram->attachShader(FS);
-  checkerr();
+  Checkerr();
 
   // Link program
   textureProgram->link();
 }
 
 //! Switch which buffer is active(being rendered on) and currentyl displayed
-void OGL_Renderer::swapBuffers() { SDL_GL_SwapWindow(_window); }
+void OGL_Renderer::SwapBuffers() { SDL_GL_SwapWindow(_window); }
 
-void OGL_Renderer::shutdown() {
+void OGL_Renderer::Shutdown() {
   // Destroy window
   SDL_DestroyWindow(_window);
 
@@ -210,7 +210,7 @@ void OGL_Renderer::shutdown() {
 //! Initialises viewport (coordinate scaling)
 void OGL_Renderer::SetViewport() {}
 
-void OGL_Renderer::checkerr() {
+void OGL_Renderer::Checkerr() {
   GLenum err;
   while ((err = glGetError()) != GL_NO_ERROR) {
     printf("An OGL error has occured: %i\n", err);
@@ -218,26 +218,26 @@ void OGL_Renderer::checkerr() {
   }
 }
 
-void OGL_Renderer::assignShader(stMesh* m, std::string name) {
+void OGL_Renderer::AssignShader(stMesh* m, std::string name) {
   // TODO: Shader store
   m->program = defaultProgram;
 };
 
-void OGL_Renderer::renderMesh(stMesh* msh, Matrix4 mvp) {
+void OGL_Renderer::RenderMesh(stMesh* msh, Matrix4 mvp) {
   glUseProgram(msh->program->getID());
-  OGL_Renderer::checkerr();
+  OGL_Renderer::Checkerr();
 
   // get shader input indexes
   GLint mvpIn = glGetUniformLocation(msh->program->getID(), "MVP");
-  OGL_Renderer::checkerr();
+  OGL_Renderer::Checkerr();
 
   // Send MVP
   glUniformMatrix4fv(mvpIn, 1, false, glm::value_ptr(mvp));
-  OGL_Renderer::checkerr();
+  OGL_Renderer::Checkerr();
 
   // Bind to VAO
   glBindVertexArray(msh->gVAO);
-  OGL_Renderer::checkerr();
+  OGL_Renderer::Checkerr();
 
   // DRAW
   if (msh->line == true) {
@@ -255,18 +255,18 @@ void OGL_Renderer::renderMesh(stMesh* msh, Matrix4 mvp) {
       glDrawArrays(GL_TRIANGLES, 0, msh->numVerts);
     }
   }
-  OGL_Renderer::checkerr();
+  OGL_Renderer::Checkerr();
 
   // unbind VAO
   glBindVertexArray(0);
-  OGL_Renderer::checkerr();
+  OGL_Renderer::Checkerr();
 
   // Unbind program
   glUseProgram(NULL);
-  OGL_Renderer::checkerr();
+  OGL_Renderer::Checkerr();
 };
 
-void OGL_Renderer::renderPoly(float a1, float a2, float a3, Matrix4 mvp){
+void OGL_Renderer::RenderPoly(float a1, float a2, float a3, Matrix4 mvp){
   // OGL_Meshloader::loadOnGPU(stMesh* msh)
 };
 }
