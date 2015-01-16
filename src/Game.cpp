@@ -13,7 +13,7 @@
 #include "Renderer.h"
 #include "MeshLoader.h"
 #include "Event_Manager.h"
-#include "Font.h"
+//#include "Font.h"
 
 #if defined(_PS3_)
 #include <sys/paths.h>
@@ -23,9 +23,9 @@ Matrix4 ViewProjection;
 Matrix4 projMatrix;
 Matrix4 ModelProjection1;
 Matrix4 ModelProjection2;
-stMesh* bmesh;
+Engine::Mesh* bmesh;
 Engine::Actor torusActor;
-stMesh torus;
+Engine::Mesh torus;
 Vector3 cameraPos;
 float horizontalAngle;
 float verticalAngle;
@@ -91,15 +91,15 @@ void Game::init() {
   torus.loadedMain = true;
   torus.numVerts = torus.vertexData.size();
   torus.strip = true;
-  Engine::Renderer->assignShader(&torus, "");
-  Engine::GameEngine::Meshloader->loadOnGPU(&torus);
+  //Engine::Renderer->assignShader(&torus, "");
+  Engine::MeshLoader->loadOnGPU(&torus);
 
   // load a model from a .obj file
   std::string name = "models/beacon.obj";
   name = FILE_PATH + name;
-  bmesh = Engine::GameEngine::Meshloader->loadOBJFile(name);
-  Engine::Renderer->assignShader(bmesh, "");
-  Engine::GameEngine::Meshloader->loadOnGPU(bmesh);
+  bmesh = Engine::MeshLoader->openOBJFile(name);
+ // Engine::Renderer->assignShader(bmesh, "");
+  Engine::MeshLoader->loadOnGPU(bmesh);
 
   // Setup view matricies
   // Projection matrix : 60° Field of View, 16:9 ratio, display range : 0.1 unit
@@ -180,9 +180,8 @@ void Game::render() {
   flp = !flp;
   Engine::Renderer->RenderMesh(bmesh, ModelProjection2);
   // Engine::Engine::Renderer->renderMesh(&torus, ModelProjection1);
-  Engine::Renderer->RenderMesh(
-      &torus, ViewProjection * torusActor.getModelProjection());
-  Engine::GameEngine::Font->renderString(flp, "Hello World", 150, 150);
+  //Engine::Renderer->RenderMesh(&torus, ViewProjection * torusActor.getModelProjection());
+//  Engine::GameEngine::Font->renderString(flp, "Hello World", 150, 150);
 }
 
 void Game::shutdown() {}

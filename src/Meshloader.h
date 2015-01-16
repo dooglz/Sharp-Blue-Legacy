@@ -1,24 +1,20 @@
 #pragma once
-#include "Mesh.h"
-#include "Maths.h"
-namespace Engine {
-// This class is responsible for loading in mesh files, and decoding them to
-// Mesh objects
-class Meshloader {
-protected:
-  virtual bool loadOBJ(const char* path, std::vector<stvec3>& out_vertices,
-                       std::vector<stvec2>& out_uvs,
-                       std::vector<stvec3>& out_normals) {
-    return false;
-  };
+#include <String>
+#include <hash_map>
 
-private:
-public:
-  // blank constuctor
-  Meshloader(){};
-  virtual stMesh* loadOBJFile(const std::string& filename) { return NULL; };
-  virtual void loadOnGPU(stMesh* msh){};
-  virtual void render(stMesh* msh, Matrix4 mvp){};
-  virtual ~Meshloader(){};
-};
+namespace Engine {
+	// This class is responsible for loading in mesh files, and decoding them to
+	// Mesh objects
+	class Mesh;
+	class CMeshloader {
+	protected:
+		std::hash_map<std::string, Mesh*> _meshLibrary;
+	private:
+	public:
+		virtual Mesh* openOBJFile(const std::string& filename) = 0;
+		virtual void loadOnGPU(Mesh* msh) = 0;
+		Mesh* getMesh(std::string name);
+	};
+	// global public reference to the loader
+	extern CMeshloader* MeshLoader;
 }

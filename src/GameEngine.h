@@ -28,7 +28,6 @@ public:
   static double GetTime();
   //
 
-  static Meshloader* Meshloader;
   static EventManager* EventManager;
   static Font* Font;
 };

@@ -8,6 +8,7 @@
 
 #include "Scene.h"
 #include "platform.h"
+#include "MeshLoader.h"
 
 #if defined(_vita_)
 #include "VITA/GXM_Renderer.h"
@@ -24,22 +25,17 @@
 #elif defined(_WINDOWS_)
 #include "sdl/SDL.h"
 #include "PC/SDL_platform.h"
-#include "PC/OGL_Meshloader.h"
+#include "PC/SDL_Meshloader.h"
 #include "PC/OGL_Renderer.h"
-#include "PC/OGL_Meshloader.h"
 #include "PC/SDL_Event_Manager.h"
-#include "PC/SDL_Font.h"
-
-
-
+//#include "PC/SDL_Font.h"
 #endif
 
 namespace Engine {
 bool GameEngine::run;
 CPlatform* Platform = 0;
-Meshloader* GameEngine::Meshloader;
 EventManager* GameEngine::EventManager;
-Font* GameEngine::Font;
+//Font* GameEngine::Font;
 void (*GameEngine::_GameUpdate)(double);
 void (*GameEngine::_GameRender)();
 
@@ -62,17 +58,17 @@ void GameEngine::Init() {
 
 #elif defined(_WINDOWS_)
 
-  Renderer = new OGL::OGL_Renderer();
-  Meshloader = new OGL::OGL_Meshloader();
+  Renderer = new OGL::COGL_Renderer();
+  MeshLoader = new SDL::CSDL_Meshloader();
   EventManager = new OGL::SDLEventManager();
-  //Platform = new SDL::SDL_Platform();
-  Font = new SDL_Font();
+  Platform = new SDL::SDL_Platform();
+  //Font = new SDL_Font();
 #endif
 
   // init modules
   Renderer->Init();
   EventManager->init();
-  Font->init();
+ // Font->init();
   ActiveScene = new Scene();
 
   run = true;
@@ -85,28 +81,33 @@ void GameEngine::Update(const double delta) {
 
 void GameEngine::Render() {
   // Prep for render
-  Renderer->SetViewport();
-  Renderer->SetupFrame();
-  Renderer->ClearSurface();
+	Renderer->PrepFrame();
+	ActiveScene->Render();
+	Renderer->PostRender();
+
+	//
+  //Renderer->SetViewport();
+  //Renderer->SetupFrame();
+  //Renderer->ClearSurface();
 }
 void GameEngine::Postrender() {
-  Font->flush();
-  Renderer->SwapBuffers();
+  //Font->flush();
+  Renderer->PostRender();
 }
 
 void GameEngine::Shutdown() {
   ActiveScene->Shutdown();
   delete ActiveScene;
 
-  Font->shutdown();
-  delete Font;
-  Font = NULL;
+  //Font->shutdown();
+ // delete Font;
+ // Font = NULL;
 
   delete EventManager;
   EventManager = NULL;
 
-  delete Meshloader;
-  Meshloader = NULL;
+  delete MeshLoader;
+  MeshLoader = NULL;
 
   delete Renderer;
   Renderer = NULL;
@@ -118,7 +119,7 @@ double GameEngine::GetTime() {
   return (((double)(sys_time_get_system_time())) * 0.000001);
 #elif defined(_WINDOWS_)
   return ((double)(SDL_GetPerformanceCounter()) /
-          ((double)SDL_GetPerformanceFrequency()));
+		  ((double)SDL_GetPerformanceFrequency()));
 #endif
   return 0;
 }
@@ -130,25 +131,25 @@ void GameEngine::Loop() {
   double tartgettime = 1.0 / 60.0;
 
   while (run) {
-      continue;
-    double newTime = Engine::GameEngine::GetTime();
-    delta = newTime - currentTime;
+	  //continue;
+	double newTime = Engine::GameEngine::GetTime();
+	delta = newTime - currentTime;
 
-    // delta / 60fps
-    double deltaPercent = (double)delta / (double)tartgettime;
+	// delta / 60fps
+	double deltaPercent = (double)delta / (double)tartgettime;
 
-    // Update engine
-    Update(deltaPercent);
+	// Update engine
+	Update(deltaPercent);
 
-    // Update game
-    _GameUpdate(deltaPercent);
+	// Update game
+	_GameUpdate(deltaPercent);
 
-    // Render
-    Render();
-    _GameRender();
+	// Render
+	Render();
+	_GameRender();
 
-    // Finished Drawing
-    Postrender();
+	// Finished Drawing
+	Postrender();
   }
 };
 
@@ -165,7 +166,7 @@ void GameEngine::StopLoop() { run = false; }
 
 void GameEngine::CreateWindow(unsigned int x, unsigned int y)
 {    
-    Platform->InitDisplay(x, y);
+	Platform->InitDisplay(x, y);
 }
 
 }

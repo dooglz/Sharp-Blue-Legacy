@@ -8,7 +8,7 @@ protected:
 
 private:
 public:
-  stMesh* Mesh;
+  Mesh* Mesh;
   Vector3 position;
   Vector3 rotation;
   Vector3 scale;
