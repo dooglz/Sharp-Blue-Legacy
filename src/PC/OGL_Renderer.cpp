@@ -61,7 +61,7 @@ void OGL_Renderer::init() {
   printf("Renderer Init \n");
   // Projection matrix : 60° Field of View, 16:9 ratio, display range : 0.1 unit
   // <-> 100 units
-  projMatrix = M4::perspective(60.0f, (16.0f / 9.0f), 1.0f, 2000.0f);
+  projMatrix = Perspective(60.0f, (16.0f / 9.0f), 1.0f, 2000.0f);
   InitDisplay();
   InitSurfaces();
   loadDefaultShaders();

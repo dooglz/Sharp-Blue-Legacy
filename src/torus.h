@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "utilities.h"
+#include "Maths.h"
 
 inline std::vector<stVertex> CreateTorus(float InnerRadius, float OuterRadius,
                                          unsigned int Sides,

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Utilities.h" // asserts and commmon defines
-#include "GMaths.h"
+#include "Maths.h"
 #include <vector>
 
 #if defined(_PS3_)

@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "../GMaths.h"
+#include "../Maths.h"
 
 /*! \brief PS3 shader class
  * \ingroup PS3_Engine

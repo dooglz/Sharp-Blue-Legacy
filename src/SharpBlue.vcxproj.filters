@@ -6,7 +6,6 @@
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="FileIO.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GMaths.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PS3/GCM_FragmentShader.cpp">
@@ -72,6 +71,9 @@
     <ClCompile Include="VITA/GXM_Vertex_Shader.cpp">
       <Filter>VITA</Filter>
     </ClCompile>
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Maths.cpp" />
+    <ClCompile Include="Component.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
@@ -81,7 +83,6 @@
     <ClInclude Include="FileIO.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Input.h" />
-    <ClInclude Include="GMaths.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Meshloader.h" />
     <ClInclude Include="Renderer.h" />
@@ -172,6 +173,9 @@
     <ClInclude Include="VITA/VITA_Font.h">
       <Filter>VITA</Filter>
     </ClInclude>
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="Maths.h" />
+    <ClInclude Include="Component.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\res\shaders\basic.frag">

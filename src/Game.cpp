@@ -1,7 +1,7 @@
 // THIS GAME FILE IS FOR DEBUGINNG THE ENGINE, PROJECT USING THE ENGINE WILL
 // HAVE THEIR OWN GAME FILE
 
-#include "GMaths.h"
+#include "Maths.h"
 #include "Game.h"
 #include "Mesh.h"
 #include "torus.h"
@@ -104,7 +104,7 @@ void Game::init() {
   // Setup view matricies
   // Projection matrix : 60° Field of View, 16:9 ratio, display range : 0.1 unit
   // <-> 100 units
-  projMatrix = M4::perspective(60.0f, (16.0f / 9.0f), 1.0f, 2000.0f);
+  projMatrix = Perspective((float)(60.0f * (M_PI / 180.0f)), (16.0f / 9.0f),1.0f, 2000.0f);
 
   registerInputs();
 
@@ -147,7 +147,7 @@ void Game::update(double delta) {
                           cos(horizontalAngle - 3.14f / 2.0f));
 
   // Up vector
-  Vector3 up = M3::cross(right, direction);
+  Vector3 up = Cross(right, direction);
 
   if (Engine::Input::getMapData("W") > 128) {
     cameraPos += (float)(delta / 100.0) * direction;
@@ -162,17 +162,17 @@ void Game::update(double delta) {
     cameraPos += (float)(delta / 100.0) * right;
   }
 
-  Matrix4 viewMatrix = M4::lookat(cameraPos, cameraPos + direction, up);
+  Matrix4 viewMatrix = Lookat(cameraPos, cameraPos + direction, up);
   ViewProjection = (projMatrix * viewMatrix);
 
-  Matrix4 rot = M4::rotation(a * 0.1f* delta, Vector3(0, 1, 0));
-  Matrix4 rot2 = M4::rotation(a * -1.0f * delta , Vector3(0, 1, 0));
-  Matrix4 scl = M4::scale(Vector3(2.0f, 2.0f, 2.0f));
+  Matrix4 rot = AngleAxisToMatrix(Vector3(0, 1, 0), a * 0.1f* delta);
+  Matrix4 rot2 = AngleAxisToMatrix(Vector3(0, 1, 0), a * -1.0f * delta);
+  Matrix4 scl = Scale(Vector3(2.0f, 2.0f, 2.0f));
   // glm rotation uses degrees
   ModelProjection1 =
-      ViewProjection * M4::translation(Vector3(0, 0, 0)) * scl * rot2;
+      ViewProjection * Translation(Vector3(0, 0, 0)) * scl * rot2;
   ModelProjection2 =
-      ViewProjection * M4::translation(Vector3(0, 0, 0)) * scl * rot;
+      ViewProjection * Translation(Vector3(0, 0, 0)) * scl * rot;
 }
 
 bool flp;

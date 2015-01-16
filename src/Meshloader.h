@@ -1,6 +1,6 @@
 #pragma once
 #include "Mesh.h"
-#include "GMaths.h"
+#include "Maths.h"
 namespace Engine {
 // This class is responsible for loading in mesh files, and decoding them to
 // Mesh objects
