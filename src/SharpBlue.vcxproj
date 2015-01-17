@@ -256,6 +256,8 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Cm_Camera.cpp" />
+    <ClCompile Include="Cm_FpdMotor.cpp" />
+    <ClCompile Include="Cm_MeshRenderer.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Event_Manager.cpp" />
@@ -461,6 +463,8 @@
     <ClInclude Include="Actor.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="Cm_FpsMotor.h" />
+    <ClInclude Include="Cm_MeshRenderer.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Cm_Camera.h" />
     <ClInclude Include="Component.h" />

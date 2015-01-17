@@ -134,7 +134,7 @@ void SDL_Platform::InitDisplay(const unsigned short width,
   _screenWidth = DEFAULT_WIDTH;
   printf("Display Resolution: %i x %i\n", _screenWidth, _screenHeight);
   // Vsync
-  ASSERT(SDL_GL_SetSwapInterval(0) >= 0);
+  ASSERT(SDL_GL_SetSwapInterval(1) >= 0);
 }
 
 void SDL_Platform::Shutdown() {

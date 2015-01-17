@@ -20,16 +20,22 @@ void COGL_Renderer::Init() {
     loadShaders(); 
 }
 
+
+static float count = 0;
 void COGL_Renderer::ClearSurface() {
   // f += 0.001f;
   // glClearColor(sin(f) , 0.5f, 0.5f, 1.f);
-  glClearColor(1.f, 1.f, 1.f, 1.f);
+  count += 0.05f;
+  float r = (sin((0.1f * count) + 0) * 127.0f) + 50.0f;
+  float g = (sin((0.1f * count) + 2) * 127.0f) + 50.0f;
+  float b = (sin((0.1f * count) + 4) * 127.0f) + 50.0f;
+  glClearColor(r / 255.0f, g / 255.0f, b / 255.0f, 1.f);
   SDL::SDL_Platform::CheckGL();
-  // SDL_Delay( 16 );
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   SDL::SDL_Platform::CheckGL();
 }
+
 
 COGL_Renderer::COGL_Renderer() {}
 
@@ -51,6 +57,8 @@ void COGL_Renderer::RenderMesh(Mesh* const msh, const Matrix4& mvp) {
   SDL::SDL_Platform::CheckGL();
 
   GLint mvpIn = glGetUniformLocation(programID, "modelprojection");
+  //Does hte shader have this input?
+  ASSERT(mvpIn!= -1);
   SDL::SDL_Platform::CheckGL();
   // Send VP
   glUniformMatrix4fv(mvpIn, 1, false, glm::value_ptr(mvp));

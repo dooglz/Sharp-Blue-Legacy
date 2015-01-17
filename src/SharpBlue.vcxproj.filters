@@ -85,6 +85,12 @@
     <ClCompile Include="MeshLoader.cpp" />
     <ClCompile Include="Event_Manager.cpp" />
     <ClCompile Include="Platform.cpp" />
+    <ClCompile Include="Cm_MeshRenderer.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Cm_FpdMotor.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
@@ -190,6 +196,12 @@
     <ClInclude Include="Platform.h" />
     <ClInclude Include="PC\SDL_Meshloader.h">
       <Filter>PC</Filter>
+    </ClInclude>
+    <ClInclude Include="Cm_MeshRenderer.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Cm_FpsMotor.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
