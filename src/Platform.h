@@ -13,9 +13,9 @@ protected:
 public:
 	CPlatform(){};
   virtual ~CPlatform(){};
-  virtual void Init() = 0;
-  virtual void InitDisplay(const unsigned short width, const unsigned short height) = 0;
+  virtual void Init(const unsigned short width, const unsigned short height) = 0;
   virtual void Shutdown() = 0;
+  virtual double GetTime() = 0;
   static unsigned short GetSreenWidth() { return _screenWidth; }
   static unsigned short GetSreenHeight() { return _screenHeight; }
   //static float getScreenRatio();

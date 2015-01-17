@@ -19,8 +19,7 @@ int main(int argc, char **argv) {
 
   puts("Program Entry Point: Main\n");
 
-  Engine::GameEngine::Init();
-  Engine::GameEngine::CreateWindow(1280,720);
+  Engine::GameEngine::Init(1280, 720);
 
   Game *GameCode = new Game();
   GameCode->init();

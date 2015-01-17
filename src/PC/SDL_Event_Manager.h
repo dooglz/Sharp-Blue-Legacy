@@ -2,7 +2,7 @@
 #include "../Event_Manager.h"
 namespace Engine {
 namespace OGL {
-class SDLEventManager : public EventManager {
+class SDLEventManager : public CEventManager {
 
 protected:
 public:

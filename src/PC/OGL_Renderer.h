@@ -20,7 +20,7 @@ namespace Engine {
 			void PrepFrame();
 			void PostRender();
 
-			void Init(){};
+			void Init();
 
 			void Shutdown(){};
 

@@ -258,6 +258,7 @@
     <ClCompile Include="Cm_Camera.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Event_Manager.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="FileIO.cpp" />
     <ClCompile Include="Game.cpp">
@@ -267,6 +268,7 @@
     <ClCompile Include="Maths.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshLoader.cpp" />
+    <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="PC/SDL_Platform.cpp" />

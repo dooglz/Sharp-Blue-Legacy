@@ -1,11 +1,14 @@
 #pragma once
 namespace Engine {
-class EventManager {
+class CEventManager {
 
 protected:
 public:
   virtual void processEvents(){};
   virtual void init(){};
-  virtual ~EventManager(){};
+  virtual ~CEventManager(){};
 };
+
+// global public reference to the EventManager
+extern CEventManager* EventManager;
 }

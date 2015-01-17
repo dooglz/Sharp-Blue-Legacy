@@ -83,6 +83,8 @@
       <Filter>PC</Filter>
     </ClCompile>
     <ClCompile Include="MeshLoader.cpp" />
+    <ClCompile Include="Event_Manager.cpp" />
+    <ClCompile Include="Platform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
