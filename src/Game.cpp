@@ -3,24 +3,13 @@
 
 #include "Maths.h"
 #include "Game.h"
-#include "Mesh.h"
-#include "torus.h"
 #include "Input.h"
-#include <string>
-#include "Actor.h"
-#include "GameEngine.h"
 
+#include "GameEngine.h"
 #include "Cm_MeshRenderer.h"
 #include "Cm_FpsMotor.h"
 #include "Cm_Camera.h"
 #include "Scene.h"
-
-#include "Renderer.h"
-#include "MeshLoader.h"
-#include "Event_Manager.h"
-
-#include "Entity.h"
-//#include "Font.h"
 
 Engine::Entity* ent1;
 Engine::Entity* ent2;
@@ -58,7 +47,7 @@ void Game::init() {
   ent1->AddComponent(new Engine::Components::CmMeshRenderer());
   ent1->getComponent<Engine::Components::CmMeshRenderer>()->setMesh(
       "models/cube.obj");
-  //TODO: do this automagically
+  // TODO: do this automagically
   Engine::ActiveScene->AddEntity(ent1);
 
   ent2 = new Engine::Entity();
@@ -66,7 +55,8 @@ void Game::init() {
   ent2->setPosition(Vector3(0, 0, 0));
   ent2->setScale(Vector3(60, 1, 60));
   ent2->AddComponent(new Engine::Components::CmMeshRenderer());
-  ent2->getComponent<Engine::Components::CmMeshRenderer>()->setMesh("models/plane.obj");
+  ent2->getComponent<Engine::Components::CmMeshRenderer>()->setMesh(
+      "models/plane.obj");
   Engine::ActiveScene->AddEntity(ent2);
 
   camera = new Engine::Entity();
