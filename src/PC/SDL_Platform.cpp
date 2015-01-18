@@ -142,6 +142,14 @@ void SDL_Platform::Shutdown() {
   delete Renderer;
   Renderer = NULL;
 
+  EventManager->Shutdown();
+  delete EventManager;
+  EventManager = NULL;
+
+  MeshLoader->Shutdown();
+  delete MeshLoader;
+  MeshLoader = NULL;
+
   SDL_GL_DeleteContext(_gContext);
   SDL_DestroyWindow(_window);
   SDL_Quit();

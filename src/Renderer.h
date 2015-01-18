@@ -31,8 +31,6 @@ public:
 
   virtual void Shutdown(){};
   virtual ~CRenderer(){};
-
-  virtual void RenderPoly(float a1, float a2, float a3, Matrix4 mvp){};
 };
 
 // global public reference to the renderer

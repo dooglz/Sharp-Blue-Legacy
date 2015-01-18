@@ -46,6 +46,10 @@ void GameEngine::Shutdown() {
   ActiveScene->Shutdown();
   delete ActiveScene;
   ActiveScene = 0;
+
+  Platform->Shutdown();
+  delete Platform;
+  Platform = 0;
 }
 
 void GameEngine::Loop() {
@@ -56,8 +60,9 @@ void GameEngine::Loop() {
 
   while (run) {
     // continue;
-      double newTime = Platform->GetTime();
+    double newTime = Platform->GetTime();
     delta = newTime - currentTime;
+    currentTime = newTime;
 
     // delta / 60fps
     double deltaPercent = (double)delta / (double)tartgettime;

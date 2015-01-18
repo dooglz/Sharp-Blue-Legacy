@@ -1,7 +1,6 @@
 #pragma once
 
 namespace Engine {
-class Meshloader;
 class EventManager;
 
 class GameEngine {

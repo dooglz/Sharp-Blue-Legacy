@@ -22,10 +22,9 @@ namespace Engine {
 
 			void Init();
 
-			void Shutdown(){};
+			void Shutdown();
 
 			void RenderMesh(Mesh* const msh, const Matrix4& mvp);
-			void RenderPoly(float a1, float a2, float a3, Matrix4 mvp){};
 			void DrawLine(const Vector3& p1, const Vector3& p2);
 			void DrawCross(const Vector3& p1, const float size);
 			//

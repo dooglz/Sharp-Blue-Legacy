@@ -38,7 +38,7 @@ public:
   static void removeMap(std::vector<Input_map>::iterator itr);
   static unsigned char getMapData(std::string name);
   static bool mapExists(std::string name);
-
+  static void WipeAll();
 protected:
   static std::vector<Input_axis> input_data;
   static std::vector<Input_map> input_mapping;

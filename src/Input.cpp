@@ -103,6 +103,12 @@ void Input::removeMap(std::vector<Input_map>::iterator itr) {
   input_mapping.erase(itr);
 }
 
+
+void Input::WipeAll() {
+    input_mapping.clear();
+    input_data.clear();
+}
+
 unsigned char Input::getMapData(std::string name) {
   if (mapExists(name)) {
     std::vector<std::string> axises = findMap(name)->current;

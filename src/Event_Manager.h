@@ -6,6 +6,7 @@ protected:
 public:
   virtual void processEvents(){};
   virtual void init(){};
+  virtual void Shutdown(){};
   virtual ~CEventManager(){};
 };
 

@@ -188,5 +188,9 @@ void SDLEventManager::init() {
   Input::addAxis("kb_k_s");
   Input::addAxis("kb_k_d");
 }
+void SDLEventManager::Shutdown() {
+  printf("SDLEventManager Shutdown \n");
+  Input::WipeAll();
+}
 }
 }

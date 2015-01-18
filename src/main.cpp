@@ -6,10 +6,17 @@
         Sam Serrels
         sam@samserrels.com
 */
+//Memory leak detection
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+
+
 #include <stdio.h>
 #include "Utilities.h" // asserts and commmon defines
 #include "GameEngine.h"
 #include "Game.h"
+
 
 // ******************************************************************************
 //
@@ -39,5 +46,7 @@ int main(int argc, char **argv) {
   GameCode = NULL;
 
   puts("Quitting\n");
+
+  _CrtDumpMemoryLeaks();
   return 0;
 }

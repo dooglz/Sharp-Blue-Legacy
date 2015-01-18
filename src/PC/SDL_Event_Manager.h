@@ -8,6 +8,7 @@ protected:
 public:
   void processEvents();
   void init();
+  void Shutdown();
 };
 }
 }

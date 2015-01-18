@@ -11,6 +11,9 @@
 #include "Cm_Camera.h"
 #include "Scene.h"
 
+
+#include "Renderer.h"
+
 Engine::Entity* ent1;
 Engine::Entity* ent2;
 Engine::Entity* camera;
@@ -74,8 +77,15 @@ void Game::init() {
   registerInputs();
 }
 
-void Game::update(double delta) {}
+void Game::update(double delta) {
+    Engine::Renderer->DrawLine(Vector3(0, 0, 0), Vector3(0, 6, 0));
+    Engine::Renderer->DrawCross(Vector3(0, 6, 0), 1.0f);
+}
 
 void Game::render() {}
 
-void Game::shutdown() {}
+void Game::shutdown() {
+    delete ent1;
+    delete ent2;
+    delete camera;
+}

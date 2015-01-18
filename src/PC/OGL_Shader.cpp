@@ -87,6 +87,8 @@ void OGL_Shader::LoadSourceShader(std::string name) {
     // Set shader ID to 0 to indicate failure
     _shaderID = 0;
   }
+ 
+  delete shaderSource;
 }
 
 //! Parses a shader stored in a char array and stores it into Program in an
