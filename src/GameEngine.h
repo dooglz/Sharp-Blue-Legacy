@@ -2,7 +2,7 @@
 
 namespace Engine {
 class EventManager;
-
+class Scene;
 class GameEngine {
 
 private:
@@ -16,5 +16,6 @@ public:
   static void StopLoop();
   static void RegisterUpdate(void(*GameUpdate)(double));
   static void RegisterRender(void (*GameRender)());
+  static void SetActiveScene(Scene* scene);
 };
 }

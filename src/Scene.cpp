@@ -52,17 +52,6 @@ namespace Engine {
 
             // pos.setY(-pos.getY());
             viewMat = glm::lookAt(pos, pos + forwards, up);
-
-        /*    if (i % 100 == 0) {
-                printf("\n\n\n\n\n\n");
-                print(pos);
-                print(up);
-                print(forwards);
-                print(viewMat);
-            }
-            ++i;
-*/
-
             Renderer->SetViewMatrix(viewMat);
         }
 

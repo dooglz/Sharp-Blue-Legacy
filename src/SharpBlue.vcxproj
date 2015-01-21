@@ -447,6 +447,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|PSVita'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='debugLib|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="PS3\PS3_Font.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -465,6 +466,7 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Font.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='debugLib|Win32'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="Event_Manager.h" />
@@ -549,6 +551,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|PSVita'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='debugLib|Win32'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="torus.h" />
     <ClInclude Include="Utilities.h" />

@@ -38,8 +38,14 @@ void GameEngine::Init(const unsigned short width, const unsigned short height) {
 
   // init modules
   Platform->Init(width, height);
+  //Loading scene
   ActiveScene = new Scene();
   run = true;
+}
+
+void GameEngine::SetActiveScene(Scene* scene)
+{
+	ActiveScene = scene;
 }
 
 void GameEngine::Shutdown() {
