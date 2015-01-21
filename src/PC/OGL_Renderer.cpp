@@ -238,7 +238,6 @@ OGL::OGL_ShaderProgram* COGL_Renderer::GetDefaultShaderProgram() {
 
 void COGL_Renderer::Shutdown(){
     delete _defaultProgram;
-
 }
 
 }
