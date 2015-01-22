@@ -34,6 +34,7 @@ struct Mesh{
 
 struct Texture{
   int lol;
+  static Texture* Load(const std::string& name){return NULL;}
 };
 
 struct Material {

@@ -7,6 +7,10 @@
 #include "Scene.h"
 #include "Event_Manager.h"
 
+#include "Storage.h"
+#include "Resource.h"
+
+
 #if defined(_vita_)
 #elif defined(_PS3_)
 #include <sys/sys_time.h>
@@ -27,8 +31,14 @@ void (*GameEngine::_GameRender)();
 
 void GameEngine::Init(const unsigned short width, const unsigned short height) {
 
+  
+  Storage<Texture>::Get("yoyo");
+  Storage<Texture>::Get("yoyo");
+  Storage<Texture>::Get("funthings");
   // Seed random generator
   srand((unsigned int)time(NULL));
+
+Base_storage::Shutdown();
 
 #if defined(_vita_)
 #elif defined(_PS3_)
