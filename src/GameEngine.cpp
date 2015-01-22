@@ -8,7 +8,6 @@
 #include "Event_Manager.h"
 
 #include "Storage.h"
-#include "Resource.h"
 
 
 #if defined(_vita_)
@@ -31,14 +30,8 @@ void (*GameEngine::_GameRender)();
 
 void GameEngine::Init(const unsigned short width, const unsigned short height) {
 
-  
-  Storage<Texture>::Get("yoyo");
-  Storage<Texture>::Get("yoyo");
-  Storage<Texture>::Get("funthings");
   // Seed random generator
   srand((unsigned int)time(NULL));
-
-Base_storage::Shutdown();
 
 #if defined(_vita_)
 #elif defined(_PS3_)
@@ -48,15 +41,12 @@ Base_storage::Shutdown();
 
   // init modules
   Platform->Init(width, height);
-  //Loading scene
+  // Loading scene
   ActiveScene = new Scene();
   run = true;
 }
 
-void GameEngine::SetActiveScene(Scene* scene)
-{
-  ActiveScene = scene;
-}
+void GameEngine::SetActiveScene(Scene* scene) { ActiveScene = scene; }
 
 void GameEngine::Shutdown() {
   ActiveScene->Shutdown();
@@ -66,6 +56,8 @@ void GameEngine::Shutdown() {
   Platform->Shutdown();
   delete Platform;
   Platform = 0;
+
+  Base_storage::Shutdown();
 }
 
 void GameEngine::Loop() {

@@ -84,8 +84,6 @@ SDL_Platform::SDL_Platform() {
 void SDL_Platform::Init(const unsigned short width,
                         const unsigned short height) {
 
-  MeshLoader = new SDL::CSDL_Meshloader();
-
   EventManager = new OGL::SDLEventManager();
   EventManager->init();
 
@@ -145,10 +143,6 @@ void SDL_Platform::Shutdown() {
   EventManager->Shutdown();
   delete EventManager;
   EventManager = NULL;
-
-  MeshLoader->Shutdown();
-  delete MeshLoader;
-  MeshLoader = NULL;
 
   SDL_GL_DeleteContext(_gContext);
   SDL_DestroyWindow(_window);

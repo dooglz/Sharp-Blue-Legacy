@@ -81,7 +81,6 @@
     <ClCompile Include="PC\SDL_Meshloader.cpp">
       <Filter>PC</Filter>
     </ClCompile>
-    <ClCompile Include="MeshLoader.cpp" />
     <ClCompile Include="Event_Manager.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Cm_MeshRenderer.cpp">
@@ -90,6 +89,8 @@
     <ClCompile Include="Cm_FpdMotor.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="Storage.cpp" />
+    <ClCompile Include="Material.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine.h" />
@@ -98,7 +99,6 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Mesh.h" />
-    <ClInclude Include="Meshloader.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="torus.h" />
     <ClInclude Include="Utilities.h" />

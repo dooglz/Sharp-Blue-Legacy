@@ -5,7 +5,7 @@
 #include "Maths.h"
 #include "Component.h"
 namespace Engine {
-	class Mesh;
+
 	class Entity {
 	protected:
 		bool _visible;

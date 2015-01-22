@@ -30,11 +30,14 @@ struct Mesh{
 #endif
   // mesh data in main memory
   std::vector<stVertex> vertexData;
+  static Mesh* Load(const std::string& name);
+  void LoadOnGpu();
 };
 
 struct Texture{
   int lol;
   static Texture* Load(const std::string& name){return NULL;}
+  void LoadOnGpu();
 };
 
 struct Material {
@@ -45,6 +48,8 @@ struct Material {
   void* VS;
   void* FS;
   const unsigned int ParametersCount;
+  const unsigned int TexturesCount;
+  //static Material* Load(const std::string& name){ return NULL; }
 };
 
 struct RenderObject {

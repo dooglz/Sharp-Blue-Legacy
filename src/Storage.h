@@ -11,13 +11,8 @@ public:
   static void Shutdown();
 };
 
-std::vector<Base_storage*> Base_storage::warehouses;
 
-void Base_storage::Shutdown() {
-  for (auto b : warehouses) {
-    b->_Shutdown();
-  }
-}
+
 
 template <class T> class Storage : public Base_storage {
 private:
@@ -32,7 +27,7 @@ public:
       warehouses.push_back(new Storage<T>);
       constructed = true;
     }
-    printf("Lookign for: %s ... ",name.c_str());
+    printf("Lookign for: %s ... ", name.c_str());
     std::hash_map<std::string, T*>::iterator got = _container.find(name);
     if (got == _container.end()) {
       // Not loaded
@@ -40,8 +35,7 @@ public:
       T* item = T::Load(name);
       _container.insert(std::make_pair(name, item));
       return item;
-    }
-    else {
+    } else {
       printf("In warehouse\n");
       return got->second;
     }
@@ -49,7 +43,14 @@ public:
     return NULL;
   }
 
-  void _Shutdown() { _container.clear(); };
+  void _Shutdown() {
+    std::hash_map<std::string, T*>::iterator itt = _container.begin();
+    while (itt != _container.end()) {
+      delete itt->second;
+      ++itt;
+    }
+    _container.clear();
+  };
 };
 
 template <class T> std::hash_map<std::string, T*> Storage<T>::_container;

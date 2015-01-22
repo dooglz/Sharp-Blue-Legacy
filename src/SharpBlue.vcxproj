@@ -265,13 +265,14 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='debugLib|PS3'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='debugLib|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Material.cpp" />
     <ClCompile Include="Maths.cpp" />
     <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="MeshLoader.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="PC/SDL_Platform.cpp" />
+    <ClCompile Include="Storage.cpp" />
     <ClCompile Include="VITA/GXM_Fragment_Shader.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|PS3'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='debugLib|PS3'">true</ExcludedFromBuild>
@@ -532,7 +533,6 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="Maths.h" />
     <ClInclude Include="Mesh.h" />
-    <ClInclude Include="Meshloader.h" />
     <ClInclude Include="PS3/PS3_Font.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='debugLib|Win32'">true</ExcludedFromBuild>
