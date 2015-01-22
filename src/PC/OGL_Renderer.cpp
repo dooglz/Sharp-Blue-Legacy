@@ -1,7 +1,7 @@
 #include "OGL_Renderer.h"
 #include "SDL_platform.h"
 #include "../Maths.h"
-#include "../Mesh.h"
+#include "../Resource.h"
 #include "sdl/SDL.h"
 #include "glew/glew.h"
 #include <glm/gtc/type_ptr.hpp>
@@ -16,10 +16,7 @@ float f = 0.0f;
 OGL::OGL_ShaderProgram* COGL_Renderer::_defaultProgram;
 std::vector<const Vector3> COGL_Renderer::linebuffer;
 
-void COGL_Renderer::Init() { 
-    loadShaders(); 
-}
-
+void COGL_Renderer::Init() { loadShaders(); }
 
 static float count = 0;
 void COGL_Renderer::ClearSurface() {
@@ -36,52 +33,50 @@ void COGL_Renderer::ClearSurface() {
   SDL::SDL_Platform::CheckGL();
 }
 
-
 COGL_Renderer::COGL_Renderer() {}
 
-void COGL_Renderer::RenderMesh(Mesh* const msh, const Matrix4& mvp) {
+void COGL_Renderer::RenderMesh(RenderObject* const ro, const Matrix4& mvp) {
 
   Matrix4 m4 = _viewprojectionMat * mvp;
 
   unsigned int programID;
   // ASSERT(msh->program != NULL);
-  if (msh->program == NULL){
-      //TODO: throw warning
-      programID = GetDefaultShaderProgram()->getID();
-  }
-  else{
-      programID = msh->program->getID();
+  if (ro->material->program == NULL) {
+    // TODO: throw warning
+    programID = GetDefaultShaderProgram()->getID();
+  } else {
+    programID = ro->material->program->getID();
   }
 
   glUseProgram(programID);
   SDL::SDL_Platform::CheckGL();
 
   GLint mvpIn = glGetUniformLocation(programID, "modelprojection");
-  //Does hte shader have this input?
-  ASSERT(mvpIn!= -1);
+  // Does hte shader have this input?
+  ASSERT(mvpIn != -1);
   SDL::SDL_Platform::CheckGL();
   // Send VP
   glUniformMatrix4fv(mvpIn, 1, false, glm::value_ptr(mvp));
   SDL::SDL_Platform::CheckGL();
 
   // Bind to VAO
-  glBindVertexArray(msh->gVAO);
+  glBindVertexArray(ro->mesh->gVAO);
   SDL::SDL_Platform::CheckGL();
 
   // DRAW
-  if (msh->line == true) {
-    if (msh->strip == true) {
-      glDrawArrays(GL_LINE_STRIP, 0, msh->numVerts);
+  if (ro->mesh->line == true) {
+    if (ro->mesh->strip == true) {
+      glDrawArrays(GL_LINE_STRIP, 0, ro->mesh->numVerts);
     } else {
-      glDrawArrays(GL_LINES, 0, msh->numVerts);
+      glDrawArrays(GL_LINES, 0, ro->mesh->numVerts);
     }
   } else {
-    if (msh->fan == true) {
-      glDrawArrays(GL_TRIANGLE_FAN, 0, msh->numVerts);
-    } else if (msh->strip == true) {
-      glDrawArrays(GL_TRIANGLE_STRIP, 0, msh->numVerts);
+    if (ro->mesh->fan == true) {
+      glDrawArrays(GL_TRIANGLE_FAN, 0, ro->mesh->numVerts);
+    } else if (ro->mesh->strip == true) {
+      glDrawArrays(GL_TRIANGLE_STRIP, 0, ro->mesh->numVerts);
     } else {
-      glDrawArrays(GL_TRIANGLES, 0, msh->numVerts);
+      glDrawArrays(GL_TRIANGLES, 0, ro->mesh->numVerts);
     }
   }
   SDL::SDL_Platform::CheckGL();
@@ -236,9 +231,6 @@ OGL::OGL_ShaderProgram* COGL_Renderer::GetDefaultShaderProgram() {
   return _defaultProgram;
 }
 
-void COGL_Renderer::Shutdown(){
-    delete _defaultProgram;
-}
-
+void COGL_Renderer::Shutdown() { delete _defaultProgram; }
 }
 }

@@ -201,6 +201,8 @@
     <ClInclude Include="Cm_FpsMotor.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="Material.h" />
+    <ClInclude Include="Resource.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\res\shaders\basic.frag">

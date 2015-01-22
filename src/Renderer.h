@@ -2,10 +2,10 @@
 #include "Utilities.h" // asserts and commmon defines
 #include "Maths.h"
 #include <String>
-#include "Mesh.h"
+
 
 namespace Engine {
-class Mesh;
+ struct RenderObject;
 class CRenderer {
 
 protected:
@@ -21,7 +21,7 @@ protected:
 public:
   CRenderer();
   virtual void SetViewMatrix(const Matrix4& vm);
-  virtual void RenderMesh(Mesh* const msh, const Matrix4& mvp) = 0;
+  virtual void RenderMesh(RenderObject* const msh, const Matrix4& mvp) = 0;
   virtual void DrawLine(const Vector3& p1, const Vector3& p2) = 0;
   virtual void DrawCross(const Vector3& p1, const float size) = 0;
   virtual void PrepFrame() = 0;

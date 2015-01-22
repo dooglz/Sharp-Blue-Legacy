@@ -5,7 +5,7 @@
 namespace Engine {
     // This class is responsible for loading in mesh files, and decoding them to
     // Mesh objects
-    class Mesh;
+    struct Mesh;
     class CMeshloader {
     protected:
         std::hash_map<std::string, Mesh*> _meshLibrary;

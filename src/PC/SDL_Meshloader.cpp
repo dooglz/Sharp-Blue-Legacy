@@ -1,7 +1,7 @@
 ﻿#pragma once
 #define _CRT_SECURE_NO_WARNINGS
 #include "SDL_MeshLoader.h"
-#include "../Mesh.h"
+#include "../Resource.h"
 #include "../Maths.h"
 
 #include "SDL_Platform.h"
@@ -119,6 +119,7 @@ Mesh* CSDL_Meshloader::openOBJFile(const std::string& filename) {
   //--turn the obj into our stupid mesh class
 
   Mesh* m = new Mesh();
+  m->loadedLocal = false;
   m->numVerts = vertices.size();
   randomColor();
   randomColor();
@@ -141,7 +142,8 @@ Mesh* CSDL_Meshloader::openOBJFile(const std::string& filename) {
   }
   m->loadedMain = true;
   m->strip = false;
-
+  m->fan = false;
+  m->line = false;
   return m;
 }
 

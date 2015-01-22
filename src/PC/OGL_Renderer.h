@@ -4,31 +4,31 @@
 #include <vector>
 
 namespace Engine {
-	namespace OGL {
-		class OGL_ShaderProgram;
-		class COGL_Renderer : public CRenderer {
-		private:
-		protected:
-			static OGL::OGL_ShaderProgram* _defaultProgram;
-			static void loadShaders();
-			static std::vector<const Vector3> linebuffer;
-			void ProcessLines();
-			void ClearSurface();
+  namespace OGL {
+    class OGL_ShaderProgram;
+    class COGL_Renderer : public CRenderer {
+    private:
+    protected:
+      static OGL::OGL_ShaderProgram* _defaultProgram;
+      static void loadShaders();
+      static std::vector<const Vector3> linebuffer;
+      void ProcessLines();
+      void ClearSurface();
 
-		public:
-			COGL_Renderer();
-			void PrepFrame();
-			void PostRender();
+    public:
+      COGL_Renderer();
+      void PrepFrame();
+      void PostRender();
 
-			void Init();
+      void Init();
 
-			void Shutdown();
+      void Shutdown();
 
-			void RenderMesh(Mesh* const msh, const Matrix4& mvp);
-			void DrawLine(const Vector3& p1, const Vector3& p2);
-			void DrawCross(const Vector3& p1, const float size);
-			//
-			static OGL::OGL_ShaderProgram* GetDefaultShaderProgram();
-		};
-	}
+      void RenderMesh(RenderObject* const msh, const Matrix4& mvp);
+      void DrawLine(const Vector3& p1, const Vector3& p2);
+      void DrawCross(const Vector3& p1, const float size);
+      //
+      static OGL::OGL_ShaderProgram* GetDefaultShaderProgram();
+    };
+  }
 }

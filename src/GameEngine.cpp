@@ -45,7 +45,7 @@ void GameEngine::Init(const unsigned short width, const unsigned short height) {
 
 void GameEngine::SetActiveScene(Scene* scene)
 {
-	ActiveScene = scene;
+  ActiveScene = scene;
 }
 
 void GameEngine::Shutdown() {

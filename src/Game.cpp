@@ -11,11 +11,11 @@
 #include "Cm_Camera.h"
 #include "Scene.h"
 
-
 #include "Renderer.h"
 
 Engine::Entity* ent1;
 Engine::Entity* ent2;
+Engine::Entity* ent3;
 Engine::Entity* camera;
 void registerInputs() {
   // Todo: read these from file
@@ -62,6 +62,20 @@ void Game::init() {
       "models/plane.obj");
   Engine::ActiveScene->AddEntity(ent2);
 
+  ent3 = new Engine::Entity();
+  ent3->SetName("Tex cube");
+  ent3->setPosition(Vector3(5, 5, 5));
+  ent3->AddComponent(new Engine::Components::CmMeshRenderer());
+  Engine::Components::CmMeshRenderer* rc;
+  rc = ent3->getComponent<Engine::Components::CmMeshRenderer>();
+  rc->setMesh("models/cube.obj");
+  rc->SetMaterial("flat");
+  rc->SetMaterialTexture("coolimage.png");
+  rc->SetMaterialTexture(0,"coolimageNormal.png");
+
+  // TODO: do this automagically
+  Engine::ActiveScene->AddEntity(ent3);
+
   camera = new Engine::Entity();
   camera->SetName("Camera");
   camera->setPosition(Vector3(0, 5.5, 0));
@@ -78,14 +92,14 @@ void Game::init() {
 }
 
 void Game::update(double delta) {
-    Engine::Renderer->DrawLine(Vector3(0, 0, 0), Vector3(0, 6, 0));
-    Engine::Renderer->DrawCross(Vector3(0, 6, 0), 1.0f);
+  Engine::Renderer->DrawLine(Vector3(0, 0, 0), Vector3(0, 6, 0));
+  Engine::Renderer->DrawCross(Vector3(0, 6, 0), 1.0f);
 }
 
 void Game::render() {}
 
 void Game::shutdown() {
-    delete ent1;
-    delete ent2;
-    delete camera;
+  delete ent1;
+  delete ent2;
+  delete camera;
 }
