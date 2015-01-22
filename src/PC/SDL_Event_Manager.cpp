@@ -141,7 +141,7 @@ void SDLEventManager::processEvents() {
             break;
           }
           case SDL_BUTTON_RIGHT: {
-            Input::setValue("ms_l", 0);
+            Input::setValue("ms_r", 0);
             break;
           }
           case SDL_BUTTON_MIDDLE: {
