@@ -56,7 +56,7 @@ void OGL_Shader::LoadSourceShader(std::string name) {
   _shaderID = glCreateShader(_shaderType);
   err = glGetError();
   if (err != GL_NO_ERROR) {
-    printf("An OGL error ahas occured: %i\n", err);
+    printf("An OGL error has occured: %i\n", err);
     HALT;
   }
 

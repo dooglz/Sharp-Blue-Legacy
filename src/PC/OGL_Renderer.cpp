@@ -14,7 +14,7 @@ namespace Engine {
 namespace OGL {
 float f = 0.0f;
 
-OGL::OGL_ShaderProgram* COGL_Renderer::_defaultProgram;
+// OGL::OGL_ShaderProgram* COGL_Renderer::_defaultProgram;
 std::vector<const Vector3> COGL_Renderer::linebuffer;
 
 void COGL_Renderer::Init() { loadShaders(); }
@@ -36,21 +36,28 @@ void COGL_Renderer::ClearSurface() {
 
 COGL_Renderer::COGL_Renderer() {}
 
-void COGL_Renderer::RenderMesh(RenderObject* const ro, const Matrix4& mvp) {
+void COGL_Renderer::RenderMesh(RenderObject *const ro, const Matrix4 &mvp) {
 
-  OGLRenderObject* OglRo = static_cast<OGLRenderObject* >(ro);
+  OGLRenderObject *OglRo = static_cast<OGLRenderObject *>(ro);
   Matrix4 m4 = _viewprojectionMat * mvp;
 
   unsigned int programID;
   // ASSERT(msh->program != NULL);
-  if (OglRo->program == NULL) {
+  if (OglRo->material->program == NULL) {
     // TODO: throw warning
-    programID = GetDefaultShaderProgram()->getID();
+    return;
   } else {
-    programID = OglRo->program->getID();
+    OGL_ShaderProgram *sp = static_cast<OGL_ShaderProgram *>(
+        OglRo->material->program->actualProgram);
+    programID = sp->getID();
   }
 
   glUseProgram(programID);
+  SDL::SDL_Platform::CheckGL();
+  GLint vpIn = glGetUniformLocation(programID, "viewprojection");
+  SDL::SDL_Platform::CheckGL();
+  // Send VP, technically we should only need to do this once. //TODO that
+  glUniformMatrix4fv(vpIn, 1, false, glm::value_ptr(_viewprojectionMat));
   SDL::SDL_Platform::CheckGL();
 
   GLint mvpIn = glGetUniformLocation(programID, "modelprojection");
@@ -108,13 +115,13 @@ void COGL_Renderer::PrepFrame() {
   ClearSurface();
 
   // TODO - change this to _current_program;
-  glUseProgram(_defaultProgram->getID());
+  //  glUseProgram(_defaultProgram->getID());
   SDL::SDL_Platform::CheckGL();
-  GLint mvpIn =
-      glGetUniformLocation(_defaultProgram->getID(), "viewprojection");
+  // GLint mvpIn =glGetUniformLocation(_defaultProgram->getID(),
+  // "viewprojection");
   SDL::SDL_Platform::CheckGL();
   // Send VP, technically we should only need to do this once. //TODO that
-  glUniformMatrix4fv(mvpIn, 1, false, glm::value_ptr(_viewprojectionMat));
+  // glUniformMatrix4fv(mvpIn, 1, false, glm::value_ptr(_viewprojectionMat));
   SDL::SDL_Platform::CheckGL();
 }
 
@@ -125,6 +132,8 @@ void COGL_Renderer::PostRender() {
 }
 
 void COGL_Renderer::loadShaders() {
+  /*
+
   // load Default Shaders
   printf("Loading Shaders \n");
   _defaultProgram = new OGL::OGL_ShaderProgram();
@@ -148,20 +157,24 @@ void COGL_Renderer::loadShaders() {
 
   // Link program
   _defaultProgram->link();
+
+
+  */
 }
 
-void COGL_Renderer::DrawCross(const Vector3& p1, const float size) {
+void COGL_Renderer::DrawCross(const Vector3 &p1, const float size) {
   DrawLine(p1 + Vector3(size, 0, 0), p1 - Vector3(size, 0, 0));
   DrawLine(p1 + Vector3(0, size, 0), p1 - Vector3(0, size, 0));
   DrawLine(p1 + Vector3(0, 0, size), p1 - Vector3(0, 0, size));
 }
 
-void COGL_Renderer::DrawLine(const Vector3& p1, const Vector3& p2) {
+void COGL_Renderer::DrawLine(const Vector3 &p1, const Vector3 &p2) {
   linebuffer.push_back(p1);
   linebuffer.push_back(p2);
 }
 
 void COGL_Renderer::ProcessLines() {
+  return;
   if (linebuffer.size() < 1) {
     return;
   }
@@ -226,24 +239,33 @@ void COGL_Renderer::ProcessLines() {
   linebuffer.clear();
 }
 
-OGL::OGL_ShaderProgram* COGL_Renderer::GetDefaultShaderProgram() {
-  if (_defaultProgram == nullptr) {
-    loadShaders();
-  }
-  return _defaultProgram;
+OGL::OGL_ShaderProgram *COGL_Renderer::GetDefaultShaderProgram() {
+  /*  if (_defaultProgram == nullptr) {
+      loadShaders();
+    }
+    return _defaultProgram;
+  */
+  return NULL;
 }
 
-void COGL_Renderer::Shutdown() { delete _defaultProgram; }
+void COGL_Renderer::Shutdown() {
+  // delete _defaultProgram;
+}
 
-RenderObject* COGL_Renderer::GetNewRenderObject() {
+RenderObject *COGL_Renderer::GetNewRenderObject() {
   return new OGLRenderObject();
 }
 
-void MakeProgram(void* FS, void* VS)
-{
-  OGL_ShaderProgram* pgrm = new OGL_ShaderProgram();
-  OGL_VertexShader* ovs = static_cast<OGL_VertexShader*>(VS->actualProgram);
-  OGL_FragmentShader* ofs = static_cast<OGL_FragmentShader*>(FS->actualProgram);
+ShaderProgram *COGL_Renderer::MakeProgram(FragmentShader *FS,
+                                          VertexShader *VS) {
+  OGL_ShaderProgram *pgrm = new OGL_ShaderProgram();
+  OGL_VertexShader *ovs = static_cast<OGL_VertexShader *>(VS->actualProgram);
+  OGL_FragmentShader *ofs =
+      static_cast<OGL_FragmentShader *>(FS->actualProgram);
+  if (VS == NULL || FS == NULL) {
+    printf("Trying to link some null shaders!\n");
+    return NULL;
+  }
   pgrm->attachShader(ovs);
   SDL::SDL_Platform::CheckGL();
   pgrm->attachShader(ofs);
@@ -253,7 +275,32 @@ void MakeProgram(void* FS, void* VS)
   // Link program
   pgrm->link();
   SDL::SDL_Platform::CheckGL();
-}
 
+  ShaderProgram *sp = new ShaderProgram();
+  sp->actualProgram = pgrm;
+  return sp;
 }
 }
+FragmentShader *FragmentShader::Load(std::string name) {
+  // Create Fragment shader
+  OGL::OGL_FragmentShader *FS = new OGL::OGL_FragmentShader();
+  FS->LoadSourceShader("shaders/basic.frag");
+  SDL::SDL_Platform::CheckGL();
+
+  FragmentShader *f = new FragmentShader();
+  f->actualProgram = FS;
+  return f;
+};
+
+VertexShader *VertexShader::Load(std::string name) {
+
+  // Create vertex shader
+  OGL::OGL_VertexShader *VS = new OGL::OGL_VertexShader();
+  VS->LoadSourceShader("shaders/basic.vert");
+  SDL::SDL_Platform::CheckGL();
+
+  VertexShader *v = new VertexShader();
+  v->actualProgram = VS;
+  return v;
+};
+};

@@ -10,18 +10,24 @@ namespace Engine {
 class FragmentShader{
 public:
   void* actualProgram;
-  static FragmentShader* Load(std::string name){return NULL;};
+  static FragmentShader* Load(std::string name);
+  ~FragmentShader(){ delete actualProgram; }
 };
 
 class VertexShader{
 public:
   void* actualProgram;
-  static VertexShader* Load(std::string name){ return NULL; };
+  static VertexShader* Load(std::string name);
+  ~VertexShader(){ delete actualProgram ;}
 };
-/*
+
 class ShaderProgram {
-  void link();
-  FragmentShader* FS;
-  VertexShader* VS;
-};*/
+public:
+  void* actualProgram;
+  ~ShaderProgram(){ delete actualProgram; }
+ // void link();
+  //FragmentShader* FS;
+  //VertexShader* VS;
+};
+
 }

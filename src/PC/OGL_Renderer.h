@@ -10,7 +10,7 @@ namespace Engine {
     class COGL_Renderer : public CRenderer {
     private:
     protected:
-      static OGL::OGL_ShaderProgram* _defaultProgram;
+     // static OGL::OGL_ShaderProgram* _defaultProgram;
       static void loadShaders();
       static std::vector<const Vector3> linebuffer;
       void ProcessLines();
@@ -31,7 +31,7 @@ namespace Engine {
       //
       static OGL::OGL_ShaderProgram* GetDefaultShaderProgram();
       RenderObject* GetNewRenderObject() ;
-      void MakeProgram(void* FS, void* VS);
+      ShaderProgram* MakeProgram(FragmentShader* FS, VertexShader* VS);
     };
 
     struct OGLRenderObject : RenderObject {

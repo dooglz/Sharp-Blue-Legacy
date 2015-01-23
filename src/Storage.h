@@ -30,16 +30,16 @@ public:
       warehouses.push_back(new Storage<T>);
       constructed = true;
     }
-    printf("Lookign for: %s ... ", name.c_str());
+    //printf("Lookign for: %s ... ", name.c_str());
     std::hash_map<std::string, T*>::iterator got = _container.find(name);
     if (got == _container.end()) {
       // Not loaded
-      printf("Not found, Loading \n");
+     // printf("Not found, Loading \n");
       T* item = T::Load(name);
       _container.insert(std::make_pair(name, item));
       return item;
     } else {
-      printf("In warehouse\n");
+      //printf("In warehouse\n");
       return got->second;
     }
 

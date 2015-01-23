@@ -5,7 +5,7 @@
 
 namespace Engine{
   namespace Materials{
-    Material md = { "Default", "basic", "basic", NULL, NULL, 1,0 };
+    Material md = { "Default", "basic", "basic", NULL, NULL, NULL, 1, 0 };
     Material* mat_Default = &md;
   }
 
@@ -16,9 +16,12 @@ namespace Engine{
       VS = Storage<VertexShader>::Get(vsName);
     }
     if (FS == NULL){
-      VS = Storage<FragmentShader>::Get(fsName);
+      FS = Storage<FragmentShader>::Get(fsName);
     }
-    Renderer->MakeProgram(VS,FS);
+    //TODO: mkae program a get from resource
+    printf("Linking shader - %s with %s\n", vsName.c_str(),fsName.c_str());
+    program = Renderer->MakeProgram(FS,VS);
+
   }
 
 
