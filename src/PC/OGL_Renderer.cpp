@@ -2,6 +2,7 @@
 #include "SDL_platform.h"
 #include "../Maths.h"
 #include "../Resource.h"
+#include "../Shaders.h"
 #include "sdl/SDL.h"
 #include "glew/glew.h"
 #include <glm/gtc/type_ptr.hpp>
@@ -37,15 +38,16 @@ COGL_Renderer::COGL_Renderer() {}
 
 void COGL_Renderer::RenderMesh(RenderObject* const ro, const Matrix4& mvp) {
 
+  OGLRenderObject* OglRo = static_cast<OGLRenderObject* >(ro);
   Matrix4 m4 = _viewprojectionMat * mvp;
 
   unsigned int programID;
   // ASSERT(msh->program != NULL);
-  if (ro->material->program == NULL) {
+  if (OglRo->program == NULL) {
     // TODO: throw warning
     programID = GetDefaultShaderProgram()->getID();
   } else {
-    programID = ro->material->program->getID();
+    programID = OglRo->program->getID();
   }
 
   glUseProgram(programID);
@@ -232,5 +234,26 @@ OGL::OGL_ShaderProgram* COGL_Renderer::GetDefaultShaderProgram() {
 }
 
 void COGL_Renderer::Shutdown() { delete _defaultProgram; }
+
+RenderObject* COGL_Renderer::GetNewRenderObject() {
+  return new OGLRenderObject();
+}
+
+void MakeProgram(void* FS, void* VS)
+{
+  OGL_ShaderProgram* pgrm = new OGL_ShaderProgram();
+  OGL_VertexShader* ovs = static_cast<OGL_VertexShader*>(VS->actualProgram);
+  OGL_FragmentShader* ofs = static_cast<OGL_FragmentShader*>(FS->actualProgram);
+  pgrm->attachShader(ovs);
+  SDL::SDL_Platform::CheckGL();
+  pgrm->attachShader(ofs);
+  SDL::SDL_Platform::CheckGL();
+  pgrm->FS = ofs;
+  pgrm->VS = ovs;
+  // Link program
+  pgrm->link();
+  SDL::SDL_Platform::CheckGL();
+}
+
 }
 }

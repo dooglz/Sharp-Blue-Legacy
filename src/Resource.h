@@ -44,19 +44,18 @@ struct Material {
   const std::string materialName;
   const std::string vsName;
   const std::string fsName;
-  OGL::OGL_ShaderProgram* program; //TODO: abstract
   void* VS;
   void* FS;
   const unsigned int ParametersCount;
   const unsigned int TexturesCount;
-  //static Material* Load(const std::string& name){ return NULL; }
+  void Load();
 };
 
 struct RenderObject {
   Mesh* mesh;
   Material* material;
   Texture** textures;
-  void* otherParams;
+  void** Params;
 };
 }
 

@@ -27,6 +27,8 @@ public:
   void SetMaterialTexture(unsigned int i, const std::string& textureName);
   void SetMaterialTexture(unsigned int i, Texture* tex);
 
+  void SetMaterialParameter(unsigned int i, void* param);
+
   void Render();
   bool culled;
 };

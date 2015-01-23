@@ -9,8 +9,8 @@ class OGL_ShaderProgram {
 public:
   OGL_ShaderProgram();
 
-  OGL_VertexShader VS;
-  OGL_FragmentShader FS;
+  OGL_VertexShader* VS;
+  OGL_FragmentShader* FS;
 
   std::string name;
 

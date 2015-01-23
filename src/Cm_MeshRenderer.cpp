@@ -10,7 +10,8 @@
 namespace Engine {
 namespace Components {
 CmMeshRenderer::CmMeshRenderer() : CComponent("MeshRenderer") {
-  _ro = new RenderObject();
+  //_ro = new RenderObject();
+  _ro = Renderer->GetNewRenderObject();
   _ro->textures = NULL;
   _ro->material = Materials::mat_Default;
 }
@@ -29,7 +30,14 @@ void CmMeshRenderer::setMesh(const std::string& meshname) {
   // null shaders get defaulted in renderer
 }
 
-void CmMeshRenderer::SetMaterial(Material* mat) { _ro->material = mat; }
+void CmMeshRenderer::SetMaterial(Material* mat) {
+  mat->Load();
+_ro->material = mat; 
+delete _ro->textures;
+delete _ro->Params;
+_ro->textures = new Texture*[_ro->material->TexturesCount];
+_ro->Params = new void*[_ro->material->ParametersCount];
+}
 /*
 void CmMeshRenderer::SetMaterial(const std::string& materialName) {
   SetMaterial(Storage<Material>::Get(materialName));
@@ -47,6 +55,12 @@ void CmMeshRenderer::SetMaterialTexture(unsigned int i, Texture* tex) {
 void CmMeshRenderer::SetMaterialTexture(unsigned int i,
                                         const std::string& textureName) {
   SetMaterialTexture(i, Storage<Texture>::Get(textureName));
+}
+
+void CmMeshRenderer::SetMaterialParameter(unsigned int i, void* param)
+{
+  if (i + 1 > _ro->material->ParametersCount){ return; }
+  _ro->Params[i] = param;
 }
 
 void CmMeshRenderer::Render() {

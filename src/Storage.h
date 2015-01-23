@@ -21,6 +21,9 @@ private:
 
 public:
   Storage() {}
+  static void Store(const std::string& name,T* item) {
+    _container.insert(std::make_pair(name, item));
+  }
 
   static T* Get(const std::string& name) {
     if (!constructed) {

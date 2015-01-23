@@ -5,7 +5,9 @@
 
 
 namespace Engine {
- struct RenderObject;
+struct RenderObject;
+class FragmentShader;
+class VertexShader;
 class CRenderer {
 
 protected:
@@ -26,6 +28,9 @@ public:
   virtual void DrawCross(const Vector3& p1, const float size) = 0;
   virtual void PrepFrame() = 0;
   virtual void PostRender() = 0;
+
+  virtual void MakeProgram(void* FS, void* VS) = 0;
+  virtual RenderObject* GetNewRenderObject() = 0;
 
   virtual void Init() = 0;
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "../Renderer.h"
+#include "../Resource.h"
 #include "../Maths.h"
 #include <vector>
 
@@ -29,6 +30,13 @@ namespace Engine {
       void DrawCross(const Vector3& p1, const float size);
       //
       static OGL::OGL_ShaderProgram* GetDefaultShaderProgram();
+      RenderObject* GetNewRenderObject() ;
+      void MakeProgram(void* FS, void* VS);
     };
+
+    struct OGLRenderObject : RenderObject {
+      OGL_ShaderProgram* program;
+    };
+
   }
 }
