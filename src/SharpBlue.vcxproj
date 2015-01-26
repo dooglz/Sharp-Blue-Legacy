@@ -267,8 +267,7 @@
     </ClCompile>
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Maths.cpp" />
-    <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="OGL_Material.cpp" />
+    <ClCompile Include="PC/OGL_Material.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -533,7 +532,6 @@
     </ClInclude>
     <ClInclude Include="Input.h" />
     <ClInclude Include="Maths.h" />
-    <ClInclude Include="Mesh.h" />
     <ClInclude Include="PS3/PS3_Font.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='debugLib|Win32'">true</ExcludedFromBuild>

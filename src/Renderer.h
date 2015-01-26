@@ -30,8 +30,6 @@ public:
   virtual void PrepFrame() = 0;
   virtual void PostRender() = 0;
 
-  virtual RenderObject* GetNewRenderObject() = 0;
-
   virtual void Init() = 0;
 
   virtual void Shutdown(){};

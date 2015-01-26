@@ -43,13 +43,14 @@ struct Texture {
 };
 
 struct Material {
+  ~Material();
   void* EngineMaterial; //most likely a OGL_ShaderProgram*
+  void Load();
   const std::string materialName;
   const std::string vsName;
   const std::string fsName;
   const unsigned int ParametersCount;
   const unsigned int TexturesCount;
-  void Load();
 };
 
 struct RenderObject {

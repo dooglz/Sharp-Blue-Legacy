@@ -1,10 +1,9 @@
 #pragma once
-#include "../Resource.h"
+#include <string>
+
 
 namespace Engine {
-
-
-
+struct Mesh;
 namespace SDL {
 
 class CSDL_Meshloader {

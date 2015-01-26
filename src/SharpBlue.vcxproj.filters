@@ -77,7 +77,6 @@
     <ClCompile Include="PC/SDL_Platform.cpp">
       <Filter>PC</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="PC\SDL_Meshloader.cpp">
       <Filter>PC</Filter>
     </ClCompile>
@@ -91,7 +90,7 @@
     </ClCompile>
     <ClCompile Include="Storage.cpp" />
     <ClCompile Include="Material.cpp" />
-    <ClCompile Include="OGL_Material.cpp">
+    <ClCompile Include="PC/OGL_Material.cpp">
       <Filter>PC</Filter>
     </ClCompile>
   </ItemGroup>
@@ -101,7 +100,6 @@
     <ClInclude Include="FileIO.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Input.h" />
-    <ClInclude Include="Mesh.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="torus.h" />
     <ClInclude Include="Utilities.h" />

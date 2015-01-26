@@ -37,17 +37,14 @@ COGL_Renderer::COGL_Renderer() {}
 
 void COGL_Renderer::RenderMesh(RenderObject *const ro, const Matrix4 &mvp) {
 
-  OGLRenderObject *OglRo = static_cast<OGLRenderObject *>(ro);
-  Matrix4 m4 = _viewprojectionMat * mvp;
-
   unsigned int programID;
   // ASSERT(msh->program != NULL);
-  if (OglRo->material->EngineMaterial == NULL) {
+  if (ro->material->EngineMaterial == NULL) {
     // TODO: throw warning
     return;
   } else {
     OGL_ShaderProgram *sp =
-        static_cast<OGL_ShaderProgram *>(OglRo->material->EngineMaterial);
+        static_cast<OGL_ShaderProgram *>(ro->material->EngineMaterial);
     programID = sp->getID();
   }
 
@@ -251,11 +248,5 @@ void COGL_Renderer::Shutdown() {
   // delete _defaultProgram;
 }
 
-RenderObject *COGL_Renderer::GetNewRenderObject() {
-  return new OGLRenderObject();
 }
-
-
-}
-
 };

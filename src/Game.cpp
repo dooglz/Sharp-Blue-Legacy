@@ -1,6 +1,6 @@
 // THIS GAME FILE IS FOR DEBUGINNG THE ENGINE, PROJECT USING THE ENGINE WILL
 // HAVE THEIR OWN GAME FILE
-
+#include "Entity.h"
 #include "Maths.h"
 #include "Game.h"
 #include "Input.h"

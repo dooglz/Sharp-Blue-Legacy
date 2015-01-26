@@ -3,7 +3,7 @@
 #include "Entity.h"
 #include "Resource.h"
 #include "Storage.h"
-#include "MAterial.h"
+#include "Material.h"
 #include <iostream>
 #include <string>
 
@@ -11,7 +11,7 @@ namespace Engine {
 namespace Components {
 CmMeshRenderer::CmMeshRenderer() : CComponent("MeshRenderer") {
   //_ro = new RenderObject();
-  _ro = Renderer->GetNewRenderObject();
+  _ro = new RenderObject();
   _ro->textures = NULL;
   _ro->material = Materials::mat_Default;
 }
@@ -32,23 +32,20 @@ void CmMeshRenderer::setMesh(const std::string& meshname) {
 
 void CmMeshRenderer::SetMaterial(Material* mat) {
   mat->Load();
-_ro->material = mat; 
-delete _ro->textures;
-delete _ro->Params;
-_ro->textures = new Texture*[_ro->material->TexturesCount];
-_ro->Params = new void*[_ro->material->ParametersCount];
+  _ro->material = mat;
+  delete _ro->textures;
+  delete _ro->Params;
+  _ro->textures = new Texture* [_ro->material->TexturesCount];
+  _ro->Params = new void* [_ro->material->ParametersCount];
 }
-/*
-void CmMeshRenderer::SetMaterial(const std::string& materialName) {
-  SetMaterial(Storage<Material>::Get(materialName));
-}
-*/
 
 void* CmMeshRenderer::getMaterial() { return _ro->material; }
 
 void CmMeshRenderer::SetMaterialTexture(unsigned int i, Texture* tex) {
   // Loader->loadOnGPU(texture);
-  if (i+1 > _ro->material->TexturesCount){return;}
+  if (i + 1 > _ro->material->TexturesCount) {
+    return;
+  }
   _ro->textures[i] = tex;
 }
 
@@ -57,9 +54,10 @@ void CmMeshRenderer::SetMaterialTexture(unsigned int i,
   SetMaterialTexture(i, Storage<Texture>::Get(textureName));
 }
 
-void CmMeshRenderer::SetMaterialParameter(unsigned int i, void* param)
-{
-  if (i + 1 > _ro->material->ParametersCount){ return; }
+void CmMeshRenderer::SetMaterialParameter(unsigned int i, void* param) {
+  if (i + 1 > _ro->material->ParametersCount) {
+    return;
+  }
   _ro->Params[i] = param;
 }
 
