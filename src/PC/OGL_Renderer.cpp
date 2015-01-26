@@ -2,7 +2,6 @@
 #include "SDL_platform.h"
 #include "../Maths.h"
 #include "../Resource.h"
-#include "../Shaders.h"
 #include "sdl/SDL.h"
 #include "glew/glew.h"
 #include <glm/gtc/type_ptr.hpp>
@@ -43,12 +42,12 @@ void COGL_Renderer::RenderMesh(RenderObject *const ro, const Matrix4 &mvp) {
 
   unsigned int programID;
   // ASSERT(msh->program != NULL);
-  if (OglRo->material->program == NULL) {
+  if (OglRo->material->EngineMaterial == NULL) {
     // TODO: throw warning
     return;
   } else {
-    OGL_ShaderProgram *sp = static_cast<OGL_ShaderProgram *>(
-        OglRo->material->program->actualProgram);
+    OGL_ShaderProgram *sp =
+        static_cast<OGL_ShaderProgram *>(OglRo->material->EngineMaterial);
     programID = sp->getID();
   }
 
@@ -256,51 +255,7 @@ RenderObject *COGL_Renderer::GetNewRenderObject() {
   return new OGLRenderObject();
 }
 
-ShaderProgram *COGL_Renderer::MakeProgram(FragmentShader *FS,
-                                          VertexShader *VS) {
-  OGL_ShaderProgram *pgrm = new OGL_ShaderProgram();
-  OGL_VertexShader *ovs = static_cast<OGL_VertexShader *>(VS->actualProgram);
-  OGL_FragmentShader *ofs =
-      static_cast<OGL_FragmentShader *>(FS->actualProgram);
-  if (VS == NULL || FS == NULL) {
-    printf("Trying to link some null shaders!\n");
-    return NULL;
-  }
-  pgrm->attachShader(ovs);
-  SDL::SDL_Platform::CheckGL();
-  pgrm->attachShader(ofs);
-  SDL::SDL_Platform::CheckGL();
-  pgrm->FS = ofs;
-  pgrm->VS = ovs;
-  // Link program
-  pgrm->link();
-  SDL::SDL_Platform::CheckGL();
 
-  ShaderProgram *sp = new ShaderProgram();
-  sp->actualProgram = pgrm;
-  return sp;
 }
-}
-FragmentShader *FragmentShader::Load(std::string name) {
-  // Create Fragment shader
-  OGL::OGL_FragmentShader *FS = new OGL::OGL_FragmentShader();
-  FS->LoadSourceShader("shaders/basic.frag");
-  SDL::SDL_Platform::CheckGL();
 
-  FragmentShader *f = new FragmentShader();
-  f->actualProgram = FS;
-  return f;
-};
-
-VertexShader *VertexShader::Load(std::string name) {
-
-  // Create vertex shader
-  OGL::OGL_VertexShader *VS = new OGL::OGL_VertexShader();
-  VS->LoadSourceShader("shaders/basic.vert");
-  SDL::SDL_Platform::CheckGL();
-
-  VertexShader *v = new VertexShader();
-  v->actualProgram = VS;
-  return v;
-};
 };

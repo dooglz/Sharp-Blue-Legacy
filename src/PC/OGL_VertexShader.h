@@ -5,6 +5,10 @@ namespace OGL {
 class OGL_VertexShader : public OGL_Shader {
 
 public:
+
+  static OGL_VertexShader* Load(const std::string &name);
+
+
   OGL_VertexShader();
 
   //! Set a named paramter value
@@ -26,3 +30,5 @@ public:
 };
 }
 }
+
+

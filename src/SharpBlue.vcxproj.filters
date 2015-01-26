@@ -91,6 +91,9 @@
     </ClCompile>
     <ClCompile Include="Storage.cpp" />
     <ClCompile Include="Material.cpp" />
+    <ClCompile Include="OGL_Material.cpp">
+      <Filter>PC</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine.h" />
@@ -204,7 +207,6 @@
     <ClInclude Include="Material.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Storage.h" />
-    <ClInclude Include="Shaders.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\res\shaders\basic.frag">

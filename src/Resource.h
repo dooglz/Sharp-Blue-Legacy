@@ -37,18 +37,16 @@ struct Mesh {
 };
 
 struct Texture {
-  int lol;
+  void* EngineTexture;
   static Texture *Load(const std::string &name) { return NULL; }
   void LoadOnGpu();
 };
 
 struct Material {
+  void* EngineMaterial; //most likely a OGL_ShaderProgram*
   const std::string materialName;
   const std::string vsName;
   const std::string fsName;
-  VertexShader* VS;
-  FragmentShader* FS;
-  ShaderProgram* program;
   const unsigned int ParametersCount;
   const unsigned int TexturesCount;
   void Load();

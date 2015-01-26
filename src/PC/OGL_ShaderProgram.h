@@ -8,6 +8,7 @@ class OGL_ShaderProgram {
 
 public:
   OGL_ShaderProgram();
+  static OGL_ShaderProgram *Load(const std::string &name);
 
   OGL_VertexShader* VS;
   OGL_FragmentShader* FS;

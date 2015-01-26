@@ -31,7 +31,6 @@ namespace Engine {
       //
       static OGL::OGL_ShaderProgram* GetDefaultShaderProgram();
       RenderObject* GetNewRenderObject() ;
-      ShaderProgram* MakeProgram(FragmentShader* FS, VertexShader* VS);
     };
 
     struct OGLRenderObject : RenderObject {

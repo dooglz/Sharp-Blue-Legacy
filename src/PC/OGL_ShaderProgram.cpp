@@ -1,5 +1,9 @@
 #include "OGL_ShaderProgram.h"
 #include "glew\glew.h"
+#include <sstream>
+#include "SDL_platform.h"
+#include "../Storage.h"
+
 namespace Engine {
 namespace OGL {
 
@@ -28,5 +32,47 @@ void OGL_ShaderProgram::attachShader(OGL_Shader* shader) {
 }
 
 GLuint OGL_ShaderProgram::getID() { return _ID; }
+
+OGL_ShaderProgram* OGL_ShaderProgram::Load(const std::string& name) {
+  std::string vsName;
+  std::string fsName;
+
+  {
+    // Todo: move to a helper class
+    std::stringstream ss(name);
+    std::string item;
+    bool b = 0;
+    while (std::getline(ss, item, '-')) {
+      if (!b) {
+        vsName = item + ".vert";
+        b = 1;
+      } else {
+        fsName = item + ".frag";
+      }
+    }
+  }
+
+  OGL::OGL_VertexShader* VS = Storage<OGL::OGL_VertexShader>::Get(vsName);
+  OGL::OGL_FragmentShader* FS = Storage<OGL::OGL_FragmentShader>::Get(fsName);
+  OGL_ShaderProgram* pgrm = new OGL_ShaderProgram();
+  if (VS == NULL || FS == NULL) {
+    printf("Trying to link some null shaders!\n");
+    return NULL;
+  }
+
+  pgrm->attachShader(VS);
+  SDL::SDL_Platform::CheckGL();
+  pgrm->attachShader(FS);
+  SDL::SDL_Platform::CheckGL();
+  pgrm->FS = FS;
+  pgrm->VS = VS;
+  // Link program
+  pgrm->link();
+  SDL::SDL_Platform::CheckGL();
+
+  return pgrm;
+}
+
+
 }
 }

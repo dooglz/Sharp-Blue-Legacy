@@ -268,6 +268,7 @@
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Maths.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="OGL_Material.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -480,7 +481,6 @@
     </ClInclude>
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="Shaders.h" />
     <ClInclude Include="Storage.h" />
     <ClInclude Include="VITA/GXM_Fragment_shader.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|PS3'">true</ExcludedFromBuild>
