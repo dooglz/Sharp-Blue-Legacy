@@ -1,5 +1,6 @@
 #include "OGL_Renderer.h"
 #include "SDL_platform.h"
+#include "../OGL_Resources.h"
 #include "../Maths.h"
 #include "../Resource.h"
 #include "sdl/SDL.h"
@@ -38,31 +39,41 @@ COGL_Renderer::COGL_Renderer() {}
 void COGL_Renderer::RenderMesh(RenderObject *const ro, const Matrix4 &mvp) {
 
   unsigned int programID;
-  // ASSERT(msh->program != NULL);
-  if (ro->material->EngineMaterial == NULL) {
-    // TODO: throw warning
+  if (ro->material == NULL || ro->material->EngineMaterial == NULL) {
+    ASSERT(false);
     return;
-  } else {
-    OGL_ShaderProgram *sp =
-        static_cast<OGL_ShaderProgram *>(ro->material->EngineMaterial);
-    programID = sp->getID();
   }
+  Material *material = ro->material;
+  OGL_ShaderProgram *sp =
+      static_cast<OGL_ShaderProgram *>(material->EngineMaterial);
+  programID = sp->getID();
 
   glUseProgram(programID);
   SDL::SDL_Platform::CheckGL();
+
+  // TODO: only do this once per frame per SP.
   GLint vpIn = glGetUniformLocation(programID, "viewprojection");
   SDL::SDL_Platform::CheckGL();
-  // Send VP, technically we should only need to do this once. //TODO that
   glUniformMatrix4fv(vpIn, 1, false, glm::value_ptr(_viewprojectionMat));
   SDL::SDL_Platform::CheckGL();
 
   GLint mvpIn = glGetUniformLocation(programID, "modelprojection");
-  // Does hte shader have this input?
-  ASSERT(mvpIn != -1);
   SDL::SDL_Platform::CheckGL();
-  // Send VP
+  // Does the shader have this input?
+  ASSERT(mvpIn != -1);
   glUniformMatrix4fv(mvpIn, 1, false, glm::value_ptr(mvp));
   SDL::SDL_Platform::CheckGL();
+
+  for (unsigned int i = 0; i < material->TexturesCount; i++) {
+    // Bind toTexture Unit
+    glActiveTexture(GL_TEXTURE0 + i);
+    //bind texture to texture unit
+    OGL_Texture* oglTex = static_cast<OGL_Texture*>(ro->textures[i]->EngineTexture);
+    glBindTexture(GL_TEXTURE_2D, oglTex->TextureID);
+    // Set Shader Texture sampler to Texture Unit
+    //GLuint TextureID = glGetUniformLocation(programID, "myTextureSampler");
+    glUniform1i(50 + i, 0 + i);
+  }
 
   // Bind to VAO
   glBindVertexArray(ro->mesh->gVAO);
@@ -127,36 +138,7 @@ void COGL_Renderer::PostRender() {
   SDL_GL_SwapWindow(SDL::SDL_Platform::GetWindow());
 }
 
-void COGL_Renderer::loadShaders() {
-  /*
-
-  // load Default Shaders
-  printf("Loading Shaders \n");
-  _defaultProgram = new OGL::OGL_ShaderProgram();
-
-  // Create vertex shader
-  OGL::OGL_VertexShader* VS = new OGL::OGL_VertexShader();
-  VS->LoadSourceShader("shaders/basic.vert");
-  SDL::SDL_Platform::CheckGL();
-
-  // Attach vertex shader to program
-  _defaultProgram->attachShader(VS);
-
-  // Create Fragment shader
-  OGL::OGL_FragmentShader* FS = new OGL::OGL_FragmentShader();
-  FS->LoadSourceShader("shaders/basic.frag");
-  SDL::SDL_Platform::CheckGL();
-
-  // Attach vertex shader to program
-  _defaultProgram->attachShader(FS);
-  SDL::SDL_Platform::CheckGL();
-
-  // Link program
-  _defaultProgram->link();
-
-
-  */
-}
+void COGL_Renderer::loadShaders() {}
 
 void COGL_Renderer::DrawCross(const Vector3 &p1, const float size) {
   DrawLine(p1 + Vector3(size, 0, 0), p1 - Vector3(size, 0, 0));
@@ -247,6 +229,5 @@ OGL::OGL_ShaderProgram *COGL_Renderer::GetDefaultShaderProgram() {
 void COGL_Renderer::Shutdown() {
   // delete _defaultProgram;
 }
-
 }
 };

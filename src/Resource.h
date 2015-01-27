@@ -38,14 +38,16 @@ struct Mesh {
 
 struct Texture {
   ~Texture();
-  void *EngineTexture;
+  void *EngineTexture; //OGL_Texture*
   static Texture *Load(const std::string &name);
   void LoadOnGpu();
 };
 
 struct Material {
   Material(const std::string &name, const std::string &vs,
-           const std::string &fs, unsigned int Params, unsigned int Textures);
+           const std::string &fs, const unsigned int Params,
+           const unsigned int Textures, const bool NeedsNormals,
+           const bool NeedsColours, const bool NeedsUVs);
   ~Material();
   void *EngineMaterial; // most likely a OGL_ShaderProgram*
   static Material *Load(const std::string &name);
@@ -54,6 +56,9 @@ struct Material {
   const std::string fsName;
   const unsigned int ParametersCount;
   const unsigned int TexturesCount;
+  const bool NeedsNormals;
+  const bool NeedsColours;
+  const bool NeedsUVs;
 };
 
 struct RenderObject {

@@ -10,12 +10,16 @@ namespace Engine {
 
 Material::Material(const std::string& name, const std::string& vs,
                    const std::string& fs, unsigned int Params,
-                   unsigned int Textures)
+                   unsigned int Textures, const bool NeedsNormals,
+                   const bool NeedsColours, const bool NeedsUVs)
     : materialName(name),
       vsName(vs),
       fsName(fs),
       ParametersCount(Params),
-      TexturesCount(Textures) {}
+      TexturesCount(Textures),
+      NeedsNormals(NeedsNormals),
+      NeedsColours(NeedsColours),
+      NeedsUVs(NeedsUVs) {}
 
 Material* Material::Load(const std::string& name) {
   // TODO: what the hell are you doing son?!
@@ -32,7 +36,9 @@ Material* Material::Load(const std::string& name) {
   ASSERT(found);
   Material* m = new Material(
       name, MaterialStats[index].vsName, MaterialStats[index].fsName,
-      MaterialStats[index].TexturesCount, MaterialStats[index].ParametersCount);
+      MaterialStats[index].ParametersCount, MaterialStats[index].TexturesCount,
+      MaterialStats[index].NeedsNormals, MaterialStats[index].NeedsColours,
+      MaterialStats[index].NeedsUVs);
   m->EngineMaterial =
       Storage<OGL::OGL_ShaderProgram>::Get(m->vsName + "-" + m->fsName);
   return m;

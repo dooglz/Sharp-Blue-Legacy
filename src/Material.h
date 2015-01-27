@@ -1,13 +1,20 @@
 #pragma once
 #include "Resource.h"
-namespace Engine{
-  enum Materials { Default, Textured };
-  struct MaterialData{
-    const std::string materialName;
-    const std::string vsName;
-    const std::string fsName;
-    const unsigned int ParametersCount;
-    const unsigned int TexturesCount;
-  };
-  const MaterialData MaterialStats[] = { { "Default", "basic", "basic", 0, 0 }, { "Textured", "basic", "basic", 1, 0 } };
+namespace Engine {
+enum Materials { Default, Coloured, Textured };
+struct MaterialData {
+  const std::string materialName;
+  const std::string vsName;
+  const std::string fsName;
+  const unsigned int ParametersCount;
+  const unsigned int TexturesCount;
+  bool NeedsNormals;
+  bool NeedsColours;
+  bool NeedsUVs;
+};
+const MaterialData MaterialStats[] = {
+  { "Default", "basic", "basic", 1, 0, false, false, false },
+  { "Coloured", "basic", "basic", 0, 0, false, true, false },
+  { "Textured", "basic", "basic", 1, 0, false, false, true }
+};
 }
