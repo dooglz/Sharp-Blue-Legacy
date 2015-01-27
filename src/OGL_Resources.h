@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "SDL_platform.h"
 
 namespace Engine {
 namespace OGL {
@@ -9,7 +10,7 @@ struct OGL_Texture {
   static OGL_Texture* Load(const std::string& name);
   void LoadOnGpu();
   unsigned int TextureID;
-  void* imageData;
+  SDL_Surface* imageData;
 };
 }
 }

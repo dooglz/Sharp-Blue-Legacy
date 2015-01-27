@@ -90,6 +90,8 @@ void SDL_Platform::Init(const unsigned short width,
   InitDisplay(width, height);
   Renderer = new OGL::COGL_Renderer();
   Renderer->Init();
+
+
 }
 
 void SDL_Platform::InitDisplay(const unsigned short width,
