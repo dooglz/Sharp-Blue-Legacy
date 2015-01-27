@@ -13,7 +13,7 @@ CmMeshRenderer::CmMeshRenderer() : CComponent("MeshRenderer") {
   //_ro = new RenderObject();
   _ro = new RenderObject();
   _ro->textures = NULL;
-  _ro->material = Materials::mat_Default;
+  SetMaterial(Materials::Default);
 }
 
 CmMeshRenderer::~CmMeshRenderer() { delete _ro; }
@@ -30,11 +30,10 @@ void CmMeshRenderer::setMesh(const std::string& meshname) {
   // null shaders get defaulted in renderer
 }
 
-void CmMeshRenderer::SetMaterial(Material* mat) {
-  mat->Load();
-  _ro->material = mat;
+void CmMeshRenderer::SetMaterial(Materials mat) {
+  _ro->material = Storage<Material>::Get(MaterialStats[mat].materialName);
   delete _ro->textures;
-  delete _ro->Params;
+//TODO:  delete _ro->Params;
   _ro->textures = new Texture* [_ro->material->TexturesCount];
   _ro->Params = new void* [_ro->material->ParametersCount];
 }

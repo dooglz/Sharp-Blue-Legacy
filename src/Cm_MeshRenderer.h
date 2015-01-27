@@ -4,7 +4,7 @@
 namespace Engine {
 struct Mesh;
 struct Texture;
-struct Material;
+enum Materials;
 struct RenderObject;
 namespace Components {
 
@@ -21,7 +21,7 @@ public:
   void setMesh(const std::string& meshname);
 
   //void SetMaterial(const std::string& materialName);
-  void SetMaterial(Material* mat);
+  void SetMaterial(Materials mat);
   void* getMaterial();
 
   void SetMaterialTexture(unsigned int i, const std::string& textureName);

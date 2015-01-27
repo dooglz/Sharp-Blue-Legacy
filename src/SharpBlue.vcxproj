@@ -267,7 +267,7 @@
     </ClCompile>
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Maths.cpp" />
-    <ClCompile Include="PC/OGL_Material.cpp" />
+    <ClCompile Include="PC\OGL_Resources.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />

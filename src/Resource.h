@@ -5,9 +5,9 @@
 #include <vector>
 
 namespace Engine {
-  class FragmentShader;
-  class ShaderProgram;
-  class VertexShader;
+class FragmentShader;
+class ShaderProgram;
+class VertexShader;
 namespace OGL {
 class OGL_ShaderProgram;
 }
@@ -37,15 +37,18 @@ struct Mesh {
 };
 
 struct Texture {
-  void* EngineTexture;
-  static Texture *Load(const std::string &name) { return NULL; }
+  ~Texture();
+  void *EngineTexture;
+  static Texture *Load(const std::string &name);
   void LoadOnGpu();
 };
 
 struct Material {
+  Material(const std::string &name, const std::string &vs,
+           const std::string &fs, unsigned int Params, unsigned int Textures);
   ~Material();
-  void* EngineMaterial; //most likely a OGL_ShaderProgram*
-  void Load();
+  void *EngineMaterial; // most likely a OGL_ShaderProgram*
+  static Material *Load(const std::string &name);
   const std::string materialName;
   const std::string vsName;
   const std::string fsName;
@@ -54,6 +57,10 @@ struct Material {
 };
 
 struct RenderObject {
+  ~RenderObject(){
+    // Todo: URGENT
+  };
+  void *EngineRenderObject;
   Mesh *mesh;
   Material *material;
   Texture **textures;

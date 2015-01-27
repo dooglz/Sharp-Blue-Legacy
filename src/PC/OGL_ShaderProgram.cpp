@@ -7,6 +7,12 @@
 namespace Engine {
 namespace OGL {
 
+OGL_ShaderProgram::~OGL_ShaderProgram(){
+
+  printf("shader program shurdown \n");
+}
+
+
 OGL_ShaderProgram::OGL_ShaderProgram() { _ID = glCreateProgram(); }
 
 void OGL_ShaderProgram::link() {

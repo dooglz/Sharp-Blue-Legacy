@@ -90,7 +90,7 @@
     </ClCompile>
     <ClCompile Include="Storage.cpp" />
     <ClCompile Include="Material.cpp" />
-    <ClCompile Include="PC/OGL_Material.cpp">
+    <ClCompile Include="PC\OGL_Resources.cpp">
       <Filter>PC</Filter>
     </ClCompile>
   </ItemGroup>

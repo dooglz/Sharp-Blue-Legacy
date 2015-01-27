@@ -71,7 +71,7 @@ void Game::init() {
   Engine::Components::CmMeshRenderer* rc;
   rc = ent3->getComponent<Engine::Components::CmMeshRenderer>();
   rc->setMesh("models/cube.obj");
-  rc->SetMaterial(Engine::Materials::mat_Default);
+  rc->SetMaterial(Engine::Materials::Default);
   rc->SetMaterialTexture(0,"cool_image.png");
 
   // TODO: do this automagically
