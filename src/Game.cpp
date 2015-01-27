@@ -72,7 +72,7 @@ void Game::init() {
   rc = ent3->getComponent<Engine::Components::CmMeshRenderer>();
   rc->setMesh("models/cube.obj");
   rc->SetMaterial(Engine::Materials::Default);
-  rc->SetMaterialTexture(0,"textures/test32.bmp");
+  rc->SetMaterialTexture(0,"textures/test24.bmp");
 
   // TODO: do this automagically
   Engine::ActiveScene->AddEntity(ent3);
