@@ -463,6 +463,7 @@
     <ClInclude Include="Cm_FpsMotor.h" />
     <ClInclude Include="Cm_MeshRenderer.h" />
     <ClInclude Include="Material.h" />
+    <ClInclude Include="OGL_Resources.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Cm_Camera.h" />
     <ClInclude Include="Component.h" />

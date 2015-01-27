@@ -1,8 +1,11 @@
+#include "../OGL_Resources.h"
 #include "../Resource.h"
 #include "../Storage.h"
 #include "../Material.h"
 #include "OGL_ShaderProgram.h"
-
+//
+#include "glew/glew.h"
+#include "SDL_platform.h"
 namespace Engine {
 
 Material::Material(const std::string& name, const std::string& vs,
@@ -41,10 +44,29 @@ Material::~Material() {
 
 Texture* Texture::Load(const std::string& name) {
   Texture* T = new Texture();
-  // T->EngineTexture = Storage<OGL::OGL_ShaderProgram>::Get(name);
+  T->EngineTexture = Storage<OGL::OGL_Texture>::Get(name);
   return T;
 }
 Texture::~Texture() {
   // delete (static_cast<OGL::OGL_ShaderProgram*>(EngineTexture));
+}
+
+namespace OGL {
+OGL_Texture::~OGL_Texture() {}
+OGL_Texture::OGL_Texture() 
+{
+  
+  glGenTextures(1, &TextureID);
+  SDL::SDL_Platform::CheckGL();
+ // glBindTexture(GL_TEXTURE_2D, TextureID);
+//  SDL::SDL_Platform::CheckGL();
+  //TODO: Load Texture file from disk
+ // imageData = ...
+ // glTexImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, 0, 0, imageData);
+
+
+}
+OGL_Texture* OGL_Texture::Load(const std::string& name) { return NULL;}
+void OGL_Texture::LoadOnGpu() {}
 }
 }

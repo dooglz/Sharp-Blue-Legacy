@@ -205,6 +205,9 @@
     <ClInclude Include="Material.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Storage.h" />
+    <ClInclude Include="OGL_Resources.h">
+      <Filter>PC</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\res\shaders\basic.frag">
