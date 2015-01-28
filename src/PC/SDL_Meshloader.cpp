@@ -142,18 +142,31 @@ Mesh *CSDL_Meshloader::openOBJFile(const std::string &filename) {
   bool b = false;
   for (int i = 0; i < (m->numVerts); ++i) {
     b = !b;
-    stVertex a;
+    Vector3 a;
     a.x = vertices[i].x;
     a.y = vertices[i].y;
     a.z = vertices[i].z;
+
     if (hasUvs) {
-      a.ux = uvs[i].x;
-      a.uy = uvs[i].y;
-    }
-    if (b) {
-      a.rgba = col1;
+      Vector2 uv;
+      m->hasUvs = true;
+      uv.x = uvs[i].x;
+      uv.y = uvs[i].y;
+      m->uvs.push_back(uv);
     } else {
-      a.rgba = col2;
+      m->hasUvs = false;
+    }
+
+    if (hasNormals) {
+      m->hasNormals = true;
+    } else {
+      m->hasNormals = false;
+    }
+
+    if (b) {
+      m->colours.push_back(col1);
+    } else {
+      m->colours.push_back(col2);
     }
 
     m->vertexData.push_back(a);
@@ -170,6 +183,7 @@ void CSDL_Meshloader::loadOnGPU(Mesh *msh) {
   if (msh->loadedLocal) {
     return;
   }
+  ASSERT(msh->loadedMain);
 
   // Generate VAO
   glGenVertexArrays(1, &msh->gVAO);
@@ -179,46 +193,85 @@ void CSDL_Meshloader::loadOnGPU(Mesh *msh) {
   glBindVertexArray(msh->gVAO);
   SDL_Platform::CheckGL();
 
-  // Generate VBO
-  glGenBuffers(1, &(msh->gVBO));
-  SDL_Platform::CheckGL();
+  { // Vertex
+    // Generate VBO
+    glGenBuffers(1, &(msh->gVBO));
+    SDL_Platform::CheckGL();
 
-  // Bind VBO
-  glBindBuffer(GL_ARRAY_BUFFER, (msh->gVBO));
-  SDL_Platform::CheckGL();
+    // Bind VBO
+    glBindBuffer(GL_ARRAY_BUFFER, (msh->gVBO));
+    SDL_Platform::CheckGL();
 
-  // put the data in it
-  glBufferData(GL_ARRAY_BUFFER, msh->vertexData.size() * sizeof(stVertex),
-               &msh->vertexData[0], GL_STATIC_DRAW);
-  SDL_Platform::CheckGL();
+    // put the data in it
+    glBufferData(GL_ARRAY_BUFFER, msh->vertexData.size() * sizeof(Vector3),
+                 &msh->vertexData[0], GL_STATIC_DRAW);
+    SDL_Platform::CheckGL();
 
-  /* stVertex layout:
-  [x,y,z,color]
-  [float,float,float,uint]
-  Color is really 4 chars [rgba]
-  So effectivly, this is what ogl will see:
-  [float,float,float,char,char,char,char]
-  */
-  glEnableVertexAttribArray(0);
-  glVertexAttribPointer(0,                // index
-                        3,                // size
-                        GL_FLOAT,         // type
-                        GL_FALSE,         // normalised
-                        sizeof(stVertex), // stride
-                        NULL              // pointer/offset
-                        );
-  SDL_Platform::CheckGL();
+    glEnableVertexAttribArray(0);
+    SDL_Platform::CheckGL();
+    glVertexAttribPointer(0,               // index
+                          3,               // size
+                          GL_FLOAT,        // type
+                          GL_FALSE,        // normalised
+                          sizeof(Vector3), // stride
+                          NULL             // pointer/offset
+                          );
+    SDL_Platform::CheckGL();
+  }
 
-  // color data
-  glEnableVertexAttribArray(1);
-  glVertexAttribPointer(1,                          // index
-                        4,                          // size
-                        GL_UNSIGNED_BYTE,           // type
-                        GL_TRUE,                    // normalised
-                        sizeof(stVertex),           // stride
-                        (void *)(sizeof(float) * 3) // pointer/offset
-                        );
-  SDL_Platform::CheckGL();
+  { // colours data
+
+    // Generate BO
+    glGenBuffers(1, &(msh->gCOLOURBO));
+    SDL_Platform::CheckGL();
+
+    // Bind VBO
+    glBindBuffer(GL_ARRAY_BUFFER, (msh->gCOLOURBO));
+    SDL_Platform::CheckGL();
+
+    // put the data in it
+    glBufferData(GL_ARRAY_BUFFER, msh->colours.size() * sizeof(unsigned int),
+                 &msh->colours[0], GL_STATIC_DRAW);
+    SDL_Platform::CheckGL();
+
+    glEnableVertexAttribArray(1);
+    SDL_Platform::CheckGL();
+    glVertexAttribPointer(1,                    // index
+                          4,                    // size
+                          GL_UNSIGNED_BYTE,     // type
+                          GL_TRUE,              // normalised
+                          sizeof(unsigned int), // stride
+                          NULL                  // pointer/offset
+                          );
+    SDL_Platform::CheckGL();
+  }
+
+  if (msh->hasUvs) {
+
+    // Generate BO
+    glGenBuffers(1, &(msh->gUVBO));
+    SDL_Platform::CheckGL();
+
+    // Bind VBO
+    glBindBuffer(GL_ARRAY_BUFFER, (msh->gUVBO));
+    SDL_Platform::CheckGL();
+
+    // put the data in it
+    glBufferData(GL_ARRAY_BUFFER, msh->uvs.size() * sizeof(Vector2),
+                 &msh->uvs[0], GL_STATIC_DRAW);
+    SDL_Platform::CheckGL();
+
+    glEnableVertexAttribArray(2);
+    SDL_Platform::CheckGL();
+    glVertexAttribPointer(2,               // index
+                          2,               // size
+                          GL_FLOAT,        // type
+                          GL_FALSE,        // normalised
+                          sizeof(Vector2), // stride
+                          NULL             // pointer/offset
+                          );
+    SDL_Platform::CheckGL();
+  }
 
   // Unblind VAO
   glEnableVertexAttribArray(NULL);

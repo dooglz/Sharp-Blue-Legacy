@@ -1,6 +1,7 @@
 #pragma once
 #include "Utilities.h"
 
+
 struct stVertex {
   float x, y, z;
   float ux, uy;
