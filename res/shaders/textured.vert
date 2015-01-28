@@ -1,10 +1,12 @@
 #version 430
 
-in vec4 pos_uv;
-out vec2 uv;
+// Input vertex data, different for all executions of this shader.
+layout(location = 0) in vec3 LVertexPos;
+// Values that stay constant for the whole mesh.
+uniform mat4 viewprojection;
+uniform mat4 modelprojection;
 
 void main()
 {
-    gl_Position = vec4(pos_uv.xy, 0, 1);
-    uv = pos_uv.zw;
+	gl_Position =  viewprojection * modelprojection * vec4(LVertexPos,1);
 }

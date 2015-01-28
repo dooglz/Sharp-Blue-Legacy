@@ -15,6 +15,6 @@ struct MaterialData {
 const MaterialData MaterialStats[] = {
   { "Default", "basic", "basic", 1, 0, false, false, false },
   { "Coloured", "basic", "basic", 0, 0, false, true, false },
-  { "Textured", "basic", "basic", 1, 0, false, false, true }
+  { "Textured", "textured", "textured", 0, 1, false, false, true }
 };
 }

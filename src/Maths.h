@@ -2,14 +2,15 @@
 #include "Utilities.h"
 
 struct stVertex {
-	float x, y, z;
-	unsigned int rgba;
+  float x, y, z;
+  float ux, uy;
+  unsigned int rgba;
 };
 struct stvec3 {
-	float x, y, z;
+  float x, y, z;
 };
 struct stvec2 {
-	float x, y;
+  float x, y;
 };
 
 unsigned int ColorRamp(float t);
@@ -134,13 +135,13 @@ void print(const Matrix3& v);
 void print(const Matrix4& v);
 
 Matrix4 lookat(const Vector3 eyePos, const Vector3 targetPos,
-	const Vector3 UpVector);
+  const Vector3 UpVector);
 
 inline int randomColor() {
-	int x = rand() & 0xff;
-	x |= (rand() & 0xff) << 8;
-	x |= (rand() & 0xff) << 16;
-	x |= (rand() & 0xff) << 24;
+  int x = rand() & 0xff;
+  x |= (rand() & 0xff) << 8;
+  x |= (rand() & 0xff) << 16;
+  x |= (rand() & 0xff) << 24;
 
-	return x;
+  return x;
 }

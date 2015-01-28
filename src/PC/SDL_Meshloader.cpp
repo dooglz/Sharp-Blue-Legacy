@@ -71,7 +71,7 @@ Mesh* CSDL_Meshloader::openOBJFile(const std::string& filename) {
       temp_normals.push_back(normal);
     } else if (strcmp(lineHeader, "f") == 0) {
       std::string vertex1, vertex2, vertex3;
-      unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
+      unsigned int vertexIndex[3], uvIndex[2], normalIndex[3];
       char data[64];
       fgets(data, 64, file);
       // THERE MAY BE QUADS, if there is, we only take the last 4.
@@ -96,7 +96,6 @@ Mesh* CSDL_Meshloader::openOBJFile(const std::string& filename) {
       vertexIndices.push_back(vertexIndex[2]);
       uvIndices.push_back(uvIndex[0]);
       uvIndices.push_back(uvIndex[1]);
-      uvIndices.push_back(uvIndex[2]);
       normalIndices.push_back(normalIndex[0]);
       normalIndices.push_back(normalIndex[1]);
       normalIndices.push_back(normalIndex[2]);
@@ -146,6 +145,8 @@ Mesh* CSDL_Meshloader::openOBJFile(const std::string& filename) {
     a.x = vertices[i].x;
     a.y = vertices[i].y;
     a.z = vertices[i].z;
+    a.ux = uvs[i].x;
+    a.uy = uvs[i].y;
     if (b) {
       a.rgba = col1;
     } else {

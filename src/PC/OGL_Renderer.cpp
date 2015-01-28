@@ -67,12 +67,17 @@ void COGL_Renderer::RenderMesh(RenderObject *const ro, const Matrix4 &mvp) {
   for (unsigned int i = 0; i < material->TexturesCount; i++) {
     // Bind toTexture Unit
     glActiveTexture(GL_TEXTURE0 + i);
-    //bind texture to texture unit
-    OGL_Texture* oglTex = static_cast<OGL_Texture*>(ro->textures[i]->EngineTexture);
+    // bind texture to texture unit
+    OGL_Texture *oglTex =
+        static_cast<OGL_Texture *>(ro->textures[i]->EngineTexture);
     glBindTexture(GL_TEXTURE_2D, oglTex->TextureID);
     // Set Shader Texture sampler to Texture Unit
-    //GLuint TextureID = glGetUniformLocation(programID, "myTextureSampler");
+    // Texture uniforms starts at 50.
     glUniform1i(50 + i, 0 + i);
+  }
+
+  for (unsigned int i = 0; i < material->ParametersCount; i++) {
+    // TODO
   }
 
   // Bind to VAO
