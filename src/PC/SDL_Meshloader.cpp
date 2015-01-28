@@ -56,7 +56,7 @@ Mesh *CSDL_Meshloader::openOBJFile(const std::string &filename) {
     } else if (strcmp(lineHeader, "vt") == 0) {
       Vector2 uv;
       fscanf(file, "%f %f\n", &uv.x, &uv.y);
-      // uv.y = -uv.y; // Invert V coordinate since we will only use DDS
+       uv.y = -uv.y; // Invert V coordinate since we will only use DDS
       // texture,
       // which are inverted. Remove if you want to use TGA or BMP
       // loaders.
