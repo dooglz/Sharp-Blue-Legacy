@@ -9,26 +9,21 @@
 
 namespace Engine {
 
+// TODO: tidy this mess up
+Mesh *Mesh::Load(const std::string &name) {
+  printf("SDL loading Mesh: %s\n", name.c_str());
+  return SDL::CSDL_Meshloader::openOBJFile(name);
+}
 
-
-//TODO: tidy this mess up
-  Mesh* Mesh::Load(const std::string& name) {
-    printf("SDL loading Mesh: %s\n", name.c_str());
-    return SDL::CSDL_Meshloader::openOBJFile(name);
-  }
-
-  void Mesh::LoadOnGpu() {
-    SDL::CSDL_Meshloader::loadOnGPU(this);
-  }
-
+void Mesh::LoadOnGpu() { SDL::CSDL_Meshloader::loadOnGPU(this); }
 
 namespace SDL {
 
 CSDL_Meshloader::CSDL_Meshloader() {}
 
-Mesh* CSDL_Meshloader::openOBJFile(const std::string& filename) {
+Mesh *CSDL_Meshloader::openOBJFile(const std::string &filename) {
   printf("Loading object: %s\n", (filename.c_str()));
-  const char* path = filename.c_str();
+  const char *path = filename.c_str();
 
   std::vector<Vector3> vertices;
   std::vector<Vector2> uvs;
@@ -38,7 +33,7 @@ Mesh* CSDL_Meshloader::openOBJFile(const std::string& filename) {
   std::vector<Vector2> temp_uvs;
   std::vector<Vector3> temp_normals;
 
-  FILE* file = fopen(path, "r");
+  FILE *file = fopen(path, "r");
   if (file == NULL) {
     printf("Impossible to open the file! Are you in the right path ?\n");
     return NULL;
@@ -61,7 +56,8 @@ Mesh* CSDL_Meshloader::openOBJFile(const std::string& filename) {
     } else if (strcmp(lineHeader, "vt") == 0) {
       Vector2 uv;
       fscanf(file, "%f %f\n", &uv.x, &uv.y);
-      uv.y = -uv.y; // Invert V coordinate since we will only use DDS texture,
+      // uv.y = -uv.y; // Invert V coordinate since we will only use DDS
+      // texture,
       // which are inverted. Remove if you want to use TGA or BMP
       // loaders.
       temp_uvs.push_back(uv);
@@ -71,7 +67,7 @@ Mesh* CSDL_Meshloader::openOBJFile(const std::string& filename) {
       temp_normals.push_back(normal);
     } else if (strcmp(lineHeader, "f") == 0) {
       std::string vertex1, vertex2, vertex3;
-      unsigned int vertexIndex[3], uvIndex[2], normalIndex[3];
+      unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
       char data[64];
       fgets(data, 64, file);
       // THERE MAY BE QUADS, if there is, we only take the last 4.
@@ -84,11 +80,13 @@ Mesh* CSDL_Meshloader::openOBJFile(const std::string& filename) {
         matches = sscanf(data, "%d %d %d\n", &vertexIndex[0], &vertexIndex[1],
                          &vertexIndex[2]);
         if (matches != 3) {
-          printf(
-              "File can't be read by our simple parser :-( Try exporting with "
-              "other options %i\n",
-              matches);
-          return NULL;
+          matches = sscanf(data, "%d/%d %d/%d %d/%d\n", &vertexIndex[0],
+                           &uvIndex[0], &vertexIndex[1], &uvIndex[1],
+                           &vertexIndex[2], &uvIndex[2]);
+          if (matches != 6) {
+            printf("Urecognised Vertex Layout :( %i\n", matches);
+            return NULL;
+          }
         }
       }
       vertexIndices.push_back(vertexIndex[0]);
@@ -96,6 +94,7 @@ Mesh* CSDL_Meshloader::openOBJFile(const std::string& filename) {
       vertexIndices.push_back(vertexIndex[2]);
       uvIndices.push_back(uvIndex[0]);
       uvIndices.push_back(uvIndex[1]);
+      uvIndices.push_back(uvIndex[2]);
       normalIndices.push_back(normalIndex[0]);
       normalIndices.push_back(normalIndex[1]);
       normalIndices.push_back(normalIndex[2]);
@@ -105,6 +104,8 @@ Mesh* CSDL_Meshloader::openOBJFile(const std::string& filename) {
       fgets(stupidBuffer, 1000, file);
     }
   }
+  bool hasUvs = !temp_uvs.empty();
+  bool hasNormals = !temp_normals.empty();
 
   // For each vertex of each triangle
   for (unsigned int i = 0; i < vertexIndices.size(); i++) {
@@ -118,11 +119,11 @@ Mesh* CSDL_Meshloader::openOBJFile(const std::string& filename) {
     Vector3 vertex = temp_vertices[vertexIndex - 1];
 
     vertices.push_back(vertex);
-    if (!temp_uvs.empty()) {
+    if (hasUvs) {
       Vector2 uv = temp_uvs[uvIndex - 1];
       uvs.push_back(uv);
     }
-    if (!temp_normals.empty()) {
+    if (hasNormals) {
       Vector3 normal = temp_normals[normalIndex - 1];
       normals.push_back(normal);
     }
@@ -131,7 +132,7 @@ Mesh* CSDL_Meshloader::openOBJFile(const std::string& filename) {
   printf("file read success, vertices:%i\n", vertices.size());
   //--turn the obj into our stupid mesh class
 
-  Mesh* m = new Mesh();
+  Mesh *m = new Mesh();
   m->loadedLocal = false;
   m->numVerts = vertices.size();
   randomColor();
@@ -145,8 +146,10 @@ Mesh* CSDL_Meshloader::openOBJFile(const std::string& filename) {
     a.x = vertices[i].x;
     a.y = vertices[i].y;
     a.z = vertices[i].z;
-    a.ux = uvs[i].x;
-    a.uy = uvs[i].y;
+    if (hasUvs) {
+      a.ux = uvs[i].x;
+      a.uy = uvs[i].y;
+    }
     if (b) {
       a.rgba = col1;
     } else {
@@ -162,7 +165,7 @@ Mesh* CSDL_Meshloader::openOBJFile(const std::string& filename) {
   return m;
 }
 
-void CSDL_Meshloader::loadOnGPU(Mesh* msh) {
+void CSDL_Meshloader::loadOnGPU(Mesh *msh) {
   // check to see if we are already loaded.
   if (msh->loadedLocal) {
     return;
@@ -208,12 +211,12 @@ void CSDL_Meshloader::loadOnGPU(Mesh* msh) {
 
   // color data
   glEnableVertexAttribArray(1);
-  glVertexAttribPointer(1,                         // index
-                        4,                         // size
-                        GL_UNSIGNED_BYTE,          // type
-                        GL_TRUE,                   // normalised
-                        sizeof(stVertex),          // stride
-                        (void*)(sizeof(float) * 3) // pointer/offset
+  glVertexAttribPointer(1,                          // index
+                        4,                          // size
+                        GL_UNSIGNED_BYTE,           // type
+                        GL_TRUE,                    // normalised
+                        sizeof(stVertex),           // stride
+                        (void *)(sizeof(float) * 3) // pointer/offset
                         );
   SDL_Platform::CheckGL();
 
