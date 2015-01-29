@@ -50,6 +50,14 @@
 #endif
 
 
+#define ROCKET_ASSERT(x)
+#define ROCKET_ASSERTMSG(x, m)
+#define ROCKET_ERROR
+#define ROCKET_ERRORMSG(m)
+#define ROCKET_VERIFY(x) x
+
+
+/*
 
 // Define the LT_ASSERT and ROCKET_VERIFY macros.
 #if !defined ROCKET_DEBUG
@@ -94,6 +102,7 @@ if (!Rocket::Core::Assert(m, __FILE__, __LINE__)) \
 }
 }
 #endif
+*/
 
 namespace Rocket {
 namespace Core {

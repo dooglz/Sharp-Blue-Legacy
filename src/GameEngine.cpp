@@ -1,5 +1,7 @@
 #include "Utilities.h" // asserts and commmon defines
 #include "GameEngine.h"
+
+#include <Rocket/Core.h>
 #include <time.h>
 #include <math.h>
 #include <stdlib.h>
@@ -78,6 +80,7 @@ void GameEngine::Loop() {
     // Update engine
     EventManager->processEvents();
     ActiveScene->Update(deltaPercent);
+    Rcontext->Update();
 
     // Update game
     _GameUpdate(deltaPercent);
@@ -87,6 +90,7 @@ void GameEngine::Loop() {
     ActiveScene->Render();
 
     _GameRender();
+    Rcontext->Render();
 
     Renderer->PostRender();
     // Finished Drawing

@@ -13,11 +13,12 @@
 #include <sdl/SDL.h>
 #include <sdl/SDL_image.h>
 
-
 #include "../LibRocketInterface.h"
 //#include <sdl\SDL_opengl.h>
 #define DEFAULT_HEIGHT 720
 #define DEFAULT_WIDTH 1280
+
+Rocket::Core::Context* Engine::Rcontext = NULL;
 
 void SDLVersionInfo() {
   SDL_version compiled;
@@ -31,18 +32,14 @@ void SDLVersionInfo() {
          linked.patch);
 
   SDL_version compile_version;
-  const SDL_version *link_version = IMG_Linked_Version();
+  const SDL_version* link_version = IMG_Linked_Version();
   SDL_IMAGE_VERSION(&compile_version);
-  printf("compiled with SDL_image version: %d.%d.%d\n",
-    compile_version.major,
-    compile_version.minor,
-    compile_version.patch);
-  printf("running with SDL_image version: %d.%d.%d\n",
-    link_version->major,
-    link_version->minor,
-    link_version->patch);
+  printf("compiled with SDL_image version: %d.%d.%d\n", compile_version.major,
+         compile_version.minor, compile_version.patch);
+  printf("running with SDL_image version: %d.%d.%d\n", link_version->major,
+         link_version->minor, link_version->patch);
 
-  printf("Librocket version: %s\n\n",Rocket::Core::GetVersion());
+  printf("Librocket version: %s\n\n", Rocket::Core::GetVersion());
 }
 
 void GlewInfo() {
@@ -112,9 +109,13 @@ void SDL_Platform::Init(const unsigned short width,
   Renderer->Init();
   IMG_Init(IMG_INIT_JPG || IMG_INIT_PNG);
 
-  CLibRocketInterface* ui = new CLibRocketInterface();
-  Rocket::Core::SetSystemInterface(ui);
+  CLibRocketInterface* uii = new CLibRocketInterface();
+  Rocket::Core::SetSystemInterface(uii);
+  CLibRocketRenderInterface* uir = new CLibRocketRenderInterface();
+  Rocket::Core::SetRenderInterface(uir);
 
+  Rocket::Core::Initialise();
+  Rcontext = Rocket::Core::CreateContext("default", Rocket::Core::Vector2i(_screenWidth, _screenHeight));
 }
 
 void SDL_Platform::InitDisplay(const unsigned short width,
