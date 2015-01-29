@@ -24,6 +24,18 @@ void SDLVersionInfo() {
          compiled.minor, compiled.patch);
   printf("linking against SDL version %d.%d.%d.\n", linked.major, linked.minor,
          linked.patch);
+
+  SDL_version compile_version;
+  const SDL_version *link_version = IMG_Linked_Version();
+  SDL_IMAGE_VERSION(&compile_version);
+  printf("compiled with SDL_image version: %d.%d.%d\n",
+    compile_version.major,
+    compile_version.minor,
+    compile_version.patch);
+  printf("running with SDL_image version: %d.%d.%d\n",
+    link_version->major,
+    link_version->minor,
+    link_version->patch);
 }
 
 void GlewInfo() {

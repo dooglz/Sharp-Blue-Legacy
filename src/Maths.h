@@ -129,7 +129,7 @@ inline int randomColor() {
   int x = rand() & 0xff;
   x |= (rand() & 0xff) << 8;
   x |= (rand() & 0xff) << 16;
-  x |= (rand() & 0xff) << 24;
+  x |= (0xff) << 24;
 
   return x;
 }
