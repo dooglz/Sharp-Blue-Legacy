@@ -12,6 +12,8 @@
 
 #include "PC/SDL_Platform.h"
 #include "glew/glew.h"
+
+#include <glm/gtc/type_ptr.hpp>
 namespace Engine {
 
 CLibRocketInterface::CLibRocketInterface() {}
@@ -100,6 +102,14 @@ void CLibRocketRenderInterface::RenderGeometry(
   
 
   glUseProgram(sp->getID());
+  SDL::SDL_Platform::CheckGL();
+  ;
+
+  glUniform2f(0, translation.x, translation.y);
+  SDL::SDL_Platform::CheckGL();
+  glUniformMatrix4fv(1, 1, false, glm::value_ptr(glm::ortho(0.0f, 1280.0f, 720.0f, 0.0f)));
+  SDL::SDL_Platform::CheckGL();
+
   // Generate a buffer for the indices
   GLuint elementbuffer;
   glGenBuffers(1, &elementbuffer);
