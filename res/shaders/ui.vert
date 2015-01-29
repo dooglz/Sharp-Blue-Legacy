@@ -6,7 +6,7 @@ layout(location = 1) in vec4 vertexColor;
 
 layout(location = 0) uniform vec2 transform;
 layout(location = 1) uniform mat4 projection;
-// Output data ; will be interpolated for each fragment.
+
 out vec4 fragmentColor;
 
 void main(){	

@@ -35,6 +35,10 @@ void CLibRocketRenderInterface::RenderGeometry(
     const Rocket::Core::Vector2f& translation) {
 
   GLuint VAO;
+  vertices[0].tex_coord = {0,0};
+  vertices[1].tex_coord = { 0, 1.0f };
+  vertices[2].tex_coord = { 1.0f, 0.0f };
+  vertices[3].tex_coord = { 1.0f, 1.0f };
 
   // Generate VAO
   glGenVertexArrays(1, &VAO);
@@ -71,8 +75,11 @@ void CLibRocketRenderInterface::RenderGeometry(
                         );
   SDL::SDL_Platform::CheckGL();
   OGL::OGL_ShaderProgram* sp;
-  if (true || texture == NULL) { // Just Colours
+  if (texture == NULL) { // Just Colours
     sp = Storage<OGL::OGL_ShaderProgram>::Get("ui-ui");
+    glUseProgram(sp->getID());
+    SDL::SDL_Platform::CheckGL();
+
     glEnableVertexAttribArray(1);
     SDL::SDL_Platform::CheckGL();
     glVertexAttribPointer(1,                            // index
@@ -87,6 +94,9 @@ void CLibRocketRenderInterface::RenderGeometry(
 
   } else { // Just Textures
     sp = Storage<OGL::OGL_ShaderProgram>::Get("uiTex-uiTex");
+    glUseProgram(sp->getID());
+    SDL::SDL_Platform::CheckGL();
+
     glEnableVertexAttribArray(2);
     SDL::SDL_Platform::CheckGL();
     glVertexAttribPointer(2,                            // index
@@ -98,12 +108,27 @@ void CLibRocketRenderInterface::RenderGeometry(
                           );
 
     SDL::SDL_Platform::CheckGL();
+
+    glEnable(GL_TEXTURE_2D);
+    SDL::SDL_Platform::CheckGL();
+
+    //Bind toTexture Unit
+    glActiveTexture(GL_TEXTURE0);
+    SDL::SDL_Platform::CheckGL();
+
+    // bind texture to texture unit
+    glBindTexture(GL_TEXTURE_2D, 2);
+
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    SDL::SDL_Platform::CheckGL();
+    glTexCoordPointer(2, GL_FLOAT, sizeof(Rocket::Core::Vertex), &vertices[0].tex_coord);
+    SDL::SDL_Platform::CheckGL();
+
+    GLint texIn = glGetUniformLocation(sp->getID(), "texture");
+    glUniform1i(texIn, 0);
   }
   
 
-  glUseProgram(sp->getID());
-  SDL::SDL_Platform::CheckGL();
-  ;
 
   glUniform2f(0, translation.x, translation.y);
   SDL::SDL_Platform::CheckGL();
@@ -116,7 +141,7 @@ void CLibRocketRenderInterface::RenderGeometry(
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, num_indices * sizeof(int),&indices[0], GL_STATIC_DRAW);
   SDL::SDL_Platform::CheckGL();
-  
+  glDisable(GL_DEPTH_TEST);
   glDrawElements(
     GL_TRIANGLES,      // mode
     num_indices,    // count
@@ -128,33 +153,6 @@ void CLibRocketRenderInterface::RenderGeometry(
   glDeleteBuffers(1,&VBO);
   glDeleteBuffers(1,&elementbuffer);
   glDeleteVertexArrays(1, &VAO);
-  // ROCKET_UNUSED(num_vertices);
-  // printf("");
-  /*
-  glPushMatrix();
-  glTranslatef(translation.x, translation.y, 0);
-
-  glVertexPointer(2, GL_FLOAT, sizeof(Rocket::Core::Vertex),
-                  &vertices[0].position);
-  glEnableClientState(GL_COLOR_ARRAY);
-  glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Rocket::Core::Vertex),
-                 &vertices[0].colour);
-
-  if (!texture) {
-    glDisable(GL_TEXTURE_2D);
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-  } else {
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, (GLuint)texture);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    glTexCoordPointer(2, GL_FLOAT, sizeof(Rocket::Core::Vertex),
-                      &vertices[0].tex_coord);
-  }
-
-  glDrawElements(GL_TRIANGLES, num_indices, GL_UNSIGNED_INT, indices);
-
-  glPopMatrix();
-  */
 }
 
 // Called by Rocket when it wants to compile geometry it believes will be static
