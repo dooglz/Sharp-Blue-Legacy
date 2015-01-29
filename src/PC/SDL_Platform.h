@@ -19,7 +19,7 @@ protected:
   unsigned char _glverMin;
 
   void InitDisplay(const unsigned short width, const unsigned short height);
-
+  void InitUI();
 public:
   SDL_Platform();
   void Init(const unsigned short width, const unsigned short height);

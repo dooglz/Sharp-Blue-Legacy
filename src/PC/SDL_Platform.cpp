@@ -38,8 +38,6 @@ void SDLVersionInfo() {
          compile_version.minor, compile_version.patch);
   printf("running with SDL_image version: %d.%d.%d\n", link_version->major,
          link_version->minor, link_version->patch);
-
-  printf("Librocket version: %s\n\n", Rocket::Core::GetVersion());
 }
 
 void GlewInfo() {
@@ -108,14 +106,7 @@ void SDL_Platform::Init(const unsigned short width,
   Renderer = new OGL::COGL_Renderer();
   Renderer->Init();
   IMG_Init(IMG_INIT_JPG || IMG_INIT_PNG);
-
-  CLibRocketInterface* uii = new CLibRocketInterface();
-  Rocket::Core::SetSystemInterface(uii);
-  CLibRocketRenderInterface* uir = new CLibRocketRenderInterface();
-  Rocket::Core::SetRenderInterface(uir);
-
-  Rocket::Core::Initialise();
-  Rcontext = Rocket::Core::CreateContext("default", Rocket::Core::Vector2i(_screenWidth, _screenHeight));
+  InitUI();
 }
 
 void SDL_Platform::InitDisplay(const unsigned short width,
@@ -194,5 +185,27 @@ void SDL_Platform::SaveFile(const std::string& name) {
     delete[] pixels;
 }
 */
+
+void SDL_Platform::InitUI() {
+  printf("Librocket version: %s\n\n", Rocket::Core::GetVersion());
+
+  CLibRocketInterface* uii = new CLibRocketInterface();
+  Rocket::Core::SetSystemInterface(uii);
+  CLibRocketRenderInterface* uir = new CLibRocketRenderInterface();
+  Rocket::Core::SetRenderInterface(uir);
+
+  Rocket::Core::Initialise();
+  Rcontext = Rocket::Core::CreateContext(
+      "default", Rocket::Core::Vector2i(_screenWidth, _screenHeight));
+
+  Rocket::Core::ElementDocument* document =
+      Rcontext->LoadDocument("ui/tutorial.rml");
+  if (document != NULL) {
+    document->Show();
+   // document->RemoveReference();
+  } else {
+    ASSERT(false);
+  }
+}
 }
 }

@@ -5,7 +5,13 @@
 #include <Rocket/Core.h>
 #include <Rocket/Core/SystemInterface.h>
 #include <Rocket/Core/RenderInterface.h>
+#include "Resource.h"
 
+#include "PC/OGL_ShaderProgram.h"
+#include "Storage.h"
+
+#include "PC/SDL_Platform.h"
+#include "glew/glew.h"
 namespace Engine {
 
 CLibRocketInterface::CLibRocketInterface() {}
@@ -22,11 +28,98 @@ CLibRocketRenderInterface::CLibRocketRenderInterface() {
 // optimise.
 
 void CLibRocketRenderInterface::RenderGeometry(
-    Rocket::Core::Vertex* vertices, int ROCKET_UNUSED_PARAMETER(num_vertices),
-    int* indices, int num_indices, const Rocket::Core::TextureHandle texture,
-    const Rocket::Core::Vector2f& translation)
- {
-  ROCKET_UNUSED(num_vertices);
+    Rocket::Core::Vertex* vertices, int num_vertices, int* indices,
+    int num_indices, const Rocket::Core::TextureHandle texture,
+    const Rocket::Core::Vector2f& translation) {
+
+  GLuint VAO;
+
+  // Generate VAO
+  glGenVertexArrays(1, &VAO);
+  SDL::SDL_Platform::CheckGL();
+
+  // Bind VAO
+  glBindVertexArray(VAO);
+  SDL::SDL_Platform::CheckGL();
+
+  // Vertex
+  // Generate VBO
+  GLuint VBO;
+  glGenBuffers(1, &VBO);
+  SDL::SDL_Platform::CheckGL();
+
+  // Bind VBO
+  glBindBuffer(GL_ARRAY_BUFFER, VBO);
+  SDL::SDL_Platform::CheckGL();
+
+  // put the data in it
+  glBufferData(GL_ARRAY_BUFFER, num_vertices * sizeof(Rocket::Core::Vertex),
+               &vertices[0], GL_STATIC_DRAW);
+  SDL::SDL_Platform::CheckGL();
+
+  // Position
+  glEnableVertexAttribArray(0);
+  SDL::SDL_Platform::CheckGL();
+  glVertexAttribPointer(0,                            // index
+                        2,                            // size
+                        GL_FLOAT,                     // type
+                        GL_FALSE,                     // normalised
+                        sizeof(Rocket::Core::Vertex), // stride
+                        NULL                          // pointer/offset
+                        );
+  SDL::SDL_Platform::CheckGL();
+  OGL::OGL_ShaderProgram* sp;
+  if (true || texture == NULL) { // Just Colours
+    sp = Storage<OGL::OGL_ShaderProgram>::Get("ui-ui");
+    glEnableVertexAttribArray(1);
+    SDL::SDL_Platform::CheckGL();
+    glVertexAttribPointer(1,                            // index
+                          4,                            // size
+                          GL_UNSIGNED_BYTE,             // type
+                          GL_TRUE,                      // normalised
+                          sizeof(Rocket::Core::Vertex), // stride
+                          &vertices[0].colour           // pointer/offset
+                          );
+
+    SDL::SDL_Platform::CheckGL();
+
+  } else { // Just Textures
+    sp = Storage<OGL::OGL_ShaderProgram>::Get("uiTex-uiTex");
+    glEnableVertexAttribArray(2);
+    SDL::SDL_Platform::CheckGL();
+    glVertexAttribPointer(2,                            // index
+                          2,                            // size
+                          GL_FLOAT,                     // type
+                          GL_FALSE,                     // normalised
+                          sizeof(Rocket::Core::Vertex), // stride
+                          &vertices[0].tex_coord        // pointer/offset
+                          );
+
+    SDL::SDL_Platform::CheckGL();
+  }
+  
+
+  glUseProgram(sp->getID());
+  // Generate a buffer for the indices
+  GLuint elementbuffer;
+  glGenBuffers(1, &elementbuffer);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, num_indices * sizeof(int),&indices[0], GL_STATIC_DRAW);
+  SDL::SDL_Platform::CheckGL();
+  
+  glDrawElements(
+    GL_TRIANGLES,      // mode
+    num_indices,    // count
+    GL_UNSIGNED_INT,   // type
+    (void*)0           // element array buffer offset
+    );
+  SDL::SDL_Platform::CheckGL();
+
+  glDeleteBuffers(1,&VBO);
+  glDeleteBuffers(1,&elementbuffer);
+  glDeleteVertexArrays(1, &VAO);
+  // ROCKET_UNUSED(num_vertices);
+  // printf("");
   /*
   glPushMatrix();
   glTranslatef(translation.x, translation.y, 0);
@@ -141,8 +234,8 @@ bool CLibRocketRenderInterface::LoadTexture(
   file_interface->Seek(file_handle, 0, SEEK_SET);
 
   ASSERT_MSG(buffer_size > sizeof(TGAHeader),
-                   "Texture file size is smaller than TGAHeader, file must be "
-                   "corrupt or otherwise invalid");
+             "Texture file size is smaller than TGAHeader, file must be "
+             "corrupt or otherwise invalid");
   if (buffer_size <= sizeof(TGAHeader)) {
     file_interface->Close(file_handle);
     return false;
@@ -245,7 +338,4 @@ void CLibRocketRenderInterface::ReleaseTexture(
   glDeleteTextures(1, (GLuint*)&texture_handle);
   */
 }
-
-
-
 }
