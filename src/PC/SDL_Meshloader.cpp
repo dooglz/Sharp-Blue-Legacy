@@ -48,7 +48,6 @@ Mesh *CSDL_Meshloader::openOBJFile(const std::string &filename) {
     } // EOF = End Of File. Quit the loop.
 
     // else : parse lineHeader
-
     if (strcmp(lineHeader, "v") == 0) {
       Vector3 vertex;
       fscanf(file, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z);
@@ -56,10 +55,7 @@ Mesh *CSDL_Meshloader::openOBJFile(const std::string &filename) {
     } else if (strcmp(lineHeader, "vt") == 0) {
       Vector2 uv;
       fscanf(file, "%f %f\n", &uv.x, &uv.y);
-       uv.y = -uv.y; // Invert V coordinate since we will only use DDS
-      // texture,
-      // which are inverted. Remove if you want to use TGA or BMP
-      // loaders.
+      uv.y = -uv.y; // Invert V coordinate since we will only use DDS
       temp_uvs.push_back(uv);
     } else if (strcmp(lineHeader, "vn") == 0) {
       Vector3 normal;
@@ -71,7 +67,6 @@ Mesh *CSDL_Meshloader::openOBJFile(const std::string &filename) {
       char data[64];
       fgets(data, 64, file);
       // THERE MAY BE QUADS, if there is, we only take the last 4.
-
       int matches = sscanf(data, "%d/%d/%d %d/%d/%d %d/%d/%d\n",
                            &vertexIndex[0], &uvIndex[0], &normalIndex[0],
                            &vertexIndex[1], &uvIndex[1], &normalIndex[1],
@@ -84,7 +79,7 @@ Mesh *CSDL_Meshloader::openOBJFile(const std::string &filename) {
                            &uvIndex[0], &vertexIndex[1], &uvIndex[1],
                            &vertexIndex[2], &uvIndex[2]);
           if (matches != 6) {
-            printf("Urecognised Vertex Layout :( %i\n", matches);
+            printf("Urecognised Vertex Layout %i\n", matches);
             return NULL;
           }
         }
@@ -130,7 +125,6 @@ Mesh *CSDL_Meshloader::openOBJFile(const std::string &filename) {
   }
 
   printf("file read success, vertices:%i\n", vertices.size());
-  //--turn the obj into our stupid mesh class
 
   Mesh *m = new Mesh();
   m->loadedLocal = false;

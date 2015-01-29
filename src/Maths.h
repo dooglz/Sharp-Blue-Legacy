@@ -1,19 +1,6 @@
 #pragma once
 #include "Utilities.h"
 
-
-struct stVertex {
-  float x, y, z;
-  float ux, uy;
-  unsigned int rgba;
-};
-struct stvec3 {
-  float x, y, z;
-};
-struct stvec2 {
-  float x, y;
-};
-
 unsigned int ColorRamp(float t);
 float lerp(float a, float b, float t);
 

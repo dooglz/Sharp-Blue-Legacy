@@ -18,6 +18,7 @@
 Engine::Entity* ent1;
 Engine::Entity* ent2;
 Engine::Entity* ent3;
+Engine::Entity* ent4;
 Engine::Entity* camera;
 void registerInputs() {
   // Todo: read these from file
@@ -63,6 +64,8 @@ void Game::init() {
   ent2->getComponent<Engine::Components::CmMeshRenderer>()->setMesh(
       "models/plane.obj");
   Engine::ActiveScene->AddEntity(ent2);
+  ent2->getComponent<Engine::Components::CmMeshRenderer>()->SetMaterial(Engine::Materials::Textured);
+  ent2->getComponent<Engine::Components::CmMeshRenderer>()->SetMaterialTexture(0, "textures/placeholder2.jpg");
 
   ent3 = new Engine::Entity();
   ent3->SetName("Tex cube");
@@ -73,6 +76,18 @@ void Game::init() {
   rc->setMesh("models/cube.obj");
   rc->SetMaterial(Engine::Materials::Textured);
   rc->SetMaterialTexture(0,"textures/test24.bmp");
+
+
+  ent4 = new Engine::Entity();
+  ent4->SetName("title");
+  ent4->setPosition(Vector3(0, 3, 0));
+  ent4->setScale(Vector3(1, 1, 1));
+  ent4->setRotation(Vector3(0.5f* M_PI, M_PI, 0.5f* -M_PI));
+  ent4->AddComponent(new Engine::Components::CmMeshRenderer());
+  ent4->getComponent<Engine::Components::CmMeshRenderer>()->setMesh("models/plane.obj");
+  Engine::ActiveScene->AddEntity(ent4);
+  ent4->getComponent<Engine::Components::CmMeshRenderer>()->SetMaterial(Engine::Materials::Textured);
+  ent4->getComponent<Engine::Components::CmMeshRenderer>()->SetMaterialTexture(0, "textures/Title.png");
 
   // TODO: do this automagically
   Engine::ActiveScene->AddEntity(ent3);
@@ -92,7 +107,10 @@ void Game::init() {
   registerInputs();
 }
 
+static float a = 0.01f;
 void Game::update(double delta) {
+  //printf("%f\n", QuatToEuler(ent4->getRotation()).x);
+  ent4->setRotation(QuatToEuler(ent4->getRotation()) + Vector3(a,0,0));
   Engine::Renderer->DrawLine(Vector3(0, 0, 0), Vector3(0, 6, 0));
   Engine::Renderer->DrawCross(Vector3(0, 6, 0), 1.0f);
 }

@@ -116,11 +116,15 @@ void COGL_Renderer::PrepFrame() {
   glDepthFunc(GL_LESS);
 
   glClearDepth(1.0f);
+
+
   glViewport(0, 0, SDL::SDL_Platform::GetSreenWidth(),
              SDL::SDL_Platform::GetSreenHeight());
 
   // Cull triangles which normal is not towards the camera
-  //	glEnable(GL_CULL_FACE);
+  	//glEnable(GL_CULL_FACE);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
   // glViewport(0,0,1920,1080);
 
   SDL::SDL_Platform::CheckGL();

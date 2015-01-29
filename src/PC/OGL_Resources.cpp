@@ -6,6 +6,8 @@
 //
 #include "glew/glew.h"
 #include "SDL_platform.h"
+#include <sdl/SDL_image.h>
+
 namespace Engine {
 
 Material::Material(const std::string& name, const std::string& vs,
@@ -71,7 +73,8 @@ OGL_Texture::OGL_Texture() {
 OGL_Texture* OGL_Texture::Load(const std::string& name) {
 
   printf("\nLoading texture: %s\n\n", name.c_str());
-  SDL_Surface* surface = SDL_LoadBMP(name.c_str());
+
+  SDL_Surface* surface = IMG_Load(name.c_str());
   SDL::SDL_Platform::CheckSDL();
 
   OGL_Texture* oglt = new OGL_Texture();
@@ -109,7 +112,13 @@ OGL_Texture* OGL_Texture::Load(const std::string& name) {
       texture_format = GL_RGB;
     else
       texture_format = GL_BGR;
-  } else {
+  }
+  else if (nOfColors == 1) //8bit image
+  {
+    //but does it have alpha?
+      texture_format = GL_RGBA2;
+  }
+  else {
     printf("warning: the image is not truecolor..  this will probably break\n");
     ASSERT(false);
   }

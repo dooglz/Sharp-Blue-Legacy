@@ -9,6 +9,7 @@
 #include "SDL_Event_Manager.h"
 #include <glew/glew.h>
 #include <sdl/SDL.h>
+#include <sdl/SDL_image.h>
 //#include <sdl\SDL_opengl.h>
 #define DEFAULT_HEIGHT 720
 #define DEFAULT_WIDTH 1280
@@ -90,7 +91,7 @@ void SDL_Platform::Init(const unsigned short width,
   InitDisplay(width, height);
   Renderer = new OGL::COGL_Renderer();
   Renderer->Init();
-
+  IMG_Init(IMG_INIT_JPG || IMG_INIT_PNG);
 
 }
 
@@ -145,6 +146,8 @@ void SDL_Platform::Shutdown() {
   EventManager->Shutdown();
   delete EventManager;
   EventManager = NULL;
+
+  IMG_Quit();
 
   SDL_GL_DeleteContext(_gContext);
   SDL_DestroyWindow(_window);

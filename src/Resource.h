@@ -15,26 +15,6 @@ class OGL_ShaderProgram;
 enum Material_Parameter_type { MAT4, VEC2, VEC3, TEX };
 
 struct Mesh {
-//TODO: move outta headder
-  /* Mesh() {
-    loadedMain = 0;
-    loadedLocal = 0;
-    numVerts = 0;
-    hasUvs = 0;
-    hasNormals = 0;
-    strip = 0;
-    fan = 0;
-    line = 0;
-#if defined(_WINDOWS_)
-    gVBO = 0;
-    gVAO = 0;
-    gUVBO = 0;
-    gNORMBO = 0;
-    gCOLOURBO = 0;
-    gIBO = 0;
-#endif
-  }
-  */
   bool loadedMain;
   bool loadedLocal;
   int numVerts;
@@ -107,7 +87,7 @@ static void swapMeshColorEndianmode(Engine::Mesh *m) {
   for (int i = 0; i < (m->numVerts); ++i) {
     unsigned int r = m->colours[i];
     // Unsigned 16 bit conversion:
-    // m->vertexData[i].rgba = ((r>>8) | (r<<8));
+    //m->colours[i] = ((r>>8) | (r<<8));
 
     // Unsigned 32-bit conversion:
     m->colours[i] = ((r >> 24) & 0xff) | ((r << 8) & 0xff0000) |
