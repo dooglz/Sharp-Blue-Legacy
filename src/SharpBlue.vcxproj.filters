@@ -93,6 +93,9 @@
     <ClCompile Include="PC\OGL_Resources.cpp">
       <Filter>PC</Filter>
     </ClCompile>
+    <ClCompile Include="LibRocketInterface.cpp">
+      <Filter>PC</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine.h" />
@@ -206,6 +209,9 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Storage.h" />
     <ClInclude Include="OGL_Resources.h">
+      <Filter>PC</Filter>
+    </ClInclude>
+    <ClInclude Include="LibRocketInterface.h">
       <Filter>PC</Filter>
     </ClInclude>
   </ItemGroup>

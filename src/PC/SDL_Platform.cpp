@@ -2,6 +2,8 @@
 #include <cstring>
 #include <iostream>
 
+#include <Rocket/Core.h>
+
 #include "SDL_Platform.h"
 #include "../Utilities.h"
 #include "OGL_Renderer.h"
@@ -10,6 +12,9 @@
 #include <glew/glew.h>
 #include <sdl/SDL.h>
 #include <sdl/SDL_image.h>
+
+
+#include "../LibRocketInterface.h"
 //#include <sdl\SDL_opengl.h>
 #define DEFAULT_HEIGHT 720
 #define DEFAULT_WIDTH 1280
@@ -36,6 +41,8 @@ void SDLVersionInfo() {
     link_version->major,
     link_version->minor,
     link_version->patch);
+
+  printf("Librocket version: %s\n\n",Rocket::Core::GetVersion());
 }
 
 void GlewInfo() {
@@ -104,6 +111,9 @@ void SDL_Platform::Init(const unsigned short width,
   Renderer = new OGL::COGL_Renderer();
   Renderer->Init();
   IMG_Init(IMG_INIT_JPG || IMG_INIT_PNG);
+
+  CLibRocketInterface* ui = new CLibRocketInterface();
+  Rocket::Core::SetSystemInterface(ui);
 
 }
 

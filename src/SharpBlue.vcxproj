@@ -176,8 +176,8 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;opengl32.lib;SDL2_ttf.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\lib\x86;..\lib\x86\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;opengl32.lib;SDL2_ttf.lib;SDL2_image.lib;RocketCore.lib;RocketControls.lib;RocketDebugger.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
     <PostBuildEvent>
@@ -236,8 +236,8 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>..\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;opengl32.lib;SDL2_ttf.lib;SDL2_image.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\lib\x86;..\lib\x86\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;opengl32.lib;SDL2_ttf.lib;SDL2_image.lib;RocketCore.lib;RocketControls.lib;RocketDebugger.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debugLib|PSVita'">
@@ -266,6 +266,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='debugLib|PS3'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='debugLib|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="LibRocketInterface.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Maths.cpp" />
     <ClCompile Include="PC\OGL_Resources.cpp" />
@@ -463,6 +464,7 @@
   <ItemGroup>
     <ClInclude Include="Cm_FpsMotor.h" />
     <ClInclude Include="Cm_MeshRenderer.h" />
+    <ClInclude Include="LibRocketInterface.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="OGL_Resources.h" />
     <ClInclude Include="Platform.h" />
