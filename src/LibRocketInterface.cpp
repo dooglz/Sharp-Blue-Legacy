@@ -118,8 +118,6 @@ void CLibRocketRenderInterface::RenderGeometry(
 
     SDL::SDL_Platform::CheckGL();
 
-    glEnable(GL_TEXTURE_2D);
-    SDL::SDL_Platform::CheckGL();
 
     // Bind toTexture Unit
     glActiveTexture(GL_TEXTURE0);
@@ -127,10 +125,8 @@ void CLibRocketRenderInterface::RenderGeometry(
 
     // bind texture to texture unit
     glBindTexture(GL_TEXTURE_2D, (GLuint)texture);
-
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     SDL::SDL_Platform::CheckGL();
-    glTexCoordPointer(2, GL_FLOAT, sizeof(Rocket::Core::Vertex),
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Rocket::Core::Vertex),
                       &vertices[0].tex_coord);
     SDL::SDL_Platform::CheckGL();
 
@@ -240,13 +236,7 @@ Rocket::Core::CompiledGeometryHandle CLibRocketRenderInterface::CompileGeometry(
 
     SDL::SDL_Platform::CheckGL();
 
-    glEnable(GL_TEXTURE_2D);
-    SDL::SDL_Platform::CheckGL();
-
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    SDL::SDL_Platform::CheckGL();
-
-    glTexCoordPointer(2, GL_FLOAT, sizeof(Rocket::Core::Vertex),
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Rocket::Core::Vertex),
                       &vertices[0].tex_coord);
     SDL::SDL_Platform::CheckGL();
   }
@@ -272,13 +262,9 @@ void CLibRocketRenderInterface::RenderCompiledGeometry(
   printf("RenderCompiled %i\n", gh->VAO);
   glUseProgram(gh->sp->getID());
 
-  glEnable(GL_TEXTURE_2D);
-  SDL::SDL_Platform::CheckGL();
-
   // Bind VAO
   glBindVertexArray(gh->VAO);
   SDL::SDL_Platform::CheckGL();
-  glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
   // transform uniform
   glUniform2f(0, translation.x, translation.y);
@@ -291,8 +277,6 @@ void CLibRocketRenderInterface::RenderCompiledGeometry(
 
   if (gh->Textured) {
     // Put the Texture in a texture unit
-    glEnable(GL_TEXTURE_2D);
-    SDL::SDL_Platform::CheckGL();
     // Bind toTexture Unit
     glActiveTexture(GL_TEXTURE0);
     SDL::SDL_Platform::CheckGL();
@@ -465,7 +449,6 @@ bool CLibRocketRenderInterface::GenerateTexture(
     const Rocket::Core::byte* source,
     const Rocket::Core::Vector2i& source_dimensions) {
 
-  glEnable(GL_TEXTURE_2D);
   GLuint texture_id = 0;
   // We could push this thorugh the sld pipe, maybe later
   // Have OpenGL generate a texture object handle for us

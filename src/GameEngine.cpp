@@ -90,7 +90,7 @@ void GameEngine::Loop() {
     ActiveScene->Render();
 
     _GameRender();
-    Rcontext->Render();
+   // Rcontext->Render();
 
     Renderer->PostRender();
     // Finished Drawing

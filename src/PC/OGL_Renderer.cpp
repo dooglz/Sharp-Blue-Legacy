@@ -10,26 +10,6 @@
 #include "OGL_FragmentShader.h"
 #include "OGL_VertexShader.h"
 
-void glerrorlogger(GLenum source​, GLenum type​, GLuint id​,
-  GLenum severity​, GLsizei length​, const GLchar* message​, const void* userParam​)
-{
-  printf("yyoyoyoyoy\n");
-}
-
-static void DebugCallbackAMD(GLuint id, GLenum category, GLenum severity, GLsizei length, const GLchar* message, GLvoid* userParam) 
-{
-  printf("yyoyoyoyoy\n");
-}
-
-static void DebugCallbackARB(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, GLvoid* userParam) 
-{
-  printf("yyoyoyoyoy\n");
-}
-
-void printOutKhrDebugMessage(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam)
-{
-  printf("yyoyoyoyoy\n");
-}
 
 namespace Engine {
 namespace OGL {
@@ -40,18 +20,6 @@ std::vector<const Vector3> COGL_Renderer::linebuffer;
 
 void COGL_Renderer::Init() { 
 loadShaders();
-glEnable(GL_DEBUG_OUTPUT);
-glEnable(GL_KHR_debug);
-glEnable(GL_AMD_debug_output);
-glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS_ARB);
-//glDebugMessageCallback((GLDEBUGPROC)DebugCallbackARB, 0);
-//glDebugMessageCallbackAMD((GLDEBUGPROCAMD)DebugCallbackAMD, 0);
-//glDebugMessageCallbackARB((GLDEBUGPROCARB)DebugCallbackARB, 0);
-GLchar ch = 'b';
-glDebugMessageInsertAMD(0, 0, 0, 1, &ch);
-glDebugMessageInsertARB(0, 0, 0, 2, 1, &ch);
-//glDebugMessageInsert(0, 0, 0, 0​, 1, &ch);
-glEnable(666666666);
 }
 
 static float count = 0;

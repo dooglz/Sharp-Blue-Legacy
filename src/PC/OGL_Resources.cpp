@@ -51,7 +51,9 @@ Material::~Material() {
 }
 
 Texture* Texture::Load(const std::string& name) {
-  Texture* T = new Texture();
+
+Texture* T = new Texture();
+
   T->EngineTexture = Storage<OGL::OGL_Texture>::Get(name);
   return T;
 }
@@ -71,15 +73,13 @@ OGL_Texture::OGL_Texture() {
 }
 
 OGL_Texture* OGL_Texture::Load(const std::string& name) {
-
+  SDL::SDL_Platform::CheckGL();
   printf("\nLoading texture: %s\n\n", name.c_str());
 
   SDL_Surface* surface = IMG_Load(name.c_str());
   SDL::SDL_Platform::CheckSDL();
 
   OGL_Texture* oglt = new OGL_Texture();
-  glEnable(GL_TEXTURE_2D);
-
   // Load image from file into a surface
   oglt->imageData = surface;
   ASSERT(oglt->imageData != NULL);
@@ -87,6 +87,7 @@ OGL_Texture* OGL_Texture::Load(const std::string& name) {
   // http://content.gpwiki.org/index.php/SDL:Tutorials:Using_SDL_with_OpenGL
 
   GLenum texture_format;
+  GLenum internalFormat;
 
   // Check that the image's width is a power of 2
   if ((surface->w & (surface->w - 1)) != 0) {
@@ -102,12 +103,14 @@ OGL_Texture* OGL_Texture::Load(const std::string& name) {
   GLint nOfColors = surface->format->BytesPerPixel;
   if (nOfColors == 4) // contains an alpha channel
   {
+    internalFormat = GL_RGBA;
     if (surface->format->Rmask == 0x000000ff)
       texture_format = GL_RGBA;
     else
       texture_format = GL_BGRA;
   } else if (nOfColors == 3) // no alpha channel
   {
+    internalFormat = GL_RGB;
     if (surface->format->Rmask == 0x000000ff)
       texture_format = GL_RGB;
     else
@@ -117,12 +120,14 @@ OGL_Texture* OGL_Texture::Load(const std::string& name) {
   {
     //but does it have alpha?
       texture_format = GL_RGBA2;
+      internalFormat = GL_RGB;
   }
   else {
     printf("warning: the image is not truecolor..  this will probably break\n");
     ASSERT(false);
   }
 
+  SDL::SDL_Platform::CheckGL();
   // Have OpenGL generate a texture object handle for us
   glGenTextures(1, &oglt->TextureID);
   SDL::SDL_Platform::CheckGL();
@@ -137,9 +142,8 @@ OGL_Texture* OGL_Texture::Load(const std::string& name) {
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   SDL::SDL_Platform::CheckGL();
 
-  glTexImage2D(GL_TEXTURE_2D, 0, nOfColors, surface->w, surface->h, 0,
-               texture_format, GL_UNSIGNED_BYTE, surface->pixels);
-
+  glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, surface->w, surface->h, 0, texture_format, GL_UNSIGNED_BYTE, surface->pixels);
+  SDL::SDL_Platform::CheckGL();
   return oglt;
 }
 

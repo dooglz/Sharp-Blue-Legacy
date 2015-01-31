@@ -59,6 +59,25 @@ SDL_assert_state CustomAssertionHandler(const SDL_assert_data* data,
   return defaultHandler(data, userdata);
 }
 
+void __stdcall DebugCallbackAMD(GLuint id, GLenum category, GLenum severity,
+  GLsizei length, const GLchar* message,
+  GLvoid* userParam) {
+  printf("\nAn OGL AMD error has occured: %s\n", message);
+}
+
+void __stdcall DebugCallbackARB(GLenum source, GLenum type, GLuint id,
+  GLenum severity, GLsizei length,
+  const GLchar* message, GLvoid* userParam) {
+  printf("\nAn OGL ARB error has occured: %s\n", message);
+}
+
+void __stdcall printOutKhrDebugMessage(GLenum source, GLenum type, GLuint id,
+  GLenum severity, GLsizei length,
+  const GLchar* message,
+  const void* userParam) {
+  printf("\nAn OGL KHR error has occured: %s\n", message);
+}
+
 namespace Engine {
 unsigned short CPlatform::_screenWidth;
 unsigned short CPlatform::_screenHeight;
@@ -156,43 +175,57 @@ void SDL_Platform::InitDisplay(const unsigned short width,
       "SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, DEFAULT_WIDTH,
       DEFAULT_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
   ASSERT(_window != NULL);
-  _gContext = SDL_GL_CreateContext(_window);
-  ASSERT(_gContext != NULL);
-  glewExperimental = GL_TRUE;
-  GLenum err = glewInit();
-  CheckGL();
-  GlewInfo();
 
-  if (GLEW_VERSION_4_4) {
-    _glverMaj = 4;
-    _glverMin = 4;
-  } else if (GLEW_VERSION_4_3) {
-    _glverMaj = 4;
-    _glverMin = 3;
-  } else if (GLEW_VERSION_4_0) {
-    _glverMaj = 4;
-    _glverMin = 0;
-  } else if (GLEW_VERSION_3_3) {
-    _glverMaj = 3;
-    _glverMin = 3;
-  } else if (GLEW_VERSION_3_0) {
-    _glverMaj = 3;
-    _glverMin = 0;
-  } else {
-    printf("Unknown GL Version!\n");
+  // context flags
+  // IMPORTANT! -------------------------------------------------------
+  //TODO: make this depend on debug build.
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG);
+  //-------------------------------------------------------------------
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 4);
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+
+  // Create context
+  _gContext = SDL_GL_CreateContext(_window);
+  CheckSDL();
+  CheckGL();
+  ASSERT(_gContext != NULL);
+
+  // init Glew
+  glewExperimental = GL_TRUE;
+  SDL_assert(glewInit() == GLEW_OK);
+  glGetError(); // Experimental init throws junk errors, Ignore.
+
+  GlewInfo();
+  CheckGL();
+  glEnable(GL_DEBUG_OUTPUT);
+  glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS_ARB);
+  CheckGL();
+  if (GLEW_ARB_debug_output) {
+    printf("Supporting Arb OGL debug  output\n");
+    glEnable(GL_DEBUG_OUTPUT);
+    glDebugMessageCallbackARB((GLDEBUGPROCARB)DebugCallbackARB, 0);
+    CheckGL();
   }
 
-  printf("Using OGL version: %i.%i\n", _glverMaj, _glverMin);
-  SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG);
-  SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, GL_CONTEXT_FLAG_DEBUG_BIT);
-  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, _glverMaj);
-  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, _glverMin);
-  SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+  if (GLEW_AMD_debug_output) {
+    printf("Supporting AMD OGL debug output\n");
+    glDebugMessageCallbackAMD((GLDEBUGPROCAMD)DebugCallbackAMD, 0);
+    CheckGL();
+  }
+
+  if (GLEW_KHR_debug) {
+    printf("Supporting KHR OGL debug output\n");
+    glDebugMessageCallback((GLDEBUGPROC)printOutKhrDebugMessage, 0);
+    CheckGL();
+  }
+
   _screenHeight = DEFAULT_HEIGHT;
   _screenWidth = DEFAULT_WIDTH;
   printf("Display Resolution: %i x %i\n", _screenWidth, _screenHeight);
   // Vsync
   ASSERT(SDL_GL_SetSwapInterval(1) >= 0);
+
 }
 
 void SDL_Platform::Shutdown() {
