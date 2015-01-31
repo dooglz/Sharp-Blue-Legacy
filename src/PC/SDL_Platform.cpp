@@ -1,4 +1,4 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <cstring>
 #include <iostream>
 
@@ -73,10 +73,49 @@ double SDL_Platform::GetTime() {
 SDL_Window* SDL_Platform::_window;
 SDL_GLContext SDL_Platform::_gContext;
 
+void GetFirstNMessages(GLuint numMsgs)
+{
+  GLint maxMsgLen = 0;
+  glGetIntegerv(GL_MAX_DEBUG_MESSAGE_LENGTH, &maxMsgLen);
+
+  std::vector<GLchar> msgData(numMsgs * maxMsgLen);
+  std::vector<GLenum> sources(numMsgs);
+  std::vector<GLenum> types(numMsgs);
+  std::vector<GLenum> severities(numMsgs);
+  std::vector<GLuint> ids(numMsgs);
+  std::vector<GLsizei> lengths(numMsgs);
+
+  GLuint numFound = glGetDebugMessageLog(numMsgs, msgData.size(), &sources[0], &types[0], &ids[0], &severities[0], &lengths[0], &msgData[0]);
+  if (numFound == 0){
+    numFound = glGetDebugMessageLogAMD(numMsgs, msgData.size(), &sources[0], &types[0], &ids[0], &lengths[0], &msgData[0]);
+  }
+  if (numFound == 0){
+    numFound = glGetDebugMessageLogARB(numMsgs, msgData.size(), &sources[0], &types[0], &ids[0], &severities[0], &lengths[0], &msgData[0]);
+  }
+
+  sources.resize(numFound);
+  types.resize(numFound);
+  severities.resize(numFound);
+  ids.resize(numFound);
+  lengths.resize(numFound);
+
+  std::vector<std::string> messages;
+  messages.reserve(numFound);
+
+  std::vector<GLchar>::iterator currPos = msgData.begin();
+  for (size_t msg = 0; msg < lengths.size(); ++msg)
+  {
+    messages.push_back(std::string(currPos, currPos + lengths[msg] - 1));
+    currPos = currPos + lengths[msg];
+  }
+}
+
+
 void SDL_Platform::CheckGL() {
   GLenum err;
   while ((err = glGetError()) != GL_NO_ERROR) {
     printf("An OGL error has occured: %i\n", err);
+    GetFirstNMessages(10);
   }
 }
 
@@ -107,6 +146,8 @@ void SDL_Platform::Init(const unsigned short width,
   Renderer->Init();
   IMG_Init(IMG_INIT_JPG || IMG_INIT_PNG);
   InitUI();
+
+
 }
 
 void SDL_Platform::InitDisplay(const unsigned short width,
@@ -117,7 +158,7 @@ void SDL_Platform::InitDisplay(const unsigned short width,
   ASSERT(_window != NULL);
   _gContext = SDL_GL_CreateContext(_window);
   ASSERT(_gContext != NULL);
-
+  glewExperimental = GL_TRUE;
   GLenum err = glewInit();
   CheckGL();
   GlewInfo();
@@ -142,6 +183,8 @@ void SDL_Platform::InitDisplay(const unsigned short width,
   }
 
   printf("Using OGL version: %i.%i\n", _glverMaj, _glverMin);
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG);
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, GL_CONTEXT_FLAG_DEBUG_BIT);
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, _glverMaj);
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, _glverMin);
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
