@@ -246,6 +246,18 @@
     <CustomBuild Include="../res/shaders/ps3/vs_basic.cg">
       <Filter>PS3\Shaders</Filter>
     </CustomBuild>
+    <CustomBuild Include="..\res\shaders\ui.frag">
+      <Filter>PC\Shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\res\shaders\ui.vert">
+      <Filter>PC\Shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\res\shaders\uiTex.frag">
+      <Filter>PC\Shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\res\shaders\uiTex.vert">
+      <Filter>PC\Shaders</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PS3">

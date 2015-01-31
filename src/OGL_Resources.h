@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "SDL_platform.h"
+#include "PC/SDL_platform.h"
 
 namespace Engine {
 namespace OGL {
