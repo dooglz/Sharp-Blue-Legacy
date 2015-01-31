@@ -134,7 +134,7 @@ void SDL_Platform::CheckGL() {
   GLenum err;
   while ((err = glGetError()) != GL_NO_ERROR) {
     printf("An OGL error has occured: %i\n", err);
-    GetFirstNMessages(10);
+   // GetFirstNMessages(10);
   }
 }
 

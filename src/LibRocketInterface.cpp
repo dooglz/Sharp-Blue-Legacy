@@ -148,6 +148,7 @@ void CLibRocketRenderInterface::RenderGeometry(
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, num_indices * sizeof(int), &indices[0],
                GL_STATIC_DRAW);
   SDL::SDL_Platform::CheckGL();
+
   glDisable(GL_DEPTH_TEST);
   glDrawElements(GL_TRIANGLES,    // mode
                  num_indices,     // count
@@ -184,7 +185,7 @@ Rocket::Core::CompiledGeometryHandle CLibRocketRenderInterface::CompileGeometry(
 
   gh->VAO = VAO;
   gh->Indices = num_indices;
-  printf("Compiling %i\n", VAO);
+  //printf("Compiling %i\n", VAO);
   // Bind VAO
   glBindVertexArray(VAO);
   SDL::SDL_Platform::CheckGL();
@@ -208,7 +209,7 @@ Rocket::Core::CompiledGeometryHandle CLibRocketRenderInterface::CompileGeometry(
   glEnableVertexAttribArray(0);
   SDL::SDL_Platform::CheckGL();
 
-  glVertexAttribPointer(0, 2, GL_FLOAT, 0, sizeof(Rocket::Core::Vertex), 0);
+  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Rocket::Core::Vertex), NULL);
   SDL::SDL_Platform::CheckGL();
 
   if (texture == NULL) { // Just Colours
@@ -230,12 +231,8 @@ Rocket::Core::CompiledGeometryHandle CLibRocketRenderInterface::CompileGeometry(
     // Tell OGL how the UVS are stored
     glEnableVertexAttribArray(2);
     SDL::SDL_Platform::CheckGL();
-
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE,
-                          sizeof(Rocket::Core::Vertex), &vertices[0].tex_coord);
-
-    SDL::SDL_Platform::CheckGL();
-
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, (GLuint)texture);
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Rocket::Core::Vertex),
                       &vertices[0].tex_coord);
     SDL::SDL_Platform::CheckGL();
@@ -248,7 +245,7 @@ Rocket::Core::CompiledGeometryHandle CLibRocketRenderInterface::CompileGeometry(
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, num_indices * sizeof(int), &indices[0],
                GL_STATIC_DRAW);
   SDL::SDL_Platform::CheckGL();
-
+  glBindVertexArray(0);
   return (Rocket::Core::CompiledGeometryHandle)gh;
 }
 
@@ -259,7 +256,7 @@ void CLibRocketRenderInterface::RenderCompiledGeometry(
 
   geoHandle* gh = (geoHandle*)geometry;
 
-  printf("RenderCompiled %i\n", gh->VAO);
+ // printf("RenderCompiled %i\n", gh->VAO);
   glUseProgram(gh->sp->getID());
 
   // Bind VAO
@@ -278,23 +275,25 @@ void CLibRocketRenderInterface::RenderCompiledGeometry(
   if (gh->Textured) {
     // Put the Texture in a texture unit
     // Bind toTexture Unit
-    glActiveTexture(GL_TEXTURE0);
+   glActiveTexture(GL_TEXTURE0);
     SDL::SDL_Platform::CheckGL();
     // bind texture to texture unit
     glBindTexture(GL_TEXTURE_2D, gh->Texture);
     SDL::SDL_Platform::CheckGL();
     GLint texIn = glGetUniformLocation(gh->sp->getID(), "texture");
-    glUniform1i(texIn, GL_TEXTURE0);
+    glUniform1i(texIn, 0);
     SDL::SDL_Platform::CheckGL();
   }
   else
   {
-    printf("");
+    printf("OHGOD HELP\n");
+    ASSERT(false);
   }
 
 
   glDisable(GL_DEPTH_TEST);
   SDL::SDL_Platform::CheckGL();
+
   glDrawElements(GL_TRIANGLES,    // mode
                  gh->Indices,     // count
                  GL_UNSIGNED_INT, // type
