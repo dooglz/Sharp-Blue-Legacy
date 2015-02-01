@@ -1,8 +1,13 @@
 #include "SDL_Event_Manager.h"
 #include "../Utilities.h"
 #include "sdl\SDL.h"
+#include "SDL_Platform.h"
 #include "../Input.h"
 #include "../GameEngine.h"
+
+#include <Rocket/Core.h>
+#include "../LibRocketInterface.h"
+
 namespace Engine {
 namespace OGL {
 
@@ -17,6 +22,7 @@ void SDLEventManager::processEvents() {
 
       // INPUT EVENTS --#
       case SDL_KEYDOWN: {
+        Rcontext->ProcessKeyDown(CLibRocketInterface::TranslateKey(e.key.keysym.sym), 0);
         switch (e.key.keysym.sym) {
           // function keys
           case SDLK_SPACE: {
@@ -115,10 +121,16 @@ void SDLEventManager::processEvents() {
         }
         break;
       }
+     case SDL_MOUSEWHEEL: {
+        Rcontext->ProcessMouseWheel(e.wheel.y, 0);
+        break;
+      }
       case SDL_MOUSEMOTION: {
+        Rcontext->ProcessMouseMove(e.motion.x, e.motion.y, 0);
         break;
       }
       case SDL_MOUSEBUTTONDOWN: {
+        Rcontext->ProcessMouseButtonDown(CLibRocketInterface::TranslateMouseButton(e.button.button), 0);
         switch (e.button.button) {
           case SDL_BUTTON_LEFT: {
             Input::setValue("ms_l", 255);
@@ -135,6 +147,7 @@ void SDLEventManager::processEvents() {
         break;
       }
       case SDL_MOUSEBUTTONUP: {
+        Rcontext->ProcessMouseButtonUp(CLibRocketInterface::TranslateMouseButton(e.button.button), 0);
         switch (e.button.button) {
           case SDL_BUTTON_LEFT: {
             Input::setValue("ms_l", 0);

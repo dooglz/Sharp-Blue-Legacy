@@ -120,7 +120,6 @@ void COGL_Renderer::PrepFrame() {
 
   glClearDepth(1.0f);
 
-
   glViewport(0, 0, SDL::SDL_Platform::GetSreenWidth(),
              SDL::SDL_Platform::GetSreenHeight());
 

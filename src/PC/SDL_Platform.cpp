@@ -3,6 +3,8 @@
 #include <iostream>
 
 #include <Rocket/Core.h>
+#include <Rocket/Controls.h>
+#include <Rocket/Debugger/Debugger.h>
 
 #include "SDL_Platform.h"
 #include "../Utilities.h"
@@ -271,8 +273,12 @@ void SDL_Platform::InitUI() {
   Rocket::Core::SetRenderInterface(uir);
 
   Rocket::Core::Initialise();
+  Rocket::Controls::Initialise();
+
   Rcontext = Rocket::Core::CreateContext(
       "default", Rocket::Core::Vector2i(_screenWidth, _screenHeight));
+
+  Rocket::Debugger::Initialise(Rcontext);
 
   Rocket::Core::FontDatabase::LoadFontFace("ui/assets/Delicious-Roman.otf");
   Rocket::Core::FontDatabase::LoadFontFace("ui/assets/Delicious-Italic.otf");
@@ -287,6 +293,7 @@ void SDL_Platform::InitUI() {
   } else {
     ASSERT(false);
   }
+  Rocket::Debugger::SetVisible(true);
 }
 }
 }

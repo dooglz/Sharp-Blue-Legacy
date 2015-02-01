@@ -267,6 +267,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='debugLib|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="LibRocketInterface.cpp" />
+    <ClCompile Include="LibrocketSystemInterface.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Maths.cpp" />
     <ClCompile Include="PC\OGL_Resources.cpp" />

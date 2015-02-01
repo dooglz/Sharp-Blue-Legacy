@@ -3,6 +3,7 @@
 #include "Utilities.h"
 #include <Rocket/Core/Platform.h>
 #include <Rocket/Core.h>
+
 #include <Rocket/Core/SystemInterface.h>
 #include <Rocket/Core/RenderInterface.h>
 #include "Resource.h"
@@ -21,6 +22,8 @@ namespace Engine {
 CLibRocketInterface::CLibRocketInterface() {}
 CLibRocketInterface::~CLibRocketInterface() {}
 float CLibRocketInterface::GetElapsedTime() { return Platform->GetTime(); }
+
+
 
 CLibRocketRenderInterface::CLibRocketRenderInterface() {
   // m_rocket_context = NULL;
@@ -43,9 +46,9 @@ void CLibRocketRenderInterface::RenderGeometry(
     //vertices[i].tex_coord.y = vertices[i].tex_coord.x;
     //vertices[i].tex_coord.x = k;
 
-    k = vertices[i].position.y;
-    vertices[i].position.y = vertices[i].position.x;
-    vertices[i].position.x = k;
+   // k = vertices[i].position.y;
+   // vertices[i].position.y = vertices[i].position.x;
+    //vertices[i].position.x = k;
   }
   // Generate VAO
   glGenVertexArrays(1, &VAO);

@@ -1,4 +1,5 @@
 #pragma once
+#include "sdl\SDL.h"
 #include <Rocket/Core.h>
 #include <Rocket/Core/SystemInterface.h>
 #include <Rocket/Core/RenderInterface.h>
@@ -9,6 +10,9 @@ public:
   CLibRocketInterface();
   ~CLibRocketInterface();
   virtual float GetElapsedTime();
+  static Rocket::Core::Input::KeyIdentifier CLibRocketInterface::TranslateKey(SDL_Keycode sdlkey);
+  static int TranslateMouseButton(Uint8 button);
+  bool LogMessage(Rocket::Core::Log::Type type, const Rocket::Core::String& message);
 };
 
 class CLibRocketRenderInterface : public Rocket::Core::RenderInterface {
