@@ -178,6 +178,11 @@ Rocket::Core::CompiledGeometryHandle CLibRocketRenderInterface::CompileGeometry(
 
   geoHandle* gh = new geoHandle();
 
+  vertices[0].tex_coord = { vertices[0].tex_coord.x, -vertices[0].tex_coord.y };
+  vertices[1].tex_coord = { vertices[1].tex_coord.x, -vertices[1].tex_coord.y };
+  vertices[2].tex_coord = { vertices[2].tex_coord.x, -vertices[2].tex_coord.y };
+  vertices[3].tex_coord = { vertices[3].tex_coord.x, -vertices[3].tex_coord.y };
+
   GLuint VAO;
   // Generate VAO
   glGenVertexArrays(1, &VAO);
@@ -286,8 +291,8 @@ void CLibRocketRenderInterface::RenderCompiledGeometry(
   }
   else
   {
-    printf("OHGOD HELP\n");
-    ASSERT(false);
+  //  printf("OHGOD HELP\n");
+  //  ASSERT(false);
   }
 
 
@@ -319,20 +324,18 @@ void CLibRocketRenderInterface::ReleaseCompiledGeometry(
 // Called by Rocket when it wants to enable or disable scissoring to clip
 // content.
 void CLibRocketRenderInterface::EnableScissorRegion(bool enable) {
-  /*
   if (enable)
     glEnable(GL_SCISSOR_TEST);
   else
     glDisable(GL_SCISSOR_TEST);
-    */
 }
 
 // Called by Rocket when it wants to change the scissor region.
 void CLibRocketRenderInterface::SetScissorRegion(int x, int y, int width,
                                                  int height) {
-  /*
-  glScissor(x, m_height - (y + height), width, height);
-  */
+  
+  glScissor(x, 720 - (y + height), width, height);
+  
 }
 
 // Set to byte packing, or the compiler will expand our struct, which means it
@@ -472,26 +475,6 @@ bool CLibRocketRenderInterface::GenerateTexture(
 
   texture_handle = (Rocket::Core::TextureHandle)texture_id;
 
-  /*
-  GLuint texture_id = 0;
-  glGenTextures(1, &texture_id);
-  if (texture_id == 0) {
-    printf("Failed to generate textures\n");
-    return false;
-  }
-
-  glBindTexture(GL_TEXTURE_2D, texture_id);
-
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, source_dimensions.x,
-               source_dimensions.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, source);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-  texture_handle = (Rocket::Core::TextureHandle)texture_id;
-  */
   return true;
 }
 
