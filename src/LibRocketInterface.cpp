@@ -37,18 +37,16 @@ void CLibRocketRenderInterface::RenderGeometry(
     const Rocket::Core::Vector2f& translation) {
 
   GLuint VAO;
-  /*
-  vertices[0].tex_coord = {0,0};
-  vertices[1].tex_coord = { 0, 1.0f };
-  vertices[2].tex_coord = { 1.0f, 0.0f };
-  vertices[3].tex_coord = { 1.0f, 1.0f };
-  */
-  /*
-  vertices[0].tex_coord = { vertices[0].tex_coord.x, -vertices[0].tex_coord.y};
-  vertices[1].tex_coord = { vertices[1].tex_coord.x, -vertices[1].tex_coord.y};
-  vertices[2].tex_coord = { vertices[2].tex_coord.x, -vertices[2].tex_coord.y};
-  vertices[3].tex_coord = { vertices[3].tex_coord.x, -vertices[3].tex_coord.y};
-  */
+  for (unsigned int i = 0; i < num_vertices; i++) {
+    float k;
+    //k = vertices[i].tex_coord.y;
+    //vertices[i].tex_coord.y = vertices[i].tex_coord.x;
+    //vertices[i].tex_coord.x = k;
+
+    k = vertices[i].position.y;
+    vertices[i].position.y = vertices[i].position.x;
+    vertices[i].position.x = k;
+  }
   // Generate VAO
   glGenVertexArrays(1, &VAO);
   SDL::SDL_Platform::CheckGL();
@@ -185,8 +183,8 @@ for (unsigned int i = 0; i < num_vertices; i++) {
   //vertices[i].tex_coord.x = k;
 
   k = vertices[i].position.y;
-  vertices[i].position.y = vertices[i].position.x;
-  vertices[i].position.x = k;
+  //vertices[i].position.y = vertices[i].position.x;
+  //vertices[i].position.x = k;
  }
 
   GLuint VAO;

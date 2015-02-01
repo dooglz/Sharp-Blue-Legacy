@@ -5,13 +5,14 @@
 	<style>
 		body
 		{
-			width: 400px;
-			height: 300px;
-
-			margin: auto;
+			width: 10%;
+			height: 10%;
+			margin-left: 2%;
+			margin-top: 2%;
 		}
 	</style>
 </head>
 <body class="window">
+Hello Bloody world!
 </body>
 </rml>

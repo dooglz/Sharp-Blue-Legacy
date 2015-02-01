@@ -274,6 +274,11 @@ void SDL_Platform::InitUI() {
   Rcontext = Rocket::Core::CreateContext(
       "default", Rocket::Core::Vector2i(_screenWidth, _screenHeight));
 
+  Rocket::Core::FontDatabase::LoadFontFace("ui/assets/Delicious-Roman.otf");
+  Rocket::Core::FontDatabase::LoadFontFace("ui/assets/Delicious-Italic.otf");
+  Rocket::Core::FontDatabase::LoadFontFace("ui/assets/Delicious-BoldItalic.otf");
+  Rocket::Core::FontDatabase::LoadFontFace("ui/assets/Delicious-Bold.otf");
+
   Rocket::Core::ElementDocument* document =
       Rcontext->LoadDocument("ui/tutorial.rml");
   if (document != NULL) {
