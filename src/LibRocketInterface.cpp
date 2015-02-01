@@ -177,11 +177,17 @@ Rocket::Core::CompiledGeometryHandle CLibRocketRenderInterface::CompileGeometry(
     int num_indices, const Rocket::Core::TextureHandle texture) {
 
   geoHandle* gh = new geoHandle();
+  
+for (unsigned int i = 0; i < num_vertices; i++) {
+  float k;
+  //k = vertices[i].tex_coord.y;
+  //vertices[i].tex_coord.y = vertices[i].tex_coord.x;
+  //vertices[i].tex_coord.x = k;
 
-  vertices[0].tex_coord = { vertices[0].tex_coord.x, -vertices[0].tex_coord.y };
-  vertices[1].tex_coord = { vertices[1].tex_coord.x, -vertices[1].tex_coord.y };
-  vertices[2].tex_coord = { vertices[2].tex_coord.x, -vertices[2].tex_coord.y };
-  vertices[3].tex_coord = { vertices[3].tex_coord.x, -vertices[3].tex_coord.y };
+  k = vertices[i].position.y;
+  vertices[i].position.y = vertices[i].position.x;
+  vertices[i].position.x = k;
+ }
 
   GLuint VAO;
   // Generate VAO
@@ -225,7 +231,7 @@ Rocket::Core::CompiledGeometryHandle CLibRocketRenderInterface::CompileGeometry(
     SDL::SDL_Platform::CheckGL();
 
     glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE,
-                          sizeof(Rocket::Core::Vertex), &vertices[0].colour);
+      sizeof(Rocket::Core::Vertex), (GLvoid*)(sizeof(Rocket::Core::Vector2f)));
     SDL::SDL_Platform::CheckGL();
 
   } else { // Just Textures
@@ -239,7 +245,7 @@ Rocket::Core::CompiledGeometryHandle CLibRocketRenderInterface::CompileGeometry(
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, (GLuint)texture);
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Rocket::Core::Vertex),
-                      &vertices[0].tex_coord);
+      (GLvoid*)(sizeof(Rocket::Core::Vector2f) + sizeof(Rocket::Core::Colourb)));
     SDL::SDL_Platform::CheckGL();
   }
 
