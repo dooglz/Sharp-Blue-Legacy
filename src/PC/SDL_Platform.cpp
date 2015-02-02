@@ -2,9 +2,7 @@
 #include <cstring>
 #include <iostream>
 
-#include <Rocket/Core.h>
-#include <Rocket/Controls.h>
-#include <Rocket/Debugger/Debugger.h>
+#include "LibRocketInterface.h"
 
 #include "SDL_Platform.h"
 #include "../Utilities.h"
@@ -15,12 +13,10 @@
 #include <sdl/SDL.h>
 #include <sdl/SDL_image.h>
 
-#include "../LibRocketInterface.h"
-//#include <sdl\SDL_opengl.h>
+
+
 #define DEFAULT_HEIGHT 720
 #define DEFAULT_WIDTH 1280
-
-Rocket::Core::Context* Engine::Rcontext = NULL;
 
 void SDLVersionInfo() {
   SDL_version compiled;
@@ -166,9 +162,9 @@ void SDL_Platform::Init(const unsigned short width,
   Renderer = new OGL::COGL_Renderer();
   Renderer->Init();
   IMG_Init(IMG_INIT_JPG || IMG_INIT_PNG);
-  InitUI();
 
-
+  UserInterface = new CLibrocket();
+  UserInterface->Init();
 }
 
 void SDL_Platform::InitDisplay(const unsigned short width,
@@ -231,6 +227,10 @@ void SDL_Platform::InitDisplay(const unsigned short width,
 }
 
 void SDL_Platform::Shutdown() {
+  UserInterface->Shutdown();
+  delete UserInterface;
+  UserInterface = NULL;
+
   Renderer->Shutdown();
   delete Renderer;
   Renderer = NULL;
@@ -264,36 +264,5 @@ void SDL_Platform::SaveFile(const std::string& name) {
 }
 */
 
-void SDL_Platform::InitUI() {
-  printf("Librocket version: %s\n\n", Rocket::Core::GetVersion());
-
-  CLibRocketInterface* uii = new CLibRocketInterface();
-  Rocket::Core::SetSystemInterface(uii);
-  CLibRocketRenderInterface* uir = new CLibRocketRenderInterface();
-  Rocket::Core::SetRenderInterface(uir);
-
-  Rocket::Core::Initialise();
-  Rocket::Controls::Initialise();
-
-  Rcontext = Rocket::Core::CreateContext(
-      "default", Rocket::Core::Vector2i(_screenWidth, _screenHeight));
-
-  Rocket::Debugger::Initialise(Rcontext);
-
-  Rocket::Core::FontDatabase::LoadFontFace("ui/assets/Delicious-Roman.otf");
-  Rocket::Core::FontDatabase::LoadFontFace("ui/assets/Delicious-Italic.otf");
-  Rocket::Core::FontDatabase::LoadFontFace("ui/assets/Delicious-BoldItalic.otf");
-  Rocket::Core::FontDatabase::LoadFontFace("ui/assets/Delicious-Bold.otf");
-
-  Rocket::Core::ElementDocument* document =
-      Rcontext->LoadDocument("ui/tutorial.rml");
-  if (document != NULL) {
-    document->Show();
-   // document->RemoveReference();
-  } else {
-    ASSERT(false);
-  }
-  Rocket::Debugger::SetVisible(true);
-}
 }
 }

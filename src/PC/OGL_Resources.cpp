@@ -1,4 +1,4 @@
-﻿#include "../OGL_Resources.h"
+﻿#include "OGL_Resources.h"
 #include "../Resource.h"
 #include "../Storage.h"
 #include "../Material.h"

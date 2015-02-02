@@ -1,7 +1,9 @@
-#include "LibRocketInterface.h"
+#include "LibRocketSystemInterface.h"
 #include "sdl\SDL.h"
+#include "SDL_Platform.h"
 
-Rocket::Core::Input::KeyIdentifier Engine::CLibRocketInterface::TranslateKey(SDL_Keycode sdlkey)
+namespace Engine{
+Rocket::Core::Input::KeyIdentifier CLibRocketInterface::TranslateKey(SDL_Keycode sdlkey)
 {
   using namespace Rocket::Core::Input;
 
@@ -344,6 +346,12 @@ Rocket::Core::Input::KeyIdentifier Engine::CLibRocketInterface::TranslateKey(SDL
 }
 
 
+
+
+CLibRocketInterface::CLibRocketInterface() {}
+CLibRocketInterface::~CLibRocketInterface() {}
+float CLibRocketInterface::GetElapsedTime() { return (float)Platform->GetTime(); }
+
 int Engine::CLibRocketInterface::TranslateMouseButton(Uint8 button)
 {
   switch (button)
@@ -392,3 +400,4 @@ bool  Engine::CLibRocketInterface::LogMessage(Rocket::Core::Log::Type type, cons
 
   return true;
 };
+}

@@ -1,6 +1,6 @@
 ﻿#include "OGL_Renderer.h"
 #include "SDL_platform.h"
-#include "../OGL_Resources.h"
+#include "OGL_Resources.h"
 #include "../Maths.h"
 #include "../Resource.h"
 #include "sdl/SDL.h"

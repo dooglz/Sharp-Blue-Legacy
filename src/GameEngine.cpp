@@ -10,7 +10,7 @@
 #include "Event_Manager.h"
 
 #include "Storage.h"
-
+#include "UI.h"
 
 #if defined(_vita_)
 #elif defined(_PS3_)
@@ -80,7 +80,7 @@ void GameEngine::Loop() {
     // Update engine
     EventManager->processEvents();
     ActiveScene->Update(deltaPercent);
-    Rcontext->Update();
+    UserInterface->Update(deltaPercent);
 
     // Update game
     _GameUpdate(deltaPercent);
@@ -90,7 +90,7 @@ void GameEngine::Loop() {
     ActiveScene->Render();
 
     _GameRender();
-    Rcontext->Render();
+    UserInterface->Render();
 
     Renderer->PostRender();
     // Finished Drawing

@@ -266,10 +266,10 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='debugLib|PS3'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='debugLib|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="LibRocketInterface.cpp" />
-    <ClCompile Include="LibrocketSystemInterface.cpp" />
-    <ClCompile Include="Material.cpp" />
+    <ClCompile Include="PC/LibRocketRenderInterface.cpp" />
+    <ClCompile Include="PC/LibrocketSystemInterface.cpp" />
     <ClCompile Include="Maths.cpp" />
+    <ClCompile Include="PC\LibRocketInterface.cpp" />
     <ClCompile Include="PC\OGL_Resources.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Renderer.cpp" />
@@ -445,15 +445,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|PSVita'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="PC/SDL_Font.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|PS3'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='debugLib|PS3'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='debugLib|PSVita'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|PSVita'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='debugLib|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="PS3\PS3_Font.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='debugLib|Win32'">true</ExcludedFromBuild>
@@ -465,17 +456,15 @@
   <ItemGroup>
     <ClInclude Include="Cm_FpsMotor.h" />
     <ClInclude Include="Cm_MeshRenderer.h" />
-    <ClInclude Include="LibRocketInterface.h" />
+    <ClInclude Include="PC/LibRocketInterface.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="OGL_Resources.h" />
+    <ClInclude Include="PC\LibRocketRenderInterface.h" />
+    <ClInclude Include="PC\LibrocketSystemInterface.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Cm_Camera.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Entity.h" />
-    <ClInclude Include="Font.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='debugLib|Win32'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="Event_Manager.h" />
     <ClInclude Include="FileIO.h" />
@@ -486,6 +475,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Storage.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="VITA/GXM_Fragment_shader.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|PS3'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='debugLib|PS3'">true</ExcludedFromBuild>
@@ -552,15 +542,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='debugLib|Win32'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Renderer.h" />
-    <ClInclude Include="PC/SDL_Font.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|PS3'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='debugLib|PS3'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='debugLib|PSVita'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|PSVita'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='debugLib|Win32'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="torus.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="PS3/PS3_Event_Manager.h">

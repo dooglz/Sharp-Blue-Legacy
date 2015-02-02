@@ -1,29 +1,20 @@
-#include "LibRocketInterface.h"
-#include "platform.h"
-#include "Utilities.h"
-#include <Rocket/Core/Platform.h>
+#include "LibRocketRenderInterface.h"
+
+//#include "../platform.h"
+#include "../Utilities.h"
+
+//#include <Rocket/Core/Platform.h>
 #include <Rocket/Core.h>
 
-#include <Rocket/Core/SystemInterface.h>
-#include <Rocket/Core/RenderInterface.h>
-#include "Resource.h"
+//#include "../Resource.h"
 
-#include "PC/OGL_ShaderProgram.h"
-#include "Storage.h"
-
-#include "PC/SDL_Platform.h"
+#include "OGL_ShaderProgram.h"
+#include "../Storage.h"
 #include "glew/glew.h"
-
 #include <glm/gtc/type_ptr.hpp>
 #include "OGL_Resources.h"
 
 namespace Engine {
-
-CLibRocketInterface::CLibRocketInterface() {}
-CLibRocketInterface::~CLibRocketInterface() {}
-float CLibRocketInterface::GetElapsedTime() { return Platform->GetTime(); }
-
-
 
 CLibRocketRenderInterface::CLibRocketRenderInterface() {
   // m_rocket_context = NULL;
