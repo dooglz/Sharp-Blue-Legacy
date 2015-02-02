@@ -1,13 +1,6 @@
 #include "LibRocketRenderInterface.h"
-
-//#include "../platform.h"
 #include "../Utilities.h"
-
-//#include <Rocket/Core/Platform.h>
 #include <Rocket/Core.h>
-
-//#include "../Resource.h"
-
 #include "OGL_ShaderProgram.h"
 #include "../Storage.h"
 #include "glew/glew.h"
@@ -16,11 +9,8 @@
 
 namespace Engine {
 
-CLibRocketRenderInterface::CLibRocketRenderInterface() {
-  // m_rocket_context = NULL;
-  // m_width = 0;
-  // m_height = 0;
-}
+CLibRocketRenderInterface::CLibRocketRenderInterface() {}
+
 
 // Called by Rocket when it wants to render geometry that it does not wish to
 // optimise.
@@ -31,20 +21,11 @@ void CLibRocketRenderInterface::RenderGeometry(
     const Rocket::Core::Vector2f& translation) {
 
   GLuint VAO;
-  for (unsigned int i = 0; i < num_vertices; i++) {
-    float k;
-    //k = vertices[i].tex_coord.y;
-    //vertices[i].tex_coord.y = vertices[i].tex_coord.x;
-    //vertices[i].tex_coord.x = k;
 
-   // k = vertices[i].position.y;
-   // vertices[i].position.y = vertices[i].position.x;
-    //vertices[i].position.x = k;
-  }
   // Generate VAO
   glGenVertexArrays(1, &VAO);
   SDL::SDL_Platform::CheckGL();
-  printf("Render %i\n", VAO);
+  //printf("Render %i\n", VAO);
   // Bind VAO
   glBindVertexArray(VAO);
   SDL::SDL_Platform::CheckGL();
@@ -167,20 +148,8 @@ struct geoHandle {
 Rocket::Core::CompiledGeometryHandle CLibRocketRenderInterface::CompileGeometry(
     Rocket::Core::Vertex* vertices, int num_vertices, int* indices,
     int num_indices, const Rocket::Core::TextureHandle texture) {
-
   geoHandle* gh = new geoHandle();
   
-for (unsigned int i = 0; i < num_vertices; i++) {
-  float k;
-  //k = vertices[i].tex_coord.y;
-  //vertices[i].tex_coord.y = vertices[i].tex_coord.x;
-  //vertices[i].tex_coord.x = k;
-
-  k = vertices[i].position.y;
-  //vertices[i].position.y = vertices[i].position.x;
-  //vertices[i].position.x = k;
- }
-
   GLuint VAO;
   // Generate VAO
   glGenVertexArrays(1, &VAO);
@@ -287,12 +256,6 @@ void CLibRocketRenderInterface::RenderCompiledGeometry(
     glUniform1i(texIn, 0);
     SDL::SDL_Platform::CheckGL();
   }
-  else
-  {
-  //  printf("OHGOD HELP\n");
-  //  ASSERT(false);
-  }
-
 
   glDisable(GL_DEPTH_TEST);
   SDL::SDL_Platform::CheckGL();

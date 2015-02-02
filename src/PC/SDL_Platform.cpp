@@ -13,8 +13,6 @@
 #include <sdl/SDL.h>
 #include <sdl/SDL_image.h>
 
-
-
 #define DEFAULT_HEIGHT 720
 #define DEFAULT_WIDTH 1280
 

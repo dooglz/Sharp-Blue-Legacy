@@ -1,7 +1,6 @@
 #include "Utilities.h" // asserts and commmon defines
 #include "GameEngine.h"
 
-#include <Rocket/Core.h>
 #include <time.h>
 #include <math.h>
 #include <stdlib.h>
