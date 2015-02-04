@@ -4,9 +4,17 @@
 #include "LibRocketInterface.h"
 #include "LibRocketSystemInterface.h"
 #include "LibRocketRenderInterface.h"
+class EventL: public Rocket::Core::EventListener
+{
+  void ProcessEvent(Rocket::Core::Event& event){
+    printf("%s has been pressed\n", event.GetTargetElement()->GetId().CString());
+  }
+};
+
 
 namespace Engine {
   CUserInterface* UserInterface = 0;
+
   UICanvas::UICanvas(unsigned int posX, unsigned int posY, unsigned int sizeX, unsigned int sizeY) : posX(posX), posY(posY), sizeX(sizeX), sizeY(sizeY)
   {}
 
@@ -16,7 +24,10 @@ void UICanvas::LoadDocument(const std::string& name) {
       ((Rocket::Core::Context*)internalPointer)->LoadDocument(name.c_str());
   if (document != NULL) {
     document->Show();
-     document->RemoveReference();
+    document->RemoveReference();
+    EventL* el = new EventL();
+    document->GetElementById("button1")->SetInnerRML("We set this element with code!");
+    document->GetElementById("button1")->AddEventListener("click", el, false);
   } else {
     ASSERT(false);
   }
@@ -100,8 +111,8 @@ UICanvas* CLibrocket::NewCanvas(const unsigned int posX,
   Rocket::Debugger::SetVisible(true);
 
   // Todo: URGENT Only once
-  Rocket::Debugger::Initialise(Rcontext);
-  Rocket::Debugger::SetVisible(true);
+  //Rocket::Debugger::Initialise(Rcontext);
+  //Rocket::Debugger::SetVisible(true);
   UICanvas* uic = new UICanvas(posX, posY, sizeX, sizeY);
   contexts.push_back(Rcontext);
   uic->internalPointer = Rcontext;

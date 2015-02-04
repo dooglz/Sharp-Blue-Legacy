@@ -210,6 +210,7 @@ Rocket::Core::CompiledGeometryHandle CLibRocketRenderInterface::CompileGeometry(
     SDL::SDL_Platform::CheckGL();
   }
 
+
   // Generate a buffer for the indices
   GLuint elementbuffer;
   glGenBuffers(1, &elementbuffer);

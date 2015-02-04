@@ -1,0 +1,23 @@
+<rml>
+<head>
+	<link type="text/css" href="ui.rcss"/>
+</head>
+<body class="window">
+        <div class="topbar">
+            <div class="topleft">
+                Base health : 600%
+            </div>
+            <div class="topleft" id="button1" >
+               some other stats
+            </div>
+        </div>
+		<div class="middle"></div>
+		<div class="bottom">
+            <div class="buttonbar">
+				<div class="towerbutton">button1</div>
+				<div class="towerbutton">button2</div>
+				<div class="towerbutton">button3</div>
+            </div>
+        </div>
+</body>
+</rml>

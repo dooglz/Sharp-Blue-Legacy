@@ -38,7 +38,7 @@ void registerInputs() {
 void Game::init() {
 
   Engine::UICanvas* canvas = Engine::UserInterface->NewCanvas(0, 0, 1280, 720, "Default");
-  canvas->LoadDocument("ui/tutorial.rml");
+  canvas->LoadDocument("ui/ui.rml");
  
   // TODO: allow code gnerated meshes to be stored in mesh storage
   /*
