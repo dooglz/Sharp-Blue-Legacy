@@ -24,7 +24,7 @@ namespace Engine {
       void Init();
 
       void Shutdown();
-
+      void SetClearColour(const float r, const float g, const float b);
       void RenderMesh(RenderObject* const msh, const Matrix4& mvp);
       void DrawLine(const Vector3& p1, const Vector3& p2);
       void DrawCross(const Vector3& p1, const float size);

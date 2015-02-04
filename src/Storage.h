@@ -21,8 +21,29 @@ private:
 
 public:
   Storage() {}
-  static void Store(const std::string& name,T* item) {
-    _container.insert(std::make_pair(name, item));
+  //! Manually Store an item, return false if key already stored.
+  static bool Store(const std::string& name,T* item) {
+    if (!constructed) {
+      warehouses.push_back(new Storage<T>);
+      constructed = true;
+    }
+    std::pair<std::hash_map<std::string, T*>::iterator, bool > pr;
+    pr = _container.insert(std::make_pair(name, item));
+    return pr.second;
+  }
+
+  //! Checks to see if key is already stored
+  static bool Contains(const std::string& name){
+    if (!constructed) {
+      warehouses.push_back(new Storage<T>);
+      constructed = true;
+    }
+    std::hash_map<std::string, T*>::iterator got = _container.find(name);
+    if (got == _container.end()) {
+      return false;
+    }else {
+      return true;
+    }
   }
 
   static T* Get(const std::string& name) {

@@ -41,7 +41,7 @@ void OGL_Shader::LoadBinaryShader(std::string name) {
 
 void OGL_Shader::LoadSourceShader(std::string name) {
   name = "shaders/" + name;
-  printf("Looking for shader: %s\n", name.c_str());
+  if (engineDebug){printf("Looking for shader: %s\n", name.c_str());}
 
   ASSERT_MSG((_shaderType),
              "_shaderType must be set before loading a shader file!");

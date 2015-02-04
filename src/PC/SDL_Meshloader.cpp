@@ -11,7 +11,6 @@ namespace Engine {
 
 // TODO: tidy this mess up
 Mesh *Mesh::Load(const std::string &name) {
-  printf("SDL loading Mesh: %s\n", name.c_str());
   return SDL::CSDL_Meshloader::openOBJFile(name);
 }
 

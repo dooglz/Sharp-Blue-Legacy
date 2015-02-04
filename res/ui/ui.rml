@@ -4,19 +4,19 @@
 </head>
 <body class="window">
         <div class="topbar">
-            <div class="topleft">
+            <div class="topleft" id="button1" >
                 Base health : 600%
             </div>
-            <div class="topleft" id="button1" >
+            <div class="topleft" id="button2" >
                some other stats
             </div>
         </div>
 		<div class="middle"></div>
 		<div class="bottom">
             <div class="buttonbar">
-				<div class="towerbutton">button1</div>
-				<div class="towerbutton">button2</div>
-				<div class="towerbutton">button3</div>
+				<div class="towerbutton" id="button3" >button1</div>
+				<div class="towerbutton" id="button4" >button2</div>
+				<div class="towerbutton" id="button5" >button3</div>
             </div>
         </div>
 </body>

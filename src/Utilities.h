@@ -1,6 +1,7 @@
 ﻿#pragma once
 //Memory leak detection
 
+#define engineDebug false
 
 #include <stdio.h>
 #include <stdlib.h> // exit function

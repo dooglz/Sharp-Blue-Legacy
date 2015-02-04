@@ -28,7 +28,7 @@ void OGL_ShaderProgram::link() {
     printf("program link error: %s\n", errorStr);
     HALT
   }
-  printf("linking program %d\n", _ID);
+  if (engineDebug){printf("linking program %d\n", _ID);}
   // check for general errors
   // checkerr();
 }

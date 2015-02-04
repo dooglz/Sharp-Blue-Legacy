@@ -1,6 +1,7 @@
 ﻿#include "OGL_Renderer.h"
 #include "SDL_platform.h"
 #include "OGL_Resources.h"
+#include "../Storage.h"
 #include "../Maths.h"
 #include "../Resource.h"
 #include "sdl/SDL.h"
@@ -23,15 +24,25 @@ loadShaders();
 }
 
 static float count = 0;
-void COGL_Renderer::ClearSurface() {
-  // f += 0.001f;
-  // glClearColor(sin(f) , 0.5f, 0.5f, 1.f);
-  count += 0.05f;
-  float r = (sin((0.1f * count) + 0) * 127.0f) + 50.0f;
-  float g = (sin((0.1f * count) + 2) * 127.0f) + 50.0f;
-  float b = (sin((0.1f * count) + 4) * 127.0f) + 50.0f;
+static bool colourCycle = true;
+
+void COGL_Renderer::SetClearColour(const float r, const float g, const float b)
+{
+  colourCycle = false;
   glClearColor(r / 255.0f, g / 255.0f, b / 255.0f, 1.f);
   SDL::SDL_Platform::CheckGL();
+
+}
+
+void COGL_Renderer::ClearSurface() {
+  if (colourCycle){
+    count += 0.05f;
+    float r = (sin((0.1f * count) + 0) * 127.0f) + 50.0f;
+    float g = (sin((0.1f * count) + 2) * 127.0f) + 50.0f;
+    float b = (sin((0.1f * count) + 4) * 127.0f) + 50.0f;
+    glClearColor(r / 255.0f, g / 255.0f, b / 255.0f, 1.f);
+    SDL::SDL_Platform::CheckGL();
+  }
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   SDL::SDL_Platform::CheckGL();
@@ -163,7 +174,6 @@ void COGL_Renderer::DrawLine(const Vector3 &p1, const Vector3 &p2) {
 }
 
 void COGL_Renderer::ProcessLines() {
-  return;
   if (linebuffer.size() < 1) {
     return;
   }
@@ -200,7 +210,7 @@ void COGL_Renderer::ProcessLines() {
                         );
   SDL::SDL_Platform::CheckGL();
 
-  GLuint prgrm = GetDefaultShaderProgram()->getID();
+  GLuint prgrm = Storage<OGL_ShaderProgram>::Get("basic-basic")->getID();
   glUseProgram(prgrm);
   SDL::SDL_Platform::CheckGL();
 
@@ -217,7 +227,6 @@ void COGL_Renderer::ProcessLines() {
 
   for (std::vector<Vector3>::iterator it = linebuffer.begin();
        it != linebuffer.end(); ++it) {
-    //(*it)->Update(delta);
   }
 
   glDeleteBuffers(1, &vbo);
@@ -229,12 +238,7 @@ void COGL_Renderer::ProcessLines() {
 }
 
 OGL::OGL_ShaderProgram *COGL_Renderer::GetDefaultShaderProgram() {
-  /*  if (_defaultProgram == nullptr) {
-      loadShaders();
-    }
-    return _defaultProgram;
-  */
-  return NULL;
+  return Storage<OGL_ShaderProgram>::Get("basic-basic");
 }
 
 void COGL_Renderer::Shutdown() {

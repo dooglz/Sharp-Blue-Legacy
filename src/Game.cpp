@@ -35,11 +35,19 @@ void registerInputs() {
   a.clear();
 }
 
+void EventListener(const std::string& elementID){
+  printf("%s G has been pressed\n", elementID.c_str());
+}
+
 void Game::init() {
 
   Engine::UICanvas* canvas = Engine::UserInterface->NewCanvas(0, 0, 1280, 720, "Default");
-  canvas->LoadDocument("ui/ui.rml");
- 
+  Engine::UIDocument* doc =  canvas->LoadDocument("ui/ui.rml");
+  doc->SetContent("button1", "We set this element with code!");
+  doc->AddEventListener("button1", "click", EventListener);
+  doc->AddEventListener("button2", "click", EventListener);
+  doc->AddEventListener("button3", "click", EventListener);
+
   // TODO: allow code gnerated meshes to be stored in mesh storage
   /*
  Engine::Mesh torus;

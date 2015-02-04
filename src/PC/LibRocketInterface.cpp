@@ -4,34 +4,98 @@
 #include "LibRocketInterface.h"
 #include "LibRocketSystemInterface.h"
 #include "LibRocketRenderInterface.h"
-class EventL: public Rocket::Core::EventListener
-{
-  void ProcessEvent(Rocket::Core::Event& event){
-    printf("%s has been pressed\n", event.GetTargetElement()->GetId().CString());
+#include "../Storage.h"
+
+class EventBouncer : public Rocket::Core::EventListener {
+private:
+public:
+  static EventBouncer* Load(const std::string& name) { return 0; }
+  void (*Gamefunc)(const std::string& elementID);
+
+  void ProcessEvent(Rocket::Core::Event& event) {
+    Gamefunc(event.GetTargetElement()->GetId().CString());
   }
 };
 
-
 namespace Engine {
-  CUserInterface* UserInterface = 0;
+void UIDocument::SetContent(const std::string& elementID,
+                            const std::string& content) {
+  ((Rocket::Core::ElementDocument*)internalPointer)
+      ->GetElementById(elementID.c_str())
+      ->SetInnerRML(content.c_str());
+}
 
-  UICanvas::UICanvas(unsigned int posX, unsigned int posY, unsigned int sizeX, unsigned int sizeY) : posX(posX), posY(posY), sizeX(sizeX), sizeY(sizeY)
-  {}
+std::string UIDocument::GetContent(const std::string& elementID) {
+  return ((Rocket::Core::ElementDocument*)internalPointer)
+      ->GetElementById(elementID.c_str())
+      ->GetInnerRML()
+      .CString();
+}
+
+void UIDocument::AddEventListener(
+    const std::string& elementID, const std::string& eventType,
+    void (*ListenerFunction)(const std::string& elementID)) {
+
+  if (Storage<EventBouncer>::Contains(elementID + eventType)) {
+    printf(
+        "ERROR: Identical [%s] Event Listner already bound to element [%s]\n",
+        eventType.c_str(), elementID.c_str());
+    return;
+  }
+
+  EventBouncer* bounce = new EventBouncer();
+  bool b = Storage<EventBouncer>::Store(elementID + eventType, bounce);
+
+  ((Rocket::Core::ElementDocument*)internalPointer)
+      ->GetElementById(elementID.c_str())
+      ->AddEventListener(eventType.c_str(), bounce, false);
+  bounce->Gamefunc = ListenerFunction;
+}
+
+void UIDocument::RemoveEventListener(
+    const std::string& elementID, const std::string& eventType,
+    void (*ListenerFunction)(const std::string& elementID)) {
+
+  EventBouncer* bounce = Storage<EventBouncer>::Get(elementID + eventType);
+  if (bounce == NULL) {
+    printf(
+        "ERROR: Removing a non-existant [%s] listner bound to element [%s]\n",
+        eventType.c_str(), elementID.c_str());
+    return;
+  }
+
+  ((Rocket::Core::ElementDocument*)internalPointer)
+      ->GetElementById(elementID.c_str())
+      ->RemoveEventListener(eventType.c_str(), bounce, false);
+
+  // TODO: URGENT
+  // Storage<EventBouncer>::Remove()
+}
+
+CUserInterface* UserInterface = 0;
+
+UICanvas::UICanvas(unsigned int posX, unsigned int posY, unsigned int sizeX,
+                   unsigned int sizeY)
+    : posX(posX), posY(posY), sizeX(sizeX), sizeY(sizeY) {}
 
 //""
-void UICanvas::LoadDocument(const std::string& name) {
+UIDocument* UICanvas::LoadDocument(const std::string& name) {
   Rocket::Core::ElementDocument* document =
       ((Rocket::Core::Context*)internalPointer)->LoadDocument(name.c_str());
   if (document != NULL) {
     document->Show();
     document->RemoveReference();
-    EventL* el = new EventL();
-    document->GetElementById("button1")->SetInnerRML("We set this element with code!");
-    document->GetElementById("button1")->AddEventListener("click", el, false);
+    //document->GetElementById("button1")->SetInnerRML("We set this element with code!");
+    //document->GetElementById("button1")->AddEventListener("click", el, false);
+    // document->GetElementById("button1")->RemoveEventListener()
   } else {
     ASSERT(false);
   }
+  UIDocument* doc = new UIDocument();
+  doc->internalPointer = document;
+  return doc;
 }
+
 void UICanvas::Unload() {
   ((Rocket::Core::Context*)internalPointer)->UnloadAllDocuments();
 }
@@ -65,40 +129,44 @@ void CLibrocket::Render() {
 }
 
 void CLibrocket::Shutdown() {
-  for each(Rocket::Core::Context * context in contexts) 
-{
-  context->UnloadAllDocuments();
-  context->RemoveReference();
- }
+  for each(Rocket::Core::Context * context in contexts) {
+      context->UnloadAllDocuments();
+      context->RemoveReference();
+    }
   Rocket::Core::Shutdown();
 }
 
-void CLibrocket::ProcessKeyDown(SDL_Keycode sdlkey)
-{
-  Rocket::Core::Input::KeyIdentifier key = CLibRocketInterface::TranslateKey(sdlkey);
-  for each(Rocket::Core::Context * context in contexts) { context->ProcessKeyDown(key,0); }
+void CLibrocket::ProcessKeyDown(SDL_Keycode sdlkey) {
+  Rocket::Core::Input::KeyIdentifier key =
+      CLibRocketInterface::TranslateKey(sdlkey);
+  for each(Rocket::Core::Context * context in contexts) {
+      context->ProcessKeyDown(key, 0);
+    }
 }
-void CLibrocket::ProcessMouseWheel(int delta)
-{
-  for each(Rocket::Core::Context * context in contexts) { context->ProcessMouseWheel(delta,0); }
+void CLibrocket::ProcessMouseWheel(int delta) {
+  for each(Rocket::Core::Context * context in contexts) {
+      context->ProcessMouseWheel(delta, 0);
+    }
 }
-void CLibrocket::ProcessMouseMove(int x, int y)
-{
-  for each(Rocket::Core::Context * context in contexts) { context->ProcessMouseMove(x,y,0);}
+void CLibrocket::ProcessMouseMove(int x, int y) {
+  for each(Rocket::Core::Context * context in contexts) {
+      context->ProcessMouseMove(x, y, 0);
+    }
 }
 
-void CLibrocket::ProcessMouseButtonDown(Uint8 sdlbutton)
-{
+void CLibrocket::ProcessMouseButtonDown(Uint8 sdlbutton) {
   int button = CLibRocketInterface::TranslateMouseButton(sdlbutton);
-  for each(Rocket::Core::Context * context in contexts) { context->ProcessMouseButtonDown(button, 0); }
+  for each(Rocket::Core::Context * context in contexts) {
+      context->ProcessMouseButtonDown(button, 0);
+    }
 }
 
-void CLibrocket::ProcessMouseButtonUp(Uint8 sdlbutton)
-{
+void CLibrocket::ProcessMouseButtonUp(Uint8 sdlbutton) {
   int button = CLibRocketInterface::TranslateMouseButton(sdlbutton);
-  for each(Rocket::Core::Context * context in contexts) { context->ProcessMouseButtonUp(button, 0); }
+  for each(Rocket::Core::Context * context in contexts) {
+      context->ProcessMouseButtonUp(button, 0);
+    }
 }
-
 
 UICanvas* CLibrocket::NewCanvas(const unsigned int posX,
                                 const unsigned int posY,
@@ -107,12 +175,12 @@ UICanvas* CLibrocket::NewCanvas(const unsigned int posX,
                                 const std::string& name) {
 
   Rocket::Core::Context* Rcontext = Rocket::Core::CreateContext(
-    name.c_str(), Rocket::Core::Vector2i(sizeX, sizeY));
+      name.c_str(), Rocket::Core::Vector2i(sizeX, sizeY));
   Rocket::Debugger::SetVisible(true);
 
   // Todo: URGENT Only once
-  //Rocket::Debugger::Initialise(Rcontext);
-  //Rocket::Debugger::SetVisible(true);
+  // Rocket::Debugger::Initialise(Rcontext);
+  // Rocket::Debugger::SetVisible(true);
   UICanvas* uic = new UICanvas(posX, posY, sizeX, sizeY);
   contexts.push_back(Rcontext);
   uic->internalPointer = Rcontext;
@@ -121,7 +189,8 @@ UICanvas* CLibrocket::NewCanvas(const unsigned int posX,
 
 void CLibrocket::RemoveCanvas(UICanvas* canvas) {
   ((Rocket::Core::Context*)canvas->internalPointer)->RemoveReference();
-  //contexts.erase(std::remove(contexts.begin(), contexts.end(), canvas), contexts.end());
+  // contexts.erase(std::remove(contexts.begin(), contexts.end(), canvas),
+  // contexts.end());
   delete canvas;
   canvas = 0;
 }

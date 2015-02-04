@@ -32,6 +32,8 @@ public:
 
   virtual void Init() = 0;
 
+  virtual void SetClearColour(const float r, const float g, const float b) = 0;
+
   virtual void Shutdown(){};
   virtual ~CRenderer(){};
 };
