@@ -1,14 +1,18 @@
 #pragma once
+#include <vector>
 #include "sdl\SDL.h"
 #include "../ui.h"
 #include <Rocket/Core.h>
+#include "LibRocketRenderInterface.h"
+#include "LibRocketSystemInterface.h"
 
 namespace Engine {
 
 class CLibrocket : public CUserInterface {
 private:
   std::vector<Rocket::Core::Context*> contexts;
-
+  CLibRocketInterface* _uii;
+  CLibRocketRenderInterface* _uir;
 public:
   void CLibrocket::ProcessMouseWheel(int delta);
   void CLibrocket::ProcessMouseMove(int x, int y);

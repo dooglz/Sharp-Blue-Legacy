@@ -139,17 +139,27 @@ void CLibRocketRenderInterface::RenderGeometry(
 struct geoHandle {
   OGL::OGL_ShaderProgram* sp;
   GLuint VAO;
+  GLuint* Buffers;
+  unsigned int bufferCount;
   GLsizei Indices;
   GLuint Texture;
   bool Textured;
+  ~geoHandle();
 };
+
+geoHandle::~geoHandle()
+{
+  glDeleteBuffers(bufferCount, Buffers);
+  glDeleteVertexArrays(1, &VAO);
+  delete [] Buffers;
+}
+
 // Called by Rocket when it wants to compile geometry it believes will be static
 // for the forseeable future.
 Rocket::Core::CompiledGeometryHandle CLibRocketRenderInterface::CompileGeometry(
     Rocket::Core::Vertex* vertices, int num_vertices, int* indices,
     int num_indices, const Rocket::Core::TextureHandle texture) {
   geoHandle* gh = new geoHandle();
-  
   GLuint VAO;
   // Generate VAO
   glGenVertexArrays(1, &VAO);
@@ -218,7 +228,11 @@ Rocket::Core::CompiledGeometryHandle CLibRocketRenderInterface::CompileGeometry(
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, num_indices * sizeof(int), &indices[0],
                GL_STATIC_DRAW);
   SDL::SDL_Platform::CheckGL();
+
   glBindVertexArray(0);
+
+  gh->bufferCount = 2;
+  gh->Buffers = new GLuint[2] {VBO,elementbuffer};
   return (Rocket::Core::CompiledGeometryHandle)gh;
 }
 
@@ -278,9 +292,9 @@ void CLibRocketRenderInterface::RenderCompiledGeometry(
 }
 
 // Called by Rocket when it wants to release application-compiled geometry.
-void CLibRocketRenderInterface::ReleaseCompiledGeometry(
-    Rocket::Core::CompiledGeometryHandle ROCKET_UNUSED_PARAMETER(geometry)) {
-  ROCKET_UNUSED(geometry);
+void CLibRocketRenderInterface::ReleaseCompiledGeometry(Rocket::Core::CompiledGeometryHandle geometry) {
+  geoHandle* gh = (geoHandle*)geometry;
+  delete gh;
 }
 
 // Called by Rocket when it wants to enable or disable scissoring to clip
@@ -443,8 +457,6 @@ bool CLibRocketRenderInterface::GenerateTexture(
 // Called by Rocket when a loaded texture is no longer required.
 void CLibRocketRenderInterface::ReleaseTexture(
     Rocket::Core::TextureHandle texture_handle) {
-  /*
-  glDeleteTextures(1, (GLuint*)&texture_handle);
-  */
+    glDeleteTextures(1, (GLuint*)&texture_handle);
 }
 }

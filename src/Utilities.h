@@ -2,9 +2,20 @@
 //Memory leak detection
 
 #define engineDebug false
+#define leakdetect true
+
+#if defined(leakdetect)
+#define _CRTDBG_MAP_ALLOC
+#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+#define new DBG_NEW
+
+#include <stdlib.h>
+#include <crtdbg.h>
 
 #include <stdio.h>
 #include <stdlib.h> // exit function
+
+#endif
 
 // Mark variable as used
 #define UNUSED(a) (void)(a)

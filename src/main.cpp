@@ -21,7 +21,9 @@
 // Program Entry Point: main
 //
 int main(int argc, char **argv) {
-
+#if defined(leakdetect)
+  _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+#endif
   puts("Program Entry Point: Main\n");
 
   Engine::GameEngine::Init(1280, 720);
