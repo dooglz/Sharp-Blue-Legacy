@@ -458,7 +458,6 @@
     <ClInclude Include="Cm_MeshRenderer.h" />
     <ClInclude Include="PC/LibRocketInterface.h" />
     <ClInclude Include="Material.h" />
-    <ClInclude Include="OGL_Resources.h" />
     <ClInclude Include="PC\LibRocketRenderInterface.h" />
     <ClInclude Include="PC\LibrocketSystemInterface.h" />
     <ClInclude Include="Platform.h" />

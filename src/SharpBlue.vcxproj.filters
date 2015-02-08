@@ -206,9 +206,6 @@
     <ClInclude Include="Material.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Storage.h" />
-    <ClInclude Include="OGL_Resources.h">
-      <Filter>PC</Filter>
-    </ClInclude>
     <ClInclude Include="PC/LibRocketInterface.h">
       <Filter>PC</Filter>
     </ClInclude>

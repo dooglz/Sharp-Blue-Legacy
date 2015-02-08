@@ -42,22 +42,19 @@ void GameEngine::Init(const unsigned short width, const unsigned short height) {
 
   // init modules
   Platform->Init(width, height);
-  // Loading scene
-  ActiveScene = new Scene();
+
   run = true;
 }
 
-void GameEngine::SetActiveScene(Scene* scene) { 
-  ActiveScene->Unload();
-  ActiveScene = scene; 
+void GameEngine::SetActiveScene(Scene* scene) {
+  if (ActiveScene != NULL) {
+    ActiveScene->Unload();
+  }
+  ActiveScene = scene;
   ActiveScene->Load();
 }
 
 void GameEngine::Shutdown() {
-  ActiveScene->Shutdown();
-  delete ActiveScene;
-  ActiveScene = 0;
-
   Platform->Shutdown();
   delete Platform;
   Platform = 0;

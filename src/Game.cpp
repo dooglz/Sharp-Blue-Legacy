@@ -39,8 +39,11 @@ void EventListener(const std::string& elementID) {
   printf("%s G has been pressed\n", elementID.c_str());
 }
 static Engine::UICanvas* canvas;
+static Engine::Scene* defaultScene;
 void Game::init() {
-
+  // Loading scene
+  defaultScene = new Engine::Scene();
+  Engine::GameEngine::SetActiveScene(defaultScene);
   canvas = Engine::UserInterface->NewCanvas(0, 0, 1280, 720, "Default");
   Engine::UIDocument* doc = canvas->LoadDocument("ui/ui.rml");
   doc->SetContent("button1", "We set this element with code!");
@@ -136,7 +139,9 @@ void Game::update(double delta) {
 void Game::render() {}
 
 void Game::shutdown() {
+
   Engine::ActiveScene->RemoveAllEntities();
+  delete defaultScene;
   ent1 = 0;
   ent2 = 0;
   ent3 = 0;
