@@ -55,7 +55,7 @@ void UIDocument::AddEventListener(
 void UIDocument::RemoveEventListener(
     const std::string& elementID, const std::string& eventType,
     void (*ListenerFunction)(const std::string& elementID)) {
-
+  //can we add &this  to the key, so we can have multiple docs?
   EventBouncer* bounce = Storage<EventBouncer>::Get(elementID + eventType);
   if (bounce == NULL) {
     printf(
@@ -97,6 +97,8 @@ UIDocument* UICanvas::LoadDocument(const std::string& name) {
 }
 
 void UICanvas::Unload() {
+  //TODO: remove all even bouners
+
   ((Rocket::Core::Context*)internalPointer)->UnloadAllDocuments();
 }
 
