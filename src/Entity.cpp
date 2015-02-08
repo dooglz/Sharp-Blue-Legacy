@@ -5,6 +5,12 @@
 #include "Component.h"
 
 namespace Engine {
+
+  //Returns the scene that this entity belongs to.
+  Scene* Entity::GetScene(){ return _scene; }
+  //Called from addEntity in scene.
+  void Entity::SetScene(Scene* scn){_scene = scn; }
+
   Entity::Entity() {
     _visible = true;
     _scale = Vector3(1.0f, 1.0f, 1.0f);
@@ -14,6 +20,7 @@ namespace Engine {
   }
 
   Entity::~Entity() {
+    printf("Entity destructor\n");
     for (std::vector<CComponent *>::iterator it = _components.begin();
       it != _components.end(); ++it) {
       delete (*it);

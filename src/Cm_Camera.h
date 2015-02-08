@@ -7,14 +7,11 @@ class Mesh;
 class CmCamera : public CComponent {
 protected:
   Mesh* _mesh;
-  bool _active;
 
 public:
   CmCamera();
   ~CmCamera();
 
-  void Activate();
-  void Deactivate();
   bool IsActive();
 
   // void Render();

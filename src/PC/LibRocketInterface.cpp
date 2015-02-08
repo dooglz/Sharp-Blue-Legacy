@@ -191,9 +191,8 @@ UICanvas* CLibrocket::NewCanvas(const unsigned int posX,
 
 void CLibrocket::RemoveCanvas(UICanvas* canvas) {
   ((Rocket::Core::Context*)canvas->internalPointer)->RemoveReference();
-  // contexts.erase(std::remove(contexts.begin(), contexts.end(), canvas),
-  // contexts.end());
-  delete canvas;
-  canvas = 0;
+  contexts.erase(std::remove(contexts.begin(), contexts.end(), (Rocket::Core::Context*)canvas->internalPointer), contexts.end());
+    
+ // delete canvas;
 }
 }
