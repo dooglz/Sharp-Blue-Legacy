@@ -88,49 +88,10 @@ double SDL_Platform::GetTime() {
 SDL_Window* SDL_Platform::_window;
 SDL_GLContext SDL_Platform::_gContext;
 
-void GetFirstNMessages(GLuint numMsgs)
-{
-  GLint maxMsgLen = 0;
-  glGetIntegerv(GL_MAX_DEBUG_MESSAGE_LENGTH, &maxMsgLen);
-
-  std::vector<GLchar> msgData(numMsgs * maxMsgLen);
-  std::vector<GLenum> sources(numMsgs);
-  std::vector<GLenum> types(numMsgs);
-  std::vector<GLenum> severities(numMsgs);
-  std::vector<GLuint> ids(numMsgs);
-  std::vector<GLsizei> lengths(numMsgs);
-
-  GLuint numFound = glGetDebugMessageLog(numMsgs, msgData.size(), &sources[0], &types[0], &ids[0], &severities[0], &lengths[0], &msgData[0]);
-  if (numFound == 0){
-    numFound = glGetDebugMessageLogAMD(numMsgs, msgData.size(), &sources[0], &types[0], &ids[0], &lengths[0], &msgData[0]);
-  }
-  if (numFound == 0){
-    numFound = glGetDebugMessageLogARB(numMsgs, msgData.size(), &sources[0], &types[0], &ids[0], &severities[0], &lengths[0], &msgData[0]);
-  }
-
-  sources.resize(numFound);
-  types.resize(numFound);
-  severities.resize(numFound);
-  ids.resize(numFound);
-  lengths.resize(numFound);
-
-  std::vector<std::string> messages;
-  messages.reserve(numFound);
-
-  std::vector<GLchar>::iterator currPos = msgData.begin();
-  for (size_t msg = 0; msg < lengths.size(); ++msg)
-  {
-    messages.push_back(std::string(currPos, currPos + lengths[msg] - 1));
-    currPos = currPos + lengths[msg];
-  }
-}
-
-
 void SDL_Platform::CheckGL() {
   GLenum err;
   while ((err = glGetError()) != GL_NO_ERROR) {
     printf("An OGL error has occured: %i\n", err);
-   // GetFirstNMessages(10);
   }
 }
 
@@ -172,14 +133,41 @@ void SDL_Platform::InitDisplay(const unsigned short width,
       DEFAULT_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
   ASSERT(_window != NULL);
 
+  //Temp context
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+  // Create context
+  _gContext = SDL_GL_CreateContext(_window);
+  CheckSDL();
+  CheckGL();
+  ASSERT(_gContext != NULL);
+  // init Glew
+  glewExperimental = GL_TRUE;
+  ASSERT(glewInit() == GLEW_OK);
+  glGetError(); // Experimental init throws junk errors, Ignore.
+
+  GlewInfo();
+  CheckGL();
+
+  if (!GLEW_VERSION_4_3)
+  {
+    printf("\n\nThis engine requires a minimum of opengl 4.3\n");
+    ASSERT(false);
+    //TODO exit
+  }
+
+  SDL_GL_DeleteContext(_gContext);
+  CheckSDL();
+
+
   // context flags
   // IMPORTANT! -------------------------------------------------------
   //TODO: make this depend on debug build.
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG);
   //-------------------------------------------------------------------
   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
-  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 4);
-  SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 
   // Create context
   _gContext = SDL_GL_CreateContext(_window);
@@ -187,13 +175,6 @@ void SDL_Platform::InitDisplay(const unsigned short width,
   CheckGL();
   ASSERT(_gContext != NULL);
 
-  // init Glew
-  glewExperimental = GL_TRUE;
-  SDL_assert(glewInit() == GLEW_OK);
-  glGetError(); // Experimental init throws junk errors, Ignore.
-
-  GlewInfo();
-  CheckGL();
   glEnable(GL_DEBUG_OUTPUT);
   glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS_ARB);
   CheckGL();

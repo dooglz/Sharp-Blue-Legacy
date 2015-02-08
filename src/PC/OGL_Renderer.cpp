@@ -232,7 +232,6 @@ void COGL_Renderer::ProcessLines() {
   glDeleteBuffers(1, &vbo);
   glDeleteVertexArrays(1, &vao);
   glBindVertexArray(NULL);
-  glEnableVertexAttribArray(NULL);
   SDL::SDL_Platform::CheckGL();
   linebuffer.clear();
 }
