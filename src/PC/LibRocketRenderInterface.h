@@ -1,4 +1,5 @@
 #pragma once
+#include "../Utilities.h"
 #include <Rocket/Core/RenderInterface.h>
 namespace Engine{
 class CLibRocketRenderInterface : public Rocket::Core::RenderInterface {

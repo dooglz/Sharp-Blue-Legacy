@@ -1,7 +1,7 @@
 #pragma once
+#include "Utilities.h"
 #include <string>
 #include "Maths.h"
-#include "Utilities.h"
 #include <vector>
 
 namespace Engine {
@@ -51,6 +51,7 @@ struct Texture {
   void LoadOnGpu();
 };
 
+//A Material holds a shader and all the parameters needed to use it.
 struct Material {
   Material(const std::string &name, const std::string &vs,
            const std::string &fs, const unsigned int Params,
@@ -69,14 +70,22 @@ struct Material {
   const bool NeedsUVs;
 };
 
+//A RenderObject hold a reference to a mesh, it's material, and render parameters.
 struct RenderObject {
   ~RenderObject(){
     // Todo: URGENT
+    material = 0;
+    mesh = 0;
+    material =0;
+
+    delete[] textures;
+    delete[] Params;
   };
-  void *EngineRenderObject;
   Mesh *mesh;
   Material *material;
+  //list of pointers to textures used by the material
   Texture **textures;
+  //list of generic pointers to parameters needed by the material shader
   void **Params;
 };
 }

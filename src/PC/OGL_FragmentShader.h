@@ -1,4 +1,5 @@
 #pragma once
+#include "../Utilities.h"
 #include "OGL_Shader.h"
 namespace Engine {
 namespace OGL {

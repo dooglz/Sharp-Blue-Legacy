@@ -151,8 +151,12 @@ void UICanvas::Unload() {
   ((Rocket::Core::Context*)internalPointer)->UnloadAllDocuments();
 }
 
-CLibrocket::CLibrocket() {}
-CLibrocket::~CLibrocket() {}
+CLibrocket::CLibrocket() {
+  printf("Librocket constructed\n");
+}
+CLibrocket::~CLibrocket() {
+  printf("Librocket destructed\n");
+}
 
 void CLibrocket::Init() {
   printf("Librocket version: %s\n\n", Rocket::Core::GetVersion());
@@ -180,6 +184,7 @@ void CLibrocket::Render() {
 }
 
 void CLibrocket::Shutdown() {
+  printf("Librocket shutting down\n");
   for each(Rocket::Core::Context * context in contexts) {
       context->UnloadAllDocuments();
       context->RemoveReference();
@@ -236,17 +241,15 @@ UICanvas* CLibrocket::NewCanvas(const unsigned int posX,
   // Rocket::Debugger::Initialise(Rcontext);
   // Rocket::Debugger::SetVisible(true);
   UICanvas* uic = new UICanvas(posX, posY, sizeX, sizeY);
-  contexts.push_back(Rcontext);
   uic->internalPointer = Rcontext;
+  contexts.push_back(Rcontext);
   return uic;
 }
 
 void CLibrocket::RemoveCanvas(UICanvas* canvas) {
 
   Rocket::Core::Context* c = ((Rocket::Core::Context*)canvas->internalPointer);
-
   c->RemoveReference();
-
   contexts.erase(std::remove(contexts.begin(), contexts.end(), (Rocket::Core::Context*)canvas->internalPointer), contexts.end());
 }
 }

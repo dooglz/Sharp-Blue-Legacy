@@ -162,13 +162,13 @@ void COGL_Renderer::PostRender() {
 
 void COGL_Renderer::loadShaders() {}
 
-void COGL_Renderer::DrawCross(const Vector3 &p1, const float size) {
+void COGL_Renderer::DrawCross(const Vector3 p1, const float size) {
   DrawLine(p1 + Vector3(size, 0, 0), p1 - Vector3(size, 0, 0));
   DrawLine(p1 + Vector3(0, size, 0), p1 - Vector3(0, size, 0));
   DrawLine(p1 + Vector3(0, 0, size), p1 - Vector3(0, 0, size));
 }
 
-void COGL_Renderer::DrawLine(const Vector3 &p1, const Vector3 &p2) {
+void COGL_Renderer::DrawLine(const Vector3 p1, const Vector3 p2) {
   linebuffer.push_back(p1);
   linebuffer.push_back(p2);
 }
@@ -241,6 +241,7 @@ OGL::OGL_ShaderProgram *COGL_Renderer::GetDefaultShaderProgram() {
 }
 
 void COGL_Renderer::Shutdown() {
+  linebuffer.clear();
   // delete _defaultProgram;
 }
 }

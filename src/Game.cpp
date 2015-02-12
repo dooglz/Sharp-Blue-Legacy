@@ -134,6 +134,7 @@ void Game::update(double delta) {
   ent4->setRotation(QuatToEuler(ent4->getRotation()) + Vector3(a, 0, 0));
   Engine::Renderer->DrawLine(Vector3(0, 0, 0), Vector3(0, 6, 0));
   Engine::Renderer->DrawCross(Vector3(0, 6, 0), 1.0f);
+  //Engine::GameEngine::StopLoop();
 }
 
 void Game::render() {}

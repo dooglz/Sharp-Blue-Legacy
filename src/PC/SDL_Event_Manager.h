@@ -1,4 +1,5 @@
 #pragma once
+#include "../Utilities.h"
 #include "../Event_Manager.h"
 namespace Engine {
 namespace OGL {

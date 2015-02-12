@@ -1,3 +1,4 @@
+#include "Utilities.h"
 #include "Cm_MeshRenderer.h"
 #include "Renderer.h"
 #include "Entity.h"
@@ -13,6 +14,7 @@ CmMeshRenderer::CmMeshRenderer() : CComponent("MeshRenderer") {
   //_ro = new RenderObject();
   _ro = new RenderObject();
   _ro->textures = NULL;
+  _ro->Params = 0;
   SetMaterial(Materials::Default);
 }
 
@@ -33,6 +35,7 @@ void CmMeshRenderer::setMesh(const std::string& meshname) {
 void CmMeshRenderer::SetMaterial(Materials mat) {
   _ro->material = Storage<Material>::Get(MaterialStats[mat].materialName);
   delete _ro->textures;
+  delete _ro->Params;
 //TODO:  delete _ro->Params;
   _ro->textures = new Texture* [_ro->material->TexturesCount];
   _ro->Params = new void* [_ro->material->ParametersCount];

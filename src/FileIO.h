@@ -1,4 +1,5 @@
 #pragma once
+#include "Utilities.h"
 #include <string>
 #pragma warning(disable : 4496)
 #pragma warning(disable : 4996)

@@ -1,4 +1,5 @@
 #pragma once
+#include "Utilities.h"
 #include <String>
 #include <hash_map>
 

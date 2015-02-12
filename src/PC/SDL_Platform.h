@@ -1,4 +1,5 @@
 #pragma once
+#include "../Utilities.h"
 #include "../Platform.h"
 #include <sdl/SDL.h>
 namespace Rocket {

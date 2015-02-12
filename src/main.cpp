@@ -20,10 +20,20 @@
 //
 // Program Entry Point: main
 //
+/*
+struct AtExit
+{
+  ~AtExit() { _CrtDumpMemoryLeaks(); }
+} doAtExit;
+*/
+
 int main(int argc, char **argv) {
+  _CrtMemState s;
 #if defined(leakdetect)
-  _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+  _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG | _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+ // _CrtSetBreakAlloc(780);
 #endif
+  _CrtMemCheckpoint(&s);
   puts("Program Entry Point: Main\n");
 
   Engine::GameEngine::Init(1280, 720);
@@ -47,6 +57,7 @@ int main(int argc, char **argv) {
 
   puts("Quitting\n");
 
-  _CrtDumpMemoryLeaks();
+//  _CrtDumpMemoryLeaks();
+  _CrtMemDumpAllObjectsSince(&s);
   return 0;
 }

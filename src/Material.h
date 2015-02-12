@@ -1,4 +1,5 @@
 #pragma once
+#include "Utilities.h"
 #include "Resource.h"
 namespace Engine {
 enum Materials { Default, Coloured, Textured };

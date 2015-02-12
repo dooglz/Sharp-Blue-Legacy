@@ -1,4 +1,5 @@
 #pragma once
+#include "../Utilities.h"
 #include "../Renderer.h"
 
 #include "../Maths.h"
@@ -26,8 +27,8 @@ namespace Engine {
       void Shutdown();
       void SetClearColour(const float r, const float g, const float b);
       void RenderMesh(RenderObject* const msh, const Matrix4& mvp);
-      void DrawLine(const Vector3& p1, const Vector3& p2);
-      void DrawCross(const Vector3& p1, const float size);
+      void DrawLine(const Vector3 p1, const Vector3 p2);
+      void DrawCross(const Vector3 p1, const float size);
       //
       static OGL::OGL_ShaderProgram* GetDefaultShaderProgram();
     };

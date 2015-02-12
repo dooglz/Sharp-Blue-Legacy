@@ -98,6 +98,7 @@
     <ClCompile Include="PC\LibRocketInterface.cpp">
       <Filter>PC</Filter>
     </ClCompile>
+    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine.h" />

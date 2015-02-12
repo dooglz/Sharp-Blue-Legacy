@@ -276,6 +276,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="PC/SDL_Platform.cpp" />
     <ClCompile Include="Storage.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="VITA/GXM_Fragment_Shader.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|PS3'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='debugLib|PS3'">true</ExcludedFromBuild>

@@ -1,4 +1,5 @@
 #pragma once
+#include "Utilities.h"
 namespace Engine {
 class CPlatform {
 protected:

@@ -1,6 +1,8 @@
 #pragma once
+#include "Utilities.h"
 #include <string>
-#include "Utilities.h" // asserts and commmon defines
+#include <vector>
+
 class EventBouncer;
 
 namespace Engine {
@@ -36,6 +38,7 @@ class CUserInterface {
 protected:
 
 public:
+  virtual ~CUserInterface() = 0;
   virtual void Update(const double delta) = 0;
   virtual void Render() = 0;
   virtual void Init() = 0;

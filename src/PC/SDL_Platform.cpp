@@ -162,7 +162,6 @@ void SDL_Platform::InitDisplay(const unsigned short width,
   SDL_GL_DeleteContext(_gContext);
   CheckSDL();
 
-
   // context flags
   // IMPORTANT! -------------------------------------------------------
   //TODO: make this depend on debug build.
