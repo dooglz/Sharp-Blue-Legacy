@@ -14,11 +14,12 @@ private:
   std::vector<Rocket::Core::Context*> contexts;
   CLibRocketInterface* _uii;
   CLibRocketRenderInterface* _uir;
+
 public:
-  void CLibrocket::ProcessMouseWheel(int delta);
-  void CLibrocket::ProcessMouseMove(int x, int y);
-  void CLibrocket::ProcessMouseButtonDown(Uint8 sdlbutton);
-  void CLibrocket::ProcessMouseButtonUp(Uint8 sdlbutton);
+  void ProcessMouseWheel(int delta);
+  void ProcessMouseMove(int x, int y);
+  void ProcessMouseButtonDown(Uint8 sdlbutton);
+  void ProcessMouseButtonUp(Uint8 sdlbutton);
   void ProcessKeyDown(SDL_Keycode sdlkey);
 
   CLibrocket();

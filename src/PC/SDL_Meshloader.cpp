@@ -39,9 +39,10 @@ Mesh *CSDL_Meshloader::openOBJFile(const std::string &filename) {
   }
 
   while (1) {
-    char lineHeader[128];
+    char lineHeader[32];
     // read the first word of the line
-    int res = fscanf(file, "%s", lineHeader);
+    //100mb limit
+    int res = fscanf(file, "%31s", lineHeader);
     if (res == EOF) {
       break;
     } // EOF = End Of File. Quit the loop.
@@ -61,20 +62,19 @@ Mesh *CSDL_Meshloader::openOBJFile(const std::string &filename) {
       fscanf(file, "%f %f %f\n", &normal.x, &normal.y, &normal.z);
       temp_normals.push_back(normal);
     } else if (strcmp(lineHeader, "f") == 0) {
-      std::string vertex1, vertex2, vertex3;
       unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
       char data[64];
       fgets(data, 64, file);
       // THERE MAY BE QUADS, if there is, we only take the last 4.
-      int matches = sscanf(data, "%d/%d/%d %d/%d/%d %d/%d/%d\n",
+      int matches = sscanf(data, "%u/%u/%u %u/%u/%u %u/%u/%u\n",
                            &vertexIndex[0], &uvIndex[0], &normalIndex[0],
                            &vertexIndex[1], &uvIndex[1], &normalIndex[1],
                            &vertexIndex[2], &uvIndex[2], &normalIndex[2]);
       if (matches != 9) {
-        matches = sscanf(data, "%d %d %d\n", &vertexIndex[0], &vertexIndex[1],
+        matches = sscanf(data, "%u %u %u\n", &vertexIndex[0], &vertexIndex[1],
                          &vertexIndex[2]);
         if (matches != 3) {
-          matches = sscanf(data, "%d/%d %d/%d %d/%d\n", &vertexIndex[0],
+          matches = sscanf(data, "%u/%u %u/%u %u/%u\n", &vertexIndex[0],
                            &uvIndex[0], &vertexIndex[1], &uvIndex[1],
                            &vertexIndex[2], &uvIndex[2]);
           if (matches != 6) {
@@ -98,6 +98,9 @@ Mesh *CSDL_Meshloader::openOBJFile(const std::string &filename) {
       fgets(stupidBuffer, 1000, file);
     }
   }
+
+  fclose(file);
+
   bool hasUvs = !temp_uvs.empty();
   bool hasNormals = !temp_normals.empty();
 
@@ -123,7 +126,7 @@ Mesh *CSDL_Meshloader::openOBJFile(const std::string &filename) {
     }
   }
 
-  printf("file read success, vertices:%i\n", vertices.size());
+  printf("file read success, vertices:%ul\n", vertices.size());
 
   Mesh *m = new Mesh();
   m->loadedLocal = false;
@@ -168,6 +171,7 @@ Mesh *CSDL_Meshloader::openOBJFile(const std::string &filename) {
   m->strip = false;
   m->fan = false;
   m->line = false;
+
   return m;
 }
 

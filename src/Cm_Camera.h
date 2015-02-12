@@ -7,7 +7,6 @@ namespace Components {
 class Mesh;
 class CmCamera : public CComponent {
 protected:
-  Mesh* _mesh;
 
 public:
   CmCamera();

@@ -9,7 +9,7 @@ class FileIO {
 
 protected:
 public:
-  static char* LoadTextFile(const std::string name);
-  static char* LoadBinaryFile(const std::string name);
+  static char* LoadTextFile(const std::string& name);
+  static char* LoadBinaryFile(const std::string& name);
 };
 }

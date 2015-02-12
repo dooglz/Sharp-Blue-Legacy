@@ -41,6 +41,7 @@ EventBouncer::~EventBouncer() {
 //----------- /Event Bouncer ---------------------------
 
 namespace Engine {
+UIDocument::UIDocument() { internalPointer = 0; }
 
 UIDocument::~UIDocument() {
   RemoveAllListeners();
@@ -115,7 +116,9 @@ CUserInterface* UserInterface = 0;
 
 UICanvas::UICanvas(unsigned int posX, unsigned int posY, unsigned int sizeX,
                    unsigned int sizeY)
-    : posX(posX), posY(posY), sizeX(sizeX), sizeY(sizeY) {}
+    : posX(posX), posY(posY), sizeX(sizeX), sizeY(sizeY) {
+  internalPointer =0;
+}
 
 
 UICanvas::~UICanvas()
@@ -152,6 +155,8 @@ void UICanvas::Unload() {
 }
 
 CLibrocket::CLibrocket() {
+  _uii=0;
+  _uir=0;
   printf("Librocket constructed\n");
 }
 CLibrocket::~CLibrocket() {
@@ -159,7 +164,7 @@ CLibrocket::~CLibrocket() {
 }
 
 void CLibrocket::Init() {
-  printf("Librocket version: %s\n\n", Rocket::Core::GetVersion());
+  printf("Librocket version: %s\n\n", Rocket::Core::GetVersion().CString());
 
   _uii = new CLibRocketInterface();
   Rocket::Core::SetSystemInterface(_uii);

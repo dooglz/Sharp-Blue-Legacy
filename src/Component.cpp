@@ -1,8 +1,9 @@
 #include "Component.h"
 
 namespace Engine {
-  CComponent::CComponent(const std::string token) : _token(token) {
+  CComponent::CComponent(const std::string& token) : _token(token) {
     _active = true;
+    Ent = 0;
   }
   CComponent::~CComponent(){
     printf("base component destructor\n");

@@ -2,9 +2,11 @@
 //Memory leak detection
 
 #define engineDebug false
-#define leakdetect true
 
-#if defined(leakdetect)
+//Set this to 0 - none, 1 - ignore global statics, 2 - report eveything
+#define leakdetect 2
+
+#if (leakdetect)
 #define _CRTDBG_MAP_ALLOC
 #define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
 #define new DBG_NEW

@@ -11,7 +11,7 @@ class UIDocument {
 protected:
   std::vector<EventBouncer*> _bouncers;
 public:
-  UIDocument(){};
+  UIDocument();
   ~UIDocument();
   void* internalPointer;
   void SetContent(const std::string& elementID, const std::string& content);

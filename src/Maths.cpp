@@ -8,7 +8,7 @@
 #include "glm/gtx/euler_angles.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
-void print(Vector3 v) { printf("V3(%f,%f,%f)\n", v.x, v.y, v.z); }
+void print(Vector3& v) { printf("V3(%f,%f,%f)\n", v.x, v.y, v.z); }
 void print(const Vector4& v) {
 	printf("V4(%f,%f,%f,%f)\n", v.x, v.y, v.z, v.w);
 }
@@ -27,31 +27,31 @@ void print(const Matrix4& v) {
 		v[2][1], v[2][2], v[2][3], v[3][0], v[3][1], v[3][2], v[3][3]);
 }
 
-void EulerToAngleAxis(const Vector3 euler, Vector3& axis, float& angle) {
+void EulerToAngleAxis(const Vector3& euler, Vector3& axis, float& angle) {
 	Quaternion q = EulerToQuat(euler);
 	axis = glm::axis(q);
 	angle = glm::angle(q);
 }
 
-void QuatToAngleAxis(const Quaternion q, Vector3& axis, float& angle) {
+void QuatToAngleAxis(const Quaternion& q, Vector3& axis, float& angle) {
 	axis = glm::axis(q);
 	angle = glm::angle(q);
 }
-void MatrixToAngleAxis(const Matrix4 m, Vector3& axis, float& angle) {
+void MatrixToAngleAxis(const Matrix4& m, Vector3& axis, float& angle) {
 	Quaternion q = MatrixToQuat(m);
 	axis = glm::axis(q);
 	angle = glm::angle(q);
 }
 
 //--
-Vector3 Normalize(Vector3 v) {
+Vector3 Normalize(Vector3& v) {
 	v = glm::normalize(v);
 	if (isnan(v.x) || isnan(v.y) || isnan(v.z)) {
 		return Vector3(0, 0, 0);
 	}
 	return v;
 }
-Vector4 Normalize(Vector4 v) {
+Vector4 Normalize(Vector4& v) {
 	v = glm::normalize(v);
 	if (isnan(v.x) || isnan(v.y) || isnan(v.z)) {
 		return Vector4(0, 0, 0, 0);
@@ -59,7 +59,7 @@ Vector4 Normalize(Vector4 v) {
 	return v;
 }
 
-Quaternion Normalize(Quaternion q) {
+Quaternion Normalize(Quaternion& q) {
 	q = glm::normalize(q);
 	if (isnan(q.x) || isnan(q.y) || isnan(q.z) || isnan(q.w)) {
 		return Quaternion(0, 0, 0, 0);
@@ -67,58 +67,58 @@ Quaternion Normalize(Quaternion q) {
 	return q;
 }
 
-Vector3 QuatToEuler(const Quaternion q) { return glm::eulerAngles(q); }
+Vector3 QuatToEuler(const Quaternion& q) { return glm::eulerAngles(q); }
 
-Vector3 AngleAxisToEuler(const Vector3 axis, const float angle) {
+Vector3 AngleAxisToEuler(const Vector3& axis, const float angle) {
 	return QuatToEuler(AngleAxisToQuat(axis, angle));
 }
 // only translate
 
-Vector3 MatrixToEuler(const Matrix4 m) { return QuatToEuler(MatrixToQuat(m)); }
+Vector3 MatrixToEuler(const Matrix4& m) { return QuatToEuler(MatrixToQuat(m)); }
 
-Vector3 GetTransaltion(const Matrix4 m) { return Vector3(m[3]); }
+Vector3 GetTransaltion(const Matrix4& m) { return Vector3(m[3]); }
 
 //--
-Quaternion EulerToQuat(const Vector3 euler) { return Quaternion(euler); }
+Quaternion EulerToQuat(const Vector3& euler) { return Quaternion(euler); }
 
-Quaternion AngleAxisToQuat(const Vector3 axis, const float angle) {
+Quaternion AngleAxisToQuat(const Vector3& axis, const float angle) {
 	return glm::angleAxis(angle, axis);
 }
 
-Quaternion MatrixToQuat(const Matrix4 m) { return glm::quat_cast(m); }
+Quaternion MatrixToQuat(const Matrix4& m) { return glm::quat_cast(m); }
 
 //--
-Matrix4 EulerToMatrix(const Vector3 euler) {
+Matrix4 EulerToMatrix(const Vector3& euler) {
 	return glm::eulerAngleYXZ(euler.y, euler.x, euler.z);
 }
 
-Matrix4 QuatToMatrix(const Quaternion q) { return glm::mat4_cast(q); }
+Matrix4 QuatToMatrix(const Quaternion& q) { return glm::mat4_cast(q); }
 
-Matrix3 QuatToMatrix3(const Quaternion q) { return glm::mat3_cast(q); }
+Matrix3 QuatToMatrix3(const Quaternion& q) { return glm::mat3_cast(q); }
 
 // Angle in Radians
-Matrix4 AngleAxisToMatrix(const Vector3 axis, const float angle) {
+Matrix4 AngleAxisToMatrix(const Vector3& axis, const float angle) {
 	return glm::rotate(glm::mat4(1.0f), angle, axis);
 }
 
-bool isZero(const Vector3 v3) {
+bool isZero(const Vector3& v3) {
 	return (abs(v3.x) == 0 && abs(v3.y) == 0 && abs(v3.z) == 0);
 }
 
-Matrix4 Translation(const Vector3 translationVector) {
+Matrix4 Translation(const Vector3& translationVector) {
 	return glm::translate(glm::mat4(1.0f), translationVector);
 }
 
-Matrix4 Scale(const Vector3 scaleVector) {
+Matrix4 Scale(const Vector3& scaleVector) {
 	return glm::scale(glm::mat4(1.0f), scaleVector);
 }
 
-Vector3 V4toV3(Vector4 v) { return Vector3(v); }
+Vector3 V4toV3(Vector4& v) { return Vector3(v); }
 
 Vector4 Column(const Matrix4& m, const int a) { return glm::column(m, a); }
 
-Matrix4 lookat(const Vector3 eyePos, const Vector3 targetPos,
-	const Vector3 UpVector) {
+Matrix4 lookat(const Vector3& eyePos, const Vector3& targetPos,
+  const Vector3& UpVector) {
 	return Matrix4(1.0f);
 }
 
@@ -329,7 +329,7 @@ Quaternion Inverse(const Quaternion q) {
 
 #endif
 
-Vector3 GetForwardVector(Quaternion q) {
+Vector3 GetForwardVector(Quaternion& q) {
 	/*
 	Matrix4 view = QuatToMatrix(q);
 	Vector3 m_xaxis = glm::vec3(view[0][0], view[1][0], view[2][0]);
@@ -343,13 +343,13 @@ Vector3 GetForwardVector(Quaternion q) {
 		1.0f - 2.0f * (q.getX() * q.getX() + q.getY() * q.getY()));
 }
 
-Vector3 GetUpVector(Quaternion q) {
+Vector3 GetUpVector(Quaternion& q) {
 	return Vector3(2 * (q.getX() * q.getY() - q.getW() * q.getZ()),
 		1.0f - 2.0f * (q.getX() * q.getX() + q.getZ() * q.getZ()),
 		2.0f * (q.getY() * q.getZ() + q.getW() * q.getX()));
 }
 
-Vector3 GetRightVector(Quaternion q) {
+Vector3 GetRightVector(Quaternion& q) {
 	return Vector3(1.0f - 2.0f * (q.getY() * q.getY() + q.getZ() * q.getZ()),
 		2.0f * (q.getX() * q.getY() + q.getW() * q.getZ()),
 		2.0f * (q.getX() * q.getZ() - q.getW() * q.getY()));

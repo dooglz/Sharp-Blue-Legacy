@@ -39,7 +39,7 @@ void Input::setValue(std::vector<Input_axis>::iterator itr,
   itr->value = value;
 }
 
-void Input::setValue(const std::string name, const unsigned char value) {
+void Input::setValue(const std::string& name, const unsigned char value) {
   // printf("input! %s = %u\n", name.c_str(), value);
   if (axisExists(name)) {
     find(name)->value = value;

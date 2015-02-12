@@ -36,7 +36,6 @@ void Scene::Update(const double delta) {
 }
 
 void Scene::Render() {
-  static unsigned int i = 0;
   if (_ents.size() < 1) {
     return;
   }
@@ -72,7 +71,7 @@ void Scene::SetActiveCamera(Components::CmCamera* const c) {
 }
 
 void Scene::report() const {
-  printf("Scene report -- Ents:%i\n", _ents.size());
+  printf("Scene report -- Ents:%ul\n", _ents.size());
   for (std::vector<Entity*>::const_iterator it = _ents.begin();
        it != _ents.end(); ++it) {
     printf("%s - (%i,%i,%i)\n", (*it)->GetName(), (*it)->getPosition().getX(),

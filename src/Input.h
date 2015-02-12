@@ -22,7 +22,7 @@ public:
   static std::vector<Input_axis>::iterator find(std::string name);
   static unsigned char getValue(std::string name);
   static unsigned char getValue(std::vector<Input_axis>::iterator itr);
-  static void setValue(const std::string name, const unsigned char value);
+  static void setValue(const std::string& name, const unsigned char value);
   static void setValue(std::vector<Input_axis>::iterator itr,
                        unsigned char value);
   static void removeAxis(std::string name);

@@ -7,4 +7,5 @@ void Base_storage::Shutdown() {
     b->_Shutdown();
     delete b;
   }
+  warehouses.clear();
 }

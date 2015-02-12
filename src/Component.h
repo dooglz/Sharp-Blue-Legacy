@@ -12,7 +12,7 @@ namespace Engine {
     const std::string _token;
 
   public:
-    CComponent(const std::string token);
+    CComponent(const std::string& token);
     virtual ~CComponent();
     virtual void Update(double delta){};
     virtual void Render(){};

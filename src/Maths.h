@@ -79,51 +79,51 @@ Quaternion Inverse(const Quaternion q);
 #define M_PI 3.14159265358979323846
 #endif
 
-void EulerToAngleAxis(const Vector3 euler, Vector3& axis, float& angle);
-void QuatToAngleAxis(const Quaternion q, Vector3& axis, float& angle);
-void MatrixToAngleAxis(const Matrix4 m, Vector3& axis, float& angle);
+void EulerToAngleAxis(const Vector3& euler, Vector3& axis, float& angle);
+void QuatToAngleAxis(const Quaternion& q, Vector3& axis, float& angle);
+void MatrixToAngleAxis(const Matrix4& m, Vector3& axis, float& angle);
 
-Vector3 QuatToEuler(const Quaternion q);
-Vector3 AngleAxisToEuler(const Vector3 axis, const float angle);
-Vector3 MatrixToEuler(const Matrix4 m);
-Vector3 GetTransaltion(const Matrix4 m);
+Vector3 QuatToEuler(const Quaternion& q);
+Vector3 AngleAxisToEuler(const Vector3& axis, const float angle);
+Vector3 MatrixToEuler(const Matrix4& m);
+Vector3 GetTransaltion(const Matrix4& m);
 
-Quaternion EulerToQuat(const Vector3 euler);
-Quaternion AngleAxisToQuat(const Vector3 axis, const float angle);
-Quaternion MatrixToQuat(const Matrix4 m);
+Quaternion EulerToQuat(const Vector3& euler);
+Quaternion AngleAxisToQuat(const Vector3& axis, const float angle);
+Quaternion MatrixToQuat(const Matrix4& m);
 
-Matrix4 EulerToMatrix(const Vector3 euler);
-Matrix4 QuatToMatrix(const Quaternion q);
-Matrix3 QuatToMatrix3(const Quaternion q);
-Matrix4 AngleAxisToMatrix(const Vector3 axis, const float angle);
+Matrix4 EulerToMatrix(const Vector3& euler);
+Matrix4 QuatToMatrix(const Quaternion& q);
+Matrix3 QuatToMatrix3(const Quaternion& q);
+Matrix4 AngleAxisToMatrix(const Vector3& axis, const float angle);
 
-Matrix4 Translation(const Vector3 translationVector);
-Matrix4 Scale(const Vector3 scaleVector);
+Matrix4 Translation(const Vector3& translationVector);
+Matrix4 Scale(const Vector3& scaleVector);
 
-Vector3 Normalize(Vector3 v);
-Vector4 Normalize(Vector4 v);
-Quaternion Normalize(Quaternion q);
+Vector3 Normalize(Vector3& v);
+Vector4 Normalize(Vector4& v);
+Quaternion Normalize(Quaternion& q);
 
-Vector3 GetForwardVector(Quaternion q);
-Vector3 GetUpVector(Quaternion q);
-Vector3 GetRightVector(Quaternion q);
+Vector3 GetForwardVector(Quaternion& q);
+Vector3 GetUpVector(Quaternion& q);
+Vector3 GetRightVector(Quaternion& q);
 
-Vector3 V4toV3(Vector4 v);
+Vector3 V4toV3(Vector4& v);
 
 float Clamp(const float a, const float max);
 bool IsIdentical(const Vector3& a, const Vector3& b);
 bool IsIdentical(const Quaternion& a, const Quaternion& b);
 
 Vector4 Column(const Matrix4& m, const int a);
-void print(Vector3 v);
+void print(Vector3& v);
 void print(const Vector4& v);
 void print(const Quaternion& v);
 void print(const Matrix3& v);
 
 void print(const Matrix4& v);
 
-Matrix4 lookat(const Vector3 eyePos, const Vector3 targetPos,
-  const Vector3 UpVector);
+Matrix4 lookat(const Vector3& eyePos, const Vector3& targetPos,
+               const Vector3& UpVector);
 
 inline int randomColor() {
   int x = rand() & 0xff;

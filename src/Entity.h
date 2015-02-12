@@ -12,9 +12,9 @@ namespace Engine {
     bool _visible;
     std::string _name;
     bool _changed;
+    Vector3 _scale;
     Vector3 _position;
     Quaternion _rotation;
-    Vector3 _scale;
     Matrix4 _transform;
     void CalculateTransform();
     std::vector<CComponent*> _components;
@@ -51,7 +51,6 @@ namespace Engine {
 
     template <typename T>
     T* const getComponent() {
-      std::vector<CComponent*>::iterator it;
       for (std::vector<CComponent*>::iterator it = _components.begin();
         it != _components.end(); ++it) {
         // printf("Checking %s against %s \n", typeid(**it).name(),

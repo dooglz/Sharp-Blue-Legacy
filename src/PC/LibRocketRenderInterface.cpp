@@ -9,7 +9,11 @@
 
 namespace Engine {
 
-CLibRocketRenderInterface::CLibRocketRenderInterface() {}
+CLibRocketRenderInterface::CLibRocketRenderInterface() {
+  m_width =0;
+  m_height = 0;
+  m_rocket_context = 0;
+}
 
 
 // Called by Rocket when it wants to render geometry that it does not wish to

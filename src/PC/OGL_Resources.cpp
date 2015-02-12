@@ -21,7 +21,9 @@ Material::Material(const std::string& name, const std::string& vs,
       TexturesCount(Textures),
       NeedsNormals(NeedsNormals),
       NeedsColours(NeedsColours),
-      NeedsUVs(NeedsUVs) {}
+      NeedsUVs(NeedsUVs) {
+  EngineMaterial = 0;
+}
 
 Material* Material::Load(const std::string& name) {
   // TODO: what the hell are you doing son?!
@@ -86,8 +88,8 @@ OGL_Texture* OGL_Texture::Load(const std::string& name) {
 
   // http://content.gpwiki.org/index.php/SDL:Tutorials:Using_SDL_with_OpenGL
 
-  GLenum texture_format;
-  GLenum internalFormat;
+  GLenum texture_format = GL_RGB;
+  GLenum internalFormat = GL_RGB;
 
   // Check that the image's width is a power of 2
   if ((surface->w & (surface->w - 1)) != 0) {

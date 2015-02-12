@@ -71,9 +71,9 @@ void __stdcall printOutKhrDebugMessage(GLenum source, GLenum type, GLuint id,
   GLenum severity, GLsizei length,
   const GLchar* message,
   const void* userParam) {
-	if (severity >= GL_DEBUG_SEVERITY_LOW){
-	printf("\nAn OGL KHR error has occured: %s\n", message);
-	}
+  if (severity >= GL_DEBUG_SEVERITY_LOW){
+  printf("\nAn OGL KHR error has occured: %s\n", message);
+  }
 }
 
 namespace Engine {
@@ -93,7 +93,7 @@ SDL_GLContext SDL_Platform::_gContext;
 void SDL_Platform::CheckGL() {
   GLenum err;
   while ((err = glGetError()) != GL_NO_ERROR) {
-    printf("An OGL error has occured: %i\n", err);
+    printf("An OGL error has occured: %u\n", err);
   }
 }
 
@@ -111,6 +111,8 @@ SDL_Platform::SDL_Platform() {
   // Initialize SDL
   SDL_SetAssertionHandler(CustomAssertionHandler, NULL);
   ASSERT((SDL_Init(SDL_INIT_VIDEO) >= 0));
+  _glverMaj = 4;
+  _glverMin = 3;
 }
 
 void SDL_Platform::Init(const unsigned short width,

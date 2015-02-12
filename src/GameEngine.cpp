@@ -63,7 +63,6 @@ void GameEngine::Shutdown() {
 }
 
 void GameEngine::Loop() {
-  double delta = 0;
   double currentTime = Platform->GetTime();
   // 60fps in Microseconds.
   double tartgettime = 1.0 / 60.0;
@@ -71,7 +70,7 @@ void GameEngine::Loop() {
   while (run) {
     // continue;
     double newTime = Platform->GetTime();
-    delta = newTime - currentTime;
+    double delta = newTime - currentTime;
     currentTime = newTime;
 
     // delta / 60fps

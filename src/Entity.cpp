@@ -16,6 +16,7 @@ namespace Engine {
     _scale = Vector3(1.0f, 1.0f, 1.0f);
     _position = Vector3(0.0f, 0.0f, 0.0f);
     _rotation = Quaternion::identity();
+    _scene = 0;
     CalculateTransform();
   }
 
@@ -118,7 +119,6 @@ namespace Engine {
     if (_components.size() < 1) {
       return c;
     }
-    std::vector<CComponent *>::iterator it;
     for (std::vector<CComponent *>::const_iterator it = _components.begin();
       it != _components.end(); ++it) {
       if ((*it)->GetToken() == name) {

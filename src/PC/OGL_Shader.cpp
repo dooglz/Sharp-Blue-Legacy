@@ -47,7 +47,7 @@ void OGL_Shader::LoadSourceShader(std::string name) {
              "_shaderType must be set before loading a shader file!");
   GLenum err = glGetError();
   if (err != GL_NO_ERROR) {
-    printf("An OGL error ahas occured: %i\n", err);
+    printf("An OGL error ahas occured: %u\n", err);
     HALT;
   }
 
@@ -59,21 +59,21 @@ void OGL_Shader::LoadSourceShader(std::string name) {
   _shaderID = glCreateShader(_shaderType);
   err = glGetError();
   if (err != GL_NO_ERROR) {
-    printf("An OGL error has occured: %i\n", err);
+    printf("An OGL error has occured: %u\n", err);
     HALT;
   }
 
   glShaderSource(_shaderID, 1, (const GLchar **)&shaderSource, 0);
   err = glGetError();
   if (err != GL_NO_ERROR) {
-    printf("An OGL error ahas occured: %i\n", err);
+    printf("An OGL error ahas occured: %u\n", err);
     HALT;
   }
 
   glCompileShader(_shaderID);
   err = glGetError();
   if (err != GL_NO_ERROR) {
-    printf("An OGL error ahas occured: %i\n", err);
+    printf("An OGL error ahas occured: %u\n", err);
     HALT;
   }
 
