@@ -36,7 +36,11 @@ void registerInputs() {
 }
 
 void EventListener(const std::string& elementID) {
-  printf("%s G has been pressed\n", elementID.c_str());
+  printf("%s G1 has been pressed\n", elementID.c_str());
+}
+
+void EventListener2(const std::string& elementID) {
+  printf("%s G2 has been pressed\n", elementID.c_str());
 }
 static Engine::UICanvas* canvas;
 static Engine::Scene* defaultScene;
@@ -49,7 +53,10 @@ void Game::init() {
   doc->SetContent("button1", "We set this element with code!");
   doc->AddEventListener("button1", "click", EventListener);
   doc->AddEventListener("button2", "click", EventListener);
-  doc->AddEventListener("button3", "click", EventListener);
+  doc->AddEventListener("button2", "click", EventListener2);
+  //doc->AddEventListener("button3", "click", EventListener2);
+ // doc->AddEventListener("button4", "click", EventListener);
+ // doc->AddEventListener("button4", "click", EventListener2);
 
   // TODO: allow code gnerated meshes to be stored in mesh storage
   /*

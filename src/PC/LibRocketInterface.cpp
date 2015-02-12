@@ -32,7 +32,7 @@ EventBouncer::EventBouncer(
       Gamefunc(ListenerFunction),
       _parentDocument(parentDocument)
 {
-  _parentDocument->AddEventListener(_type.c_str(), this, false);
+  _parentDocument->GetElementById(elementID.c_str())->AddEventListener(_type.c_str(), this, false);
 };
 
 EventBouncer::~EventBouncer() {
