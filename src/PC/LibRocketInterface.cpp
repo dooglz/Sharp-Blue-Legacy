@@ -36,7 +36,7 @@ EventBouncer::EventBouncer(
 };
 
 EventBouncer::~EventBouncer() {
-  _parentDocument->RemoveEventListener(_type.c_str(), this, false);
+_parentDocument->GetElementById(_elementID.c_str())->RemoveEventListener(_type.c_str(), this, false);
 }
 //----------- /Event Bouncer ---------------------------
 
