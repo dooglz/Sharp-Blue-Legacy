@@ -24,11 +24,15 @@ protected:
 public:
   CRenderer();
   virtual void SetViewMatrix(const Matrix4& vm);
+  Matrix4 GetViewMatrix() const;
+  Matrix4 GetProjMatrix() const;
   virtual void RenderMesh(RenderObject* const msh, const Matrix4& mvp) = 0;
   virtual void DrawLine(const Vector3& p1, const Vector3& p2) = 0;
   virtual void DrawCross(const Vector3& p1, const float size) = 0;
   virtual void PrepFrame() = 0;
   virtual void PostRender() = 0;
+
+  virtual float GetDepthAt(const unsigned int& x, const unsigned int& y) = 0;
 
   virtual void Init() = 0;
 

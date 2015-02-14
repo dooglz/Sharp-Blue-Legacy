@@ -58,7 +58,9 @@ void Scene::Render() {
 
   for (std::vector<Entity*>::iterator it = _ents.begin(); it != _ents.end();
        ++it) {
-    (*it)->Render();
+    if ((*it)->isVisible()) {
+      (*it)->Render();
+    }
   }
 }
 

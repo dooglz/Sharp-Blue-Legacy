@@ -33,6 +33,12 @@ void registerInputs() {
   a.push_back("ms_r");
   Engine::Input::addMap("action2", a);
   a.clear();
+  a.push_back("ms_x");
+  Engine::Input::addMap("pointerX", a);
+  a.clear();
+  a.push_back("ms_y");
+  Engine::Input::addMap("pointerY", a);
+  a.clear();
 }
 
 void EventListener(const std::string& elementID) {
@@ -142,6 +148,12 @@ void Game::update(double delta) {
   Engine::Renderer->DrawLine(Vector3(0, 0, 0), Vector3(0, 6, 0));
   Engine::Renderer->DrawCross(Vector3(0, 6, 0), 1.0f);
   //Engine::GameEngine::StopLoop();
+
+  if (Engine::Input::getMapData("action2") > 128) {
+    printf("action pressed 2\n");
+    printf("mouse pos: %u, %u\n", Engine::Input::getMapData("pointerX"), Engine::Input::getMapData("pointerY"));
+  }
+
 }
 
 void Game::render() {}

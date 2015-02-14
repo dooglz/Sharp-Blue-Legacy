@@ -23,7 +23,7 @@ namespace Engine {
       void PostRender();
 
       void Init();
-
+      float GetDepthAt(const unsigned int& x, const unsigned int& y);
       void Shutdown();
       void SetClearColour(const float r, const float g, const float b);
       void RenderMesh(RenderObject* const msh, const Matrix4& mvp);

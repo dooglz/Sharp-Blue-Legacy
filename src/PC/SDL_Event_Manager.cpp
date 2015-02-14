@@ -157,6 +157,8 @@ void SDLEventManager::processEvents() {
       break;
     }
     case SDL_MOUSEMOTION: {
+      Input::setValue("ms_x", e.motion.x);
+      Input::setValue("ms_y", e.motion.y);
       ((CLibrocket *)UserInterface)->ProcessMouseMove(e.motion.x, e.motion.y);
       break;
     }
@@ -218,8 +220,7 @@ void SDLEventManager::processEvents() {
 
 void SDLEventManager::init() {
   printf("SDLEventManager Init \n");
-  Input::addAxis("ms_l");
-  Input::addAxis("ms_r");
+
   Input::addAxis("kb_up");
   Input::addAxis("kb_down");
   Input::addAxis("kb_left");
@@ -236,6 +237,12 @@ void SDLEventManager::init() {
   Input::addAxis("kb_k_a");
   Input::addAxis("kb_k_s");
   Input::addAxis("kb_k_d");
+  //mouse pos
+  Input::addAxis("ms_x");
+  Input::addAxis("ms_y");
+  //mouse buttons
+  Input::addAxis("ms_l");
+  Input::addAxis("ms_r");
 }
 void SDLEventManager::Shutdown() {
   printf("SDLEventManager Shutdown \n");

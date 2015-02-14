@@ -24,22 +24,22 @@ std::vector<Input_axis>::iterator Input::find(std::string name) {
   return itr;
 }
 
-unsigned char Input::getValue(std::string name) {
+unsigned int Input::getValue(std::string name) {
   if (axisExists(name)) {
     return getValue(find(name));
   }
   return 0;
 }
-unsigned char Input::getValue(std::vector<Input_axis>::iterator itr) {
+unsigned int Input::getValue(std::vector<Input_axis>::iterator itr) {
   return itr->value;
 }
 
 void Input::setValue(std::vector<Input_axis>::iterator itr,
-                     unsigned char value) {
+  unsigned int value) {
   itr->value = value;
 }
 
-void Input::setValue(const std::string& name, const unsigned char value) {
+void Input::setValue(const std::string& name, const unsigned int value) {
   // printf("input! %s = %u\n", name.c_str(), value);
   if (axisExists(name)) {
     find(name)->value = value;
@@ -109,7 +109,7 @@ void Input::WipeAll() {
     input_data.clear();
 }
 
-unsigned char Input::getMapData(std::string name) {
+unsigned int Input::getMapData(std::string name) {
   if (mapExists(name)) {
     std::vector<std::string> axises = findMap(name)->current;
     std::vector<std::string>::iterator itr;
@@ -120,7 +120,7 @@ unsigned char Input::getMapData(std::string name) {
         std::vector<Input_axis>::iterator itr2 = find(*itr);
         if (itr2 != input_data.end()) {
           // found! Is it active?
-          unsigned char val = itr2->value;
+          unsigned int val = itr2->value;
           if (val > 0) {
             return val;
           }

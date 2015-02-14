@@ -13,4 +13,14 @@ CRenderer::CRenderer() {
   _projectionMat = Perspective((float)(60.0f * (M_PI / 180.0f)), (16.0f / 9.0f),
                                1.0f, 2000.0f);
 };
+
+Matrix4 CRenderer::GetViewMatrix() const
+{
+  return _viewMat;
+}
+Matrix4 CRenderer::GetProjMatrix() const
+{
+  return _projectionMat;
+}
+
 }

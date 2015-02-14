@@ -244,5 +244,14 @@ void COGL_Renderer::Shutdown() {
   linebuffer.clear();
   // delete _defaultProgram;
 }
+
+
+float COGL_Renderer::GetDepthAt(const unsigned int& x, const unsigned int& y)
+{
+  GLfloat depth;
+  glReadPixels(x, 720-y , 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth);
+  return depth;
+}
+
 }
 };
