@@ -104,6 +104,7 @@ void UIDocument::RemoveEventListener(
 
 void UIDocument::RemoveAllListeners()
 {
+  if (_bouncers.empty()) return;
   std::vector< EventBouncer*>::iterator itt = _bouncers.begin();
   while (itt != _bouncers.end()) {
     delete *itt;
